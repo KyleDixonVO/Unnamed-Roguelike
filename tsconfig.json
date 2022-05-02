@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2017",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "pretty": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

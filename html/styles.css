@@ -1,0 +1,27 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	background: #FFFFFF;
+	font-family: verdana,arial,helvetica,sans-serif;
+	font-size: 12px;
+    color: #000000;
+    user-select: none;
+    /* to prohibit double clicking in game selecting the entire canvas */
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */ 	
+}
+
+#caption, #fps {
+    margin-left:10px;
+}
+
+#game-canvas {
+    margin-left:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    border-style:dotted;
+    border-width:1px;
+}
