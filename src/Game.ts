@@ -12,6 +12,15 @@ let stage:createjs.StageGL;
 let canvas:HTMLCanvasElement;
 let assetManager:AssetManager;
 
+
+
+
+
+
+
+
+
+
 // --------------------------------------------------- event handler
 function onReady(e:createjs.Event):void {
     console.log(">> spritesheet loaded – ready to add sprites to game");
