@@ -1581,11 +1581,12 @@ class Projectile {
             case GameCharacter_1.GameCharacter.DIR_DOWN:
                 this.deltaX = 0;
                 this.deltaY = 1;
-                this._sprite.rotation = -90;
+                this._sprite.rotation = 270;
                 break;
             case GameCharacter_1.GameCharacter.DIR_LEFT:
                 this.deltaX = -1;
                 this.deltaY = 0;
+                this._sprite.rotation = 0;
                 break;
             case GameCharacter_1.GameCharacter.DIR_RIGHT:
                 this.deltaX = 1;
@@ -4053,7 +4054,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("977dbee27473a0c2faa9")
+/******/ 		__webpack_require__.h = () => ("a2046a2dd4a015d96ae9")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

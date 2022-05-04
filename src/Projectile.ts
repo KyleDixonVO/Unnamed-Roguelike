@@ -1,4 +1,4 @@
-import { AssetManager } from "./AssetManager";
+ import { AssetManager } from "./AssetManager";
 import { DEF_PROJECTILE_DAMAGE, DEF_PROJECTILE_SPEED, STAGE_HEIGHT, STAGE_WIDTH } from "./Constants";
 import { Inventory } from "./Inventory";
 import { Pickup } from "./Pickup";
@@ -90,12 +90,13 @@ export class Projectile {
             case GameCharacter.DIR_DOWN:
                 this.deltaX = 0;
                 this.deltaY = 1;
-                this._sprite.rotation = -90;
+                this._sprite.rotation = 270;
                 break;
 
             case GameCharacter.DIR_LEFT:
                 this.deltaX = -1;
                 this.deltaY = 0;
+                this._sprite.rotation = 0;
                 break;
 
             case GameCharacter.DIR_RIGHT:
