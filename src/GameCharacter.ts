@@ -16,6 +16,10 @@ public static DIR_UP:number = 0;
 public static DIR_DOWN:number = 1;
 public static DIR_LEFT:number = 2;
 public static DIR_RIGHT:number = 3;
+public static DIR_NE:number = 4;
+public static DIR_SE:number = 5;
+public static DIR_SW:number = 6;
+public static DIR_NW:number = 7;
 public static DIR_NEUTRAL:number =99;
 
 //Property variables
@@ -23,8 +27,10 @@ protected _speed:number;
 protected _sprite:createjs.Sprite;
 protected _state:number;
 protected _health:number;
+protected _healthMax:number;
 protected _direction:number;
 protected _facing:number;
+protected _stateBeforePause:number;
 
 //Protected variables
 protected stage:createjs.StageGL;
@@ -35,12 +41,14 @@ constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string
     //initialization
     this.stage = stage;
     this._state = GameCharacter.STATE_IDLE;
+    this._stateBeforePause = GameCharacter.STATE_IDLE;
     this._speed = DEFAULT_SPEED;
     this._health = DEFAULT_HEALTH;
     this.deltaX = 0;
     this.deltaY = 0;
     this._direction = GameCharacter.DIR_NEUTRAL;
     this._facing = GameCharacter.DIR_DOWN;
+    this._healthMax = DEFAULT_HEALTH;
 
     //construct and place sprite
     this._sprite = assetManager.getSprite("sprites", animation, STAGE_WIDTH/2, STAGE_HEIGHT/2);
@@ -91,10 +99,18 @@ get sprite():createjs.Sprite {
     return this._sprite;
 }
 
+set healthMax(value:number){
+    this._healthMax = value;
+}
+get healthMax(){
+    return this._healthMax;
+}
+
 //--------------------------------------------------------------------------------------------------------------------- public methods
 
 public addToStage():void {
     this.stage.addChild(this._sprite);
+    this.stage.setChildIndex(this._sprite, this.stage.numChildren);
 }
 
 public removeFromStage():void {
@@ -164,4 +180,16 @@ public update():void {
     this._sprite.x += this.deltaX * this.speed;
     this._sprite.y += this.deltaY * this.speed;
 }
+
+public pause():void{
+    this._stateBeforePause = this._state;
+    console.log("state before pausing: " + this._stateBeforePause);
+    this._state = GameCharacter.STATE_PAUSED;
+}
+
+public unpause():void{
+    this._state = this._stateBeforePause;
+    console.log("state after pausing: " + this._state);
+}
+
 }

@@ -12,10 +12,15 @@ export class Inventory {
     private _railgunAmmo:number;
     private _teslagunAmmo:number;
     private _rocketAmmo:number;
+    private _currentWeaponDamage:number;
 
     constructor(gameCharacter:GameCharacter){
         this.gameCharacter = gameCharacter;
         this._currentWeapon = " "; 
+    }
+
+    set currentWeapon(value:string){
+        this._currentWeapon = value;
     }
 
     get currentWeapon(){

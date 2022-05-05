@@ -4,7 +4,7 @@
 // importing createjs framework
 import "createjs";
 // importing game constants
-import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX } from "./Constants";
+import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX, I_FRAMES_DEFAULT, ALIEN_CONTACT_DAMAGE } from "./Constants";
 import { AssetManager } from "./AssetManager";
 import { UserInterface } from "./UserInterface";
 import { ScreenManager } from "./ScreenManager";
@@ -17,7 +17,6 @@ import { Inventory } from "./Inventory";
 
 // game variables
 let stage:createjs.StageGL;
-let UI_Stage:createjs.StageGL;
 let canvas:HTMLCanvasElement;
 let assetManager:AssetManager;
 
@@ -26,6 +25,10 @@ let downKey:boolean = false;
 let leftKey:boolean = false;
 let rightKey:boolean = false;
 let spacePress:boolean = false;
+let escapePress:boolean = false;
+let escapeUp:boolean = true;
+let paused:boolean = false;
+let iFramesActive:boolean = false;
 
 // game objects
 let player:Player;
@@ -35,10 +38,14 @@ let projectilePool:Projectile[] = [];
 let userInterface:UserInterface;
 let screenManager:ScreenManager;
 let newProjectile:Projectile;
+let newEnemy:Enemy;
 let playerInventory:Inventory;
 let bank:Inventory;
 
+
 // timers
+let iframes:number;
+let invincibleTimer:number;
 
 
 
@@ -52,7 +59,6 @@ function onReady(e:createjs.Event):void {
 
     // construct game objects here
     screenManager = new ScreenManager(stage, assetManager);
-    
     
     userInterface = new UserInterface(stage, assetManager);
 
@@ -84,6 +90,11 @@ function onReady(e:createjs.Event):void {
     stage.on("gameReset", onGameEvent);
     stage.on("titleActive", onGameEvent);
     stage.on("gameOverActive", onGameEvent);
+    stage.on("openSettings", onGameEvent);
+    stage.on("closeSettings", onGameEvent);
+    stage.on("gamePaused", onGameEvent);
+    stage.on("gameUnpaused", onGameEvent);
+    stage.on("playerHit", onGameEvent);
 
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
@@ -93,39 +104,114 @@ function onReady(e:createjs.Event):void {
 }
 
 function onGameEvent(e:createjs.Event):void {
+
     console.log("called onGameEvent");
+
     switch (e.type) {
         case "playerKilled":
+            userInterface.removeAll();
+            player.removeFromStage();
 
+            for (let enemy of enemyPool){
+                if (enemy.used) enemy.reset();
+            }
+
+            for (let projectile of projectilePool){
+                if (projectile.used) projectile.reset();
+            }
+
+            screenManager.showGameOverScreen();
             break;
     
-        case "playerDamaged":
 
+        case "playerHit":
+            if (iFramesActive == true) return;
+                iFramesActive = true;
+                player.takeDamage(ALIEN_CONTACT_DAMAGE);
+                invincibleTimer = window.setInterval(onInvincibleTimer, I_FRAMES_DEFAULT);   
             break;
         
-        case "gameStarted":
-            player.addToStage();
 
+        case "gameStarted":
+            console.log("received dispatch: gameStarted ");
+            screenManager.showGame();
+            player.addToStage();
+            userInterface.showPlayerHUD();
+            onAddEnemy();
             break;
+
 
         case "gameReset":
-
+            player.reset();
+            userInterface.reset();
+            screenManager.showTitleScreen();
             break;
         
+
         case "titleActive":
             console.log("received dispatch: titleActive ");
             userInterface.showStartMenu();
             userInterface.onStartClick();
-
+            userInterface.onSettingsClick();
             break;
         
-        case "gameOverActive":
 
+        case "gameOverActive":
+            
+            break;
+
+
+        case "openSettings":
+            console.log("recieved dispatch: openSettings");
+            screenManager.pauseGame();
+            userInterface.showSettingsMenu();
+            break;
+
+
+        case "closeSettings":
+            console.log("recieved dispatch: closeSettings");
+            userInterface.hideSettingsMenu();
+            screenManager.unpauseGame();
+            break;
+        
+
+        case "gamePaused":
+            if (paused == true) return;
+            paused = true;
+            console.log("recieved dispatch: gamePaused");
+            player.pause();
+            for (let projectile of projectilePool)
+            {
+                if (projectile.used) projectile.gamePaused = true;
+            }
+
+            for (let enemy of enemyPool)
+            {
+                if (enemy.used) enemy.pause();
+            }
+            break;
+        
+
+        case "gameUnpaused":
+            if (paused == false) return;
+            paused = false;
+            console.log("recieved dispatch: gameUnpaused");
+            player.unpause();
+            for (let projectile of projectilePool)
+            {
+                if (projectile.used) projectile.gamePaused = false;
+            }
+
+            for (let enemy of enemyPool)
+            {
+                if (enemy.used) enemy.unpause();
+            }
             break;
     }
 }
 
 function onAddProjectile():void{
+    if (escapePress == true || player.state == GameCharacter.STATE_DEAD) return;
     for (newProjectile of projectilePool){
         if (newProjectile.used == false){
             newProjectile.used = true;
@@ -134,6 +220,25 @@ function onAddProjectile():void{
             break;
         }
     }
+}
+
+function onAddEnemy():void{
+    if (escapePress == true) return;
+    for (newEnemy of enemyPool){
+        if (newEnemy.used == false){
+            newEnemy.used = true;
+            newEnemy.addToStage();
+            newEnemy.sprite.x = 1;
+            newEnemy.sprite.y = 1;
+            break;
+        }
+    }
+}
+
+function onInvincibleTimer():void{
+    window.clearInterval(invincibleTimer);
+    iFramesActive = false;
+    console.log("I frames no longer active");
 }
 
 function monitorKeys():void {
@@ -167,6 +272,20 @@ function monitorKeys():void {
         console.log("Fired a projectile!");
         onAddProjectile();
     }
+
+    if (escapePress == true){
+        if (escapeUp == true) return;
+        if (paused == true) return;
+        console.log("escape toggle active");
+        screenManager.openSettings();
+    }
+
+    if (escapePress == false){
+        if (escapeUp == true) return;
+        if (paused == false) return;
+        console.log("escape toggle inactive");
+        screenManager.closeSettings();
+    }
 }
 
 //keystroke listeners
@@ -194,6 +313,14 @@ function onKeyDown(e:KeyboardEvent):void {
         spacePress = true;
     }
 
+    if (e.key == "Escape"){
+        if (escapeUp = true){
+            escapePress = !escapePress;
+        }
+        
+        escapeUp = false;
+    }
+
 
 }
 
@@ -214,6 +341,10 @@ function onKeyUp(e:KeyboardEvent):void {
     if(e.key == " "){
         spacePress = false;
     }
+
+    if (e.key == "Escape"){
+        escapeUp = true;
+    }
 }
 
 function onTick(e:createjs.Event) {
@@ -229,6 +360,15 @@ function onTick(e:createjs.Event) {
     {
         if (projectile.used) projectile.update();
     }
+
+    for (let enemy of enemyPool)
+    {
+        if (enemy.used) {
+            enemy.trackPlayer(player);
+            enemy.update();
+        }
+    }
+    userInterface.updateHUD();
 
     // update the stage
     stage.update();

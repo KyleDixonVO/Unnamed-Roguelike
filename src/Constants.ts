@@ -8,11 +8,26 @@ export const DEF_PROJECTILE_DAMAGE:number = 2;
 export const DEFAULT_HEALTH:number = 10;
 export const ENEMY_MAX:number = 25;
 export const PROJECTILE_MAX:number = 100;
+export const PISTOL:string = "pistol";
+export const PISTOL_DAMAGE:number = 1;
 export const PISTOL_AMMO_MAX:number = 200;
+export const LASER:string = "laser";
+export const LASER_DAMAGE:number = 2;
 export const LASER_AMMO_MAX:number = 100;
+export const RAILGUN:string = "railgun";
+export const RAILGUN_DAMAGE:number = 6;
 export const RAILGUN_AMMO_MAX:number = 80;
+export const TESLA:string = "tesla";
+export const TESLA_IMPACT_DAMAGE:number = 3;
+export const TESLA_CHAIN_DAMAGE:number = 1;
 export const TESLA_AMMO_MAX:number = 50;
+export const ROCKET:string = "rocket";
 export const ROCKET_AMMO_MAX:number = 16;
+export const ROCKET_DAMAGE:number = 12;
+export const ALIEN_BEAM:string = 'alien_beam'
+export const ALIEN_BEAM_DAMAGE:number = 2;
+export const ALIEN_CONTACT_DAMAGE:number = 1;
+export const I_FRAMES_DEFAULT:number = 1000;
 
 
 export const ASSET_MANIFEST:Object[] = [

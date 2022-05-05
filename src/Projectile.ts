@@ -17,6 +17,7 @@ export class Projectile {
     private _used:boolean;
     private deltaX:number;
     private deltaY:number;
+    private _gamePaused:boolean;
 
     constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string){
 
@@ -28,6 +29,7 @@ export class Projectile {
         this._bounces = 0;
         this.deltaX = 0;
         this.deltaY = 0;
+        this._gamePaused = false;
     }
 
 
@@ -57,6 +59,14 @@ export class Projectile {
         this._used = value;
     }
 
+    get gamePaused(){
+        return this._gamePaused;
+    }
+
+    set gamePaused(value:boolean){
+        this._gamePaused = value;
+    }
+
 
     // -------------------------------------------------------------------------------------------------- private methods
 
@@ -77,6 +87,7 @@ export class Projectile {
         this._used = false;
         this.deltaX = 0;
         this.deltaY = 0;
+        this.stage.removeChild(this._sprite);
     }
 
     public activate():void{
@@ -113,6 +124,8 @@ export class Projectile {
     }
 
     public update():void{
+        if (this._gamePaused == true) return;
+
         this._sprite.x += this.deltaX * this._speed;
         this._sprite.y += this.deltaY * this._speed;
 

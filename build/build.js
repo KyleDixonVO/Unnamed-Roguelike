@@ -1054,7 +1054,7 @@ exports.AssetManager = AssetManager;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ASSET_MANIFEST = exports.ROCKET_AMMO_MAX = exports.TESLA_AMMO_MAX = exports.RAILGUN_AMMO_MAX = exports.LASER_AMMO_MAX = exports.PISTOL_AMMO_MAX = exports.PROJECTILE_MAX = exports.ENEMY_MAX = exports.DEFAULT_HEALTH = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.DEFAULT_SPEED = exports.FRAME_RATE = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
+exports.ASSET_MANIFEST = exports.I_FRAMES_DEFAULT = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_BEAM = exports.ROCKET_DAMAGE = exports.ROCKET_AMMO_MAX = exports.ROCKET = exports.TESLA_AMMO_MAX = exports.TESLA_CHAIN_DAMAGE = exports.TESLA_IMPACT_DAMAGE = exports.TESLA = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL = exports.PROJECTILE_MAX = exports.ENEMY_MAX = exports.DEFAULT_HEALTH = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.DEFAULT_SPEED = exports.FRAME_RATE = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
 exports.STAGE_WIDTH = 600;
 exports.STAGE_HEIGHT = 600;
 exports.FRAME_RATE = 30;
@@ -1064,11 +1064,26 @@ exports.DEF_PROJECTILE_DAMAGE = 2;
 exports.DEFAULT_HEALTH = 10;
 exports.ENEMY_MAX = 25;
 exports.PROJECTILE_MAX = 100;
+exports.PISTOL = "pistol";
+exports.PISTOL_DAMAGE = 1;
 exports.PISTOL_AMMO_MAX = 200;
+exports.LASER = "laser";
+exports.LASER_DAMAGE = 2;
 exports.LASER_AMMO_MAX = 100;
+exports.RAILGUN = "railgun";
+exports.RAILGUN_DAMAGE = 6;
 exports.RAILGUN_AMMO_MAX = 80;
+exports.TESLA = "tesla";
+exports.TESLA_IMPACT_DAMAGE = 3;
+exports.TESLA_CHAIN_DAMAGE = 1;
 exports.TESLA_AMMO_MAX = 50;
+exports.ROCKET = "rocket";
 exports.ROCKET_AMMO_MAX = 16;
+exports.ROCKET_DAMAGE = 12;
+exports.ALIEN_BEAM = 'alien_beam';
+exports.ALIEN_BEAM_DAMAGE = 2;
+exports.ALIEN_CONTACT_DAMAGE = 1;
+exports.I_FRAMES_DEFAULT = 1000;
 exports.ASSET_MANIFEST = [
     {
         type: "json",
@@ -1103,13 +1118,81 @@ exports.ASSET_MANIFEST = [
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Enemy = void 0;
+const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
 const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
+const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 class Enemy extends GameCharacter_1.GameCharacter {
     constructor(stage, assetManager, player) {
         super(stage, assetManager, "sprites/firstplayable/smol boi front");
         this.player = player;
         this.shooting = false;
         this._enemyType = "melee";
+        this._used = false;
+        this.shooting = false;
+        this._state = GameCharacter_1.GameCharacter.STATE_MOVING;
+        this._speed = 2;
+        this.eventPlayerHit = new createjs.Event("playerHit", true, false);
+    }
+    get used() {
+        return this._used;
+    }
+    set used(value) {
+        this._used = value;
+    }
+    onKilled() {
+        this._state = GameCharacter_1.GameCharacter.STATE_DEAD;
+        createjs.Tween.get(this._sprite, { useTicks: true }).to({ alpha: 0 }, 30).wait(10).call(this.reset);
+    }
+    trackPlayer(player) {
+        if (this._state == GameCharacter_1.GameCharacter.STATE_PAUSED)
+            return;
+        this.player = player;
+        this._sprite.play();
+        this._state = GameCharacter_1.GameCharacter.STATE_MOVING;
+    }
+    reset() {
+        this._sprite.gotoAndStop("sprites/firstplayable/smol boi front");
+        this._sprite.x = 300;
+        this._sprite.y = 300;
+        this._speed = 2;
+        this._health = Constants_1.DEFAULT_HEALTH;
+        this._state = GameCharacter_1.GameCharacter.STATE_IDLE;
+        this._used = false;
+        this.removeFromStage();
+    }
+    killed() {
+        this.stopMovement();
+        this.onKilled();
+    }
+    update() {
+        if (this._state == GameCharacter_1.GameCharacter.STATE_DEAD || this._state == GameCharacter_1.GameCharacter.STATE_PAUSED || this._state == GameCharacter_1.GameCharacter.STATE_IDLE) {
+            return;
+        }
+        ;
+        if (this._sprite.x > this.player.sprite.x) {
+            this.deltaX = -1;
+        }
+        else if (this._sprite.x < this.player.sprite.x) {
+            this.deltaX = 1;
+        }
+        else
+            (this.deltaX = 0);
+        if (this._sprite.y > this.player.sprite.y) {
+            this.deltaY = -1;
+        }
+        else if (this._sprite.y < this.player.sprite.y) {
+            this.deltaY = 1;
+        }
+        else
+            (this.deltaY = 0);
+        this._sprite.x += this.deltaX * this._speed;
+        this._sprite.y += this.deltaY * this._speed;
+        if (this.player.state == GameCharacter_1.GameCharacter.STATE_DEAD)
+            return;
+        if ((0, Toolkit_1.boxHit)(this._sprite, this.player.sprite)) {
+            console.log("dispatching event: playerHit");
+            this.sprite.dispatchEvent(this.eventPlayerHit);
+        }
     }
 }
 exports.Enemy = Enemy;
@@ -1137,7 +1220,6 @@ const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCh
 const Projectile_1 = __webpack_require__(/*! ./Projectile */ "./src/Projectile.ts");
 const Inventory_1 = __webpack_require__(/*! ./Inventory */ "./src/Inventory.ts");
 let stage;
-let UI_Stage;
 let canvas;
 let assetManager;
 let upKey = false;
@@ -1145,6 +1227,10 @@ let downKey = false;
 let leftKey = false;
 let rightKey = false;
 let spacePress = false;
+let escapePress = false;
+let escapeUp = true;
+let paused = false;
+let iFramesActive = false;
 let player;
 let enemyPool = [];
 let enemyInventories = [];
@@ -1152,8 +1238,11 @@ let projectilePool = [];
 let userInterface;
 let screenManager;
 let newProjectile;
+let newEnemy;
 let playerInventory;
 let bank;
+let iframes;
+let invincibleTimer;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
     screenManager = new ScreenManager_1.ScreenManager(stage, assetManager);
@@ -1176,6 +1265,11 @@ function onReady(e) {
     stage.on("gameReset", onGameEvent);
     stage.on("titleActive", onGameEvent);
     stage.on("gameOverActive", onGameEvent);
+    stage.on("openSettings", onGameEvent);
+    stage.on("closeSettings", onGameEvent);
+    stage.on("gamePaused", onGameEvent);
+    stage.on("gameUnpaused", onGameEvent);
+    stage.on("playerHit", onGameEvent);
     createjs.Ticker.framerate = Constants_1.FRAME_RATE;
     createjs.Ticker.on("tick", onTick);
     console.log(">> game ready");
@@ -1185,24 +1279,90 @@ function onGameEvent(e) {
     console.log("called onGameEvent");
     switch (e.type) {
         case "playerKilled":
+            userInterface.removeAll();
+            player.removeFromStage();
+            for (let enemy of enemyPool) {
+                if (enemy.used)
+                    enemy.reset();
+            }
+            for (let projectile of projectilePool) {
+                if (projectile.used)
+                    projectile.reset();
+            }
+            screenManager.showGameOverScreen();
             break;
-        case "playerDamaged":
+        case "playerHit":
+            if (iFramesActive == true)
+                return;
+            iFramesActive = true;
+            player.takeDamage(Constants_1.ALIEN_CONTACT_DAMAGE);
+            invincibleTimer = window.setInterval(onInvincibleTimer, Constants_1.I_FRAMES_DEFAULT);
             break;
         case "gameStarted":
+            console.log("received dispatch: gameStarted ");
+            screenManager.showGame();
             player.addToStage();
+            userInterface.showPlayerHUD();
+            onAddEnemy();
             break;
         case "gameReset":
+            player.reset();
+            userInterface.reset();
+            screenManager.showTitleScreen();
             break;
         case "titleActive":
             console.log("received dispatch: titleActive ");
             userInterface.showStartMenu();
             userInterface.onStartClick();
+            userInterface.onSettingsClick();
             break;
         case "gameOverActive":
+            break;
+        case "openSettings":
+            console.log("recieved dispatch: openSettings");
+            screenManager.pauseGame();
+            userInterface.showSettingsMenu();
+            break;
+        case "closeSettings":
+            console.log("recieved dispatch: closeSettings");
+            userInterface.hideSettingsMenu();
+            screenManager.unpauseGame();
+            break;
+        case "gamePaused":
+            if (paused == true)
+                return;
+            paused = true;
+            console.log("recieved dispatch: gamePaused");
+            player.pause();
+            for (let projectile of projectilePool) {
+                if (projectile.used)
+                    projectile.gamePaused = true;
+            }
+            for (let enemy of enemyPool) {
+                if (enemy.used)
+                    enemy.pause();
+            }
+            break;
+        case "gameUnpaused":
+            if (paused == false)
+                return;
+            paused = false;
+            console.log("recieved dispatch: gameUnpaused");
+            player.unpause();
+            for (let projectile of projectilePool) {
+                if (projectile.used)
+                    projectile.gamePaused = false;
+            }
+            for (let enemy of enemyPool) {
+                if (enemy.used)
+                    enemy.unpause();
+            }
             break;
     }
 }
 function onAddProjectile() {
+    if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD)
+        return;
     for (newProjectile of projectilePool) {
         if (newProjectile.used == false) {
             newProjectile.used = true;
@@ -1211,6 +1371,24 @@ function onAddProjectile() {
             break;
         }
     }
+}
+function onAddEnemy() {
+    if (escapePress == true)
+        return;
+    for (newEnemy of enemyPool) {
+        if (newEnemy.used == false) {
+            newEnemy.used = true;
+            newEnemy.addToStage();
+            newEnemy.sprite.x = 1;
+            newEnemy.sprite.y = 1;
+            break;
+        }
+    }
+}
+function onInvincibleTimer() {
+    window.clearInterval(invincibleTimer);
+    iFramesActive = false;
+    console.log("I frames no longer active");
 }
 function monitorKeys() {
     if (upKey == true) {
@@ -1237,6 +1415,22 @@ function monitorKeys() {
         console.log("Fired a projectile!");
         onAddProjectile();
     }
+    if (escapePress == true) {
+        if (escapeUp == true)
+            return;
+        if (paused == true)
+            return;
+        console.log("escape toggle active");
+        screenManager.openSettings();
+    }
+    if (escapePress == false) {
+        if (escapeUp == true)
+            return;
+        if (paused == false)
+            return;
+        console.log("escape toggle inactive");
+        screenManager.closeSettings();
+    }
 }
 document.onkeydown = onKeyDown;
 document.onkeyup = onKeyUp;
@@ -1256,6 +1450,12 @@ function onKeyDown(e) {
     if (e.key == " ") {
         spacePress = true;
     }
+    if (e.key == "Escape") {
+        if (escapeUp = true) {
+            escapePress = !escapePress;
+        }
+        escapeUp = false;
+    }
 }
 function onKeyUp(e) {
     if (e.key == 'w' || e.key == 'W') {
@@ -1273,6 +1473,9 @@ function onKeyUp(e) {
     if (e.key == " ") {
         spacePress = false;
     }
+    if (e.key == "Escape") {
+        escapeUp = true;
+    }
 }
 function onTick(e) {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
@@ -1282,6 +1485,13 @@ function onTick(e) {
         if (projectile.used)
             projectile.update();
     }
+    for (let enemy of enemyPool) {
+        if (enemy.used) {
+            enemy.trackPlayer(player);
+            enemy.update();
+        }
+    }
+    userInterface.updateHUD();
     stage.update();
 }
 function main() {
@@ -1314,12 +1524,14 @@ class GameCharacter {
     constructor(stage, assetManager, animation) {
         this.stage = stage;
         this._state = GameCharacter.STATE_IDLE;
+        this._stateBeforePause = GameCharacter.STATE_IDLE;
         this._speed = Constants_1.DEFAULT_SPEED;
         this._health = Constants_1.DEFAULT_HEALTH;
         this.deltaX = 0;
         this.deltaY = 0;
         this._direction = GameCharacter.DIR_NEUTRAL;
         this._facing = GameCharacter.DIR_DOWN;
+        this._healthMax = Constants_1.DEFAULT_HEALTH;
         this._sprite = assetManager.getSprite("sprites", animation, Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2);
     }
     set speed(value) {
@@ -1349,8 +1561,15 @@ class GameCharacter {
     get sprite() {
         return this._sprite;
     }
+    set healthMax(value) {
+        this._healthMax = value;
+    }
+    get healthMax() {
+        return this._healthMax;
+    }
     addToStage() {
         this.stage.addChild(this._sprite);
+        this.stage.setChildIndex(this._sprite, this.stage.numChildren);
     }
     removeFromStage() {
         this._sprite.stop();
@@ -1411,6 +1630,15 @@ class GameCharacter {
         this._sprite.x += this.deltaX * this.speed;
         this._sprite.y += this.deltaY * this.speed;
     }
+    pause() {
+        this._stateBeforePause = this._state;
+        console.log("state before pausing: " + this._stateBeforePause);
+        this._state = GameCharacter.STATE_PAUSED;
+    }
+    unpause() {
+        this._state = this._stateBeforePause;
+        console.log("state after pausing: " + this._state);
+    }
 }
 exports.GameCharacter = GameCharacter;
 GameCharacter.STATE_IDLE = 0;
@@ -1423,6 +1651,10 @@ GameCharacter.DIR_UP = 0;
 GameCharacter.DIR_DOWN = 1;
 GameCharacter.DIR_LEFT = 2;
 GameCharacter.DIR_RIGHT = 3;
+GameCharacter.DIR_NE = 4;
+GameCharacter.DIR_SE = 5;
+GameCharacter.DIR_SW = 6;
+GameCharacter.DIR_NW = 7;
 GameCharacter.DIR_NEUTRAL = 99;
 
 
@@ -1442,6 +1674,9 @@ class Inventory {
     constructor(gameCharacter) {
         this.gameCharacter = gameCharacter;
         this._currentWeapon = " ";
+    }
+    set currentWeapon(value) {
+        this._currentWeapon = value;
     }
     get currentWeapon() {
         return this._currentWeapon;
@@ -1483,33 +1718,52 @@ class Player extends GameCharacter_1.GameCharacter {
     constructor(stage, assetManager) {
         super(stage, assetManager, "sprites/firstplayable/player forward");
         this.eventKilled = new createjs.Event("playerKilled", true, false);
-        this.eventDamaged = new createjs.Event("playerDamaged", true, false);
         this.eventReloading = new createjs.Event("reloading", true, false);
         this.shooting = false;
     }
     onKilled() {
         this._state = GameCharacter_1.GameCharacter.STATE_DEAD;
-        this.stopMovement();
-        this._sprite.on("animationend", () => {
-            this._sprite.stop();
-        }, this, true);
-        this._sprite.gotoAndPlay("");
-        this._sprite.dispatchEvent(this.eventKilled);
+        createjs.Tween.get(this._sprite, { useTicks: true }).to({ alpha: 0 }, 30).wait(5).call(() => {
+            this.dispatchKilled();
+        }, null, this);
     }
     onDamaged() {
     }
     onReload() {
     }
+    killed() {
+        this.stopMovement();
+        this.onKilled();
+    }
     reset() {
-        this._sprite.gotoAndStop("");
+        this._sprite.gotoAndStop("sprites/firstplayable/player forward");
         this._sprite.x = 300;
         this._sprite.y = 300;
         this._speed = Constants_1.DEFAULT_SPEED;
         this._health = Constants_1.DEFAULT_HEALTH;
         this._state = GameCharacter_1.GameCharacter.STATE_IDLE;
+        createjs.Tween.removeTweens(this._sprite);
+        this._sprite.alpha = 1;
+    }
+    takeDamage(value) {
+        if (this._state == GameCharacter_1.GameCharacter.STATE_DEAD || this._state == GameCharacter_1.GameCharacter.STATE_DYING || this._state == GameCharacter_1.GameCharacter.STATE_PAUSED)
+            return;
+        if (value <= 0 || value >= Number.MAX_SAFE_INTEGER || value <= Number.MIN_SAFE_INTEGER)
+            return;
+        this._health -= value;
+        if (this._health < 0) {
+            this._health = 0;
+        }
+        if (this.health == 0) {
+            this.killed();
+        }
     }
     update() {
         super.update();
+    }
+    dispatchKilled() {
+        this.stage.dispatchEvent(this.eventKilled);
+        console.log("dispatched event: playerKilled");
     }
 }
 exports.Player = Player;
@@ -1539,6 +1793,7 @@ class Projectile {
         this._bounces = 0;
         this.deltaX = 0;
         this.deltaY = 0;
+        this._gamePaused = false;
     }
     get speed() {
         return this._speed;
@@ -1558,6 +1813,12 @@ class Projectile {
     set used(value) {
         this._used = value;
     }
+    get gamePaused() {
+        return this._gamePaused;
+    }
+    set gamePaused(value) {
+        this._gamePaused = value;
+    }
     passIn(gameCharacter, inventory) {
         this.gameCharacter = gameCharacter;
         this.inventory = inventory;
@@ -1570,6 +1831,7 @@ class Projectile {
         this._used = false;
         this.deltaX = 0;
         this.deltaY = 0;
+        this.stage.removeChild(this._sprite);
     }
     activate() {
         switch (this.gameCharacter.facing) {
@@ -1600,6 +1862,8 @@ class Projectile {
         this.stage.addChild(this._sprite);
     }
     update() {
+        if (this._gamePaused == true)
+            return;
         this._sprite.x += this.deltaX * this._speed;
         this._sprite.y += this.deltaY * this._speed;
         if (this._sprite.x > Constants_1.STAGE_WIDTH + this._sprite.getBounds().width
@@ -1633,16 +1897,20 @@ class ScreenManager {
     constructor(stage, assetManager) {
         this.stage = stage;
         this.titleScreen = new createjs.Container();
-        this.titleScreen.addChild(assetManager.getSprite("sprites", "sprites/other/background", 300, 300));
+        this.titleScreen.addChild(assetManager.getSprite("sprites", "sprites/other/titleScreen", 300, 300));
         this.gameOverScreen = new createjs.Container();
-        this.gameOverScreen.addChild(assetManager.getSprite("sprites", "", 0, 0));
-        let gameOverSprite = assetManager.getSprite("sprites", "", 0, 0);
+        this.gameOverScreen.addChild(assetManager.getSprite("sprites", "sprites/other/gameOverScreen", 300, 300));
+        let gameOverSprite = assetManager.getSprite("sprites", "sprites/other/gameOverScreen", 300, 300);
         this.gameOverScreen.addChild(gameOverSprite);
-        this.gameScreen = assetManager.getSprite("sprites", "", 0, 0);
+        this.gameScreen = assetManager.getSprite("sprites", "sprites/other/background", 0, 0);
         this.eventStartGame = new createjs.Event("gameStarted", true, false);
         this.eventResetGame = new createjs.Event("gameReset", true, false);
         this.eventTitleActive = new createjs.Event("titleActive", true, false);
         this.eventGameOverActive = new createjs.Event("gameOverActive", true, false);
+        this.eventOpenSettings = new createjs.Event("openSettings", true, false);
+        this.eventCloseSettings = new createjs.Event("closeSettings", true, false);
+        this.eventPaused = new createjs.Event("gamePaused", true, false);
+        this.eventUnpaused = new createjs.Event("gameUnpaused", true, false);
     }
     hideAll() {
         this.stage.removeChild(this.titleScreen);
@@ -1659,8 +1927,109 @@ class ScreenManager {
         this.stage.dispatchEvent(this.eventStartGame);
         console.log("event dispatched: startGame ");
     }
+    openSettings() {
+        this.stage.dispatchEvent(this.eventOpenSettings);
+        console.log("event dispatched: openSettings");
+    }
+    closeSettings() {
+        this.stage.dispatchEvent(this.eventCloseSettings);
+        console.log("event dispatched: closeSettings");
+    }
+    pauseGame() {
+        this.stage.dispatchEvent(this.eventPaused);
+        console.log("event dispatched: gamePaused");
+    }
+    unpauseGame() {
+        this.stage.dispatchEvent(this.eventUnpaused);
+        console.log("event dispatched: gameUnpaused");
+    }
+    showGame() {
+        this.hideAll();
+        this.gameScreen.x = 300;
+        this.gameScreen.y = 300;
+        this.stage.addChild(this.gameScreen);
+    }
+    showGameOverScreen() {
+        this.hideAll();
+        this.gameOverScreen.x = 0;
+        this.gameOverScreen.y = 0;
+        this.stage.addChild(this.gameOverScreen);
+        this.gameOverScreen.on("click", () => {
+            this.stage.dispatchEvent(this.eventResetGame);
+        });
+    }
 }
 exports.ScreenManager = ScreenManager;
+
+
+/***/ }),
+
+/***/ "./src/Toolkit.ts":
+/*!************************!*\
+  !*** ./src/Toolkit.ts ***!
+  \************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.radiusHit = exports.pointHit = exports.boxHit = exports.randomMe = void 0;
+function randomMe(low, high) {
+    let randomNum = 0;
+    randomNum = Math.floor(Math.random() * (high - low + 1)) + low;
+    return randomNum;
+}
+exports.randomMe = randomMe;
+function boxHit(sprite1, sprite2) {
+    let width1 = sprite1.getBounds().width;
+    let height1 = sprite1.getBounds().height;
+    let width2 = sprite2.getBounds().width;
+    let height2 = sprite2.getBounds().height;
+    if ((sprite1.x + width1 > sprite2.x) &&
+        (sprite1.y + height1 > sprite2.y) &&
+        (sprite1.x < sprite2.x + width2) &&
+        (sprite1.y < sprite2.y + height2)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+exports.boxHit = boxHit;
+function pointHit(sprite1, sprite2, sprite1HitX = 0, sprite1HitY = 0, stage = null) {
+    if (stage != null) {
+        let markerPoint = sprite1.localToGlobal(sprite1HitX, sprite1HitY);
+        let marker = new createjs.Shape();
+        marker.graphics.beginFill("#FF00EC");
+        marker.graphics.drawRect(0, 0, 4, 4);
+        marker.regX = 2;
+        marker.regY = 2;
+        marker.x = markerPoint.x;
+        marker.y = markerPoint.y;
+        marker.cache(0, 0, 4, 4);
+        stage.addChild(marker);
+    }
+    let point = sprite1.localToLocal(sprite1HitX, sprite1HitY, sprite2);
+    if (sprite2.hitTest(point.x, point.y)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+exports.pointHit = pointHit;
+function radiusHit(sprite1, radius1, sprite2, radius2) {
+    let a = sprite1.x - sprite2.x;
+    let b = sprite1.y - sprite2.y;
+    let c = Math.sqrt((a * a) + (b * b));
+    if (c <= (radius1 + radius2)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+exports.radiusHit = radiusHit;
 
 
 /***/ }),
@@ -1684,6 +2053,17 @@ class UserInterface {
         this.txtScore.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.startButton.gotoAndStop("sprites/button/up");
+        this.settingsButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.settingsButton.gotoAndStop("sprites/button/settingsUp");
+        this.pauseOverlay = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.pauseOverlay.gotoAndStop("sprites/other/pauseOverlay");
+        this.settingsHeader = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.settingsHeader.gotoAndStop("sprites/other/settingsText");
+        this.healthBar = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.healthBar.gotoAndStop("sprites/other/healthBar");
+        this.healthOutline = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.healthOutline.gotoAndStop("sprites/other/healthOutline");
+        this._paused = false;
         this.reset();
     }
     set score(value) {
@@ -1693,6 +2073,12 @@ class UserInterface {
     get score() {
         return this._score;
     }
+    set paused(value) {
+        this._paused = value;
+    }
+    get paused() {
+        return this._paused;
+    }
     passIn(player, screenManager) {
         this.player = player;
         this.screenManager = screenManager;
@@ -1701,9 +2087,13 @@ class UserInterface {
         this.score = 0;
     }
     showStartMenu() {
-        this.startButton.x = 300;
-        this.startButton.y = 300;
+        this.startButton.x = 200;
+        this.startButton.y = 450;
         this.stage.addChild(this.startButton);
+        this.settingsButton.x = 350;
+        this.settingsButton.y = 450;
+        this.settingsButton.scaleY = 0.9;
+        this.stage.addChild(this.settingsButton);
     }
     onStartClick() {
         this.startButton.on("mouseover", () => {
@@ -1713,9 +2103,61 @@ class UserInterface {
             this.startButton.gotoAndStop("sprites/button/up");
         });
         this.startButton.on("click", () => {
+            if (this._paused == true)
+                return;
             this.screenManager.startDispatch();
-            this.stage.removeChild(this.startButton);
         });
+    }
+    onSettingsClick() {
+        this.settingsButton.on("mouseover", () => {
+            this.settingsButton.gotoAndStop("sprites/button/settingsOver");
+        });
+        this.settingsButton.on("mouseout", () => {
+            this.settingsButton.gotoAndStop("sprites/button/settingsUp");
+        });
+        this.settingsButton.on("click", () => {
+            if (this._paused == true)
+                return;
+            this.screenManager.openSettings();
+        });
+    }
+    removeAll() {
+        this.stage.removeChild(this.startButton);
+        this.stage.removeChild(this.settingsButton);
+        this.stage.removeChild(this.pauseOverlay);
+        this.stage.removeChild(this.healthBar);
+        this.stage.removeChild(this.healthOutline);
+    }
+    showSettingsMenu() {
+        this._paused = true;
+        this.pauseOverlay.x = 300;
+        this.pauseOverlay.y = 300;
+        this.stage.addChild(this.pauseOverlay);
+        this.settingsHeader.x = 300;
+        this.settingsHeader.y = 100;
+        this.stage.addChild(this.settingsHeader);
+    }
+    hideSettingsMenu() {
+        this._paused = false;
+        this.stage.removeChild(this.pauseOverlay);
+        this.stage.removeChild(this.settingsHeader);
+    }
+    showPlayerHUD() {
+        this.healthBar.x = 15;
+        this.healthBar.y = 30;
+        this.healthBar.scaleY = 0.8;
+        this.healthBar.alpha = 0.65;
+        this.healthOutline.x = 10;
+        this.healthOutline.y = 30;
+        this.healthOutline.alpha = 0.65;
+        this.healthOutline.scaleX = 1.05;
+        this.stage.addChild(this.healthOutline);
+        this.stage.addChild(this.healthBar);
+    }
+    updateHUD() {
+        let scaleFactor;
+        scaleFactor = this.player.health / this.player.healthMax;
+        this.healthBar.scaleX = scaleFactor;
     }
 }
 exports.UserInterface = UserInterface;
@@ -4054,7 +4496,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a2046a2dd4a015d96ae9")
+/******/ 		__webpack_require__.h = () => ("06a1a1e68e7ff06b09cc")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
