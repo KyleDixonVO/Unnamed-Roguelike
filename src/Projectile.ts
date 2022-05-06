@@ -11,7 +11,7 @@ export class Projectile {
     private _damage:number;
     private _bounces:number;
     private stage:createjs.StageGL;
-    private gameCharacter:GameCharacter;
+    private _gameCharacter:GameCharacter;
     private weaponType:string;
     private inventory:Inventory;
     private _used:boolean;
@@ -67,6 +67,14 @@ export class Projectile {
         this._gamePaused = value;
     }
 
+    get gamecharacter():GameCharacter{
+        return this._gameCharacter;
+    }
+
+    set gamecharacter(value:GameCharacter){
+        this._gameCharacter = value;
+    }
+
 
     // -------------------------------------------------------------------------------------------------- private methods
 
@@ -75,7 +83,7 @@ export class Projectile {
     // -------------------------------------------------------------------------------------------------- public methods
 
     public passIn(gameCharacter:GameCharacter, inventory:Inventory):void {
-        this.gameCharacter = gameCharacter;
+        this._gameCharacter = gameCharacter;
         this.inventory = inventory;
         this.weaponType = inventory.currentWeapon;
     }
@@ -91,7 +99,7 @@ export class Projectile {
     }
 
     public activate():void{
-        switch (this.gameCharacter.facing) {
+        switch (this.gamecharacter.facing) {
             case GameCharacter.DIR_UP:
                 this.deltaX = 0;
                 this.deltaY = -1;
@@ -118,8 +126,8 @@ export class Projectile {
             
         }
         this.used = true;
-        this._sprite.x = this.gameCharacter.sprite.x;
-        this._sprite.y = this.gameCharacter.sprite.y;
+        this._sprite.x = this.gamecharacter.sprite.x;
+        this._sprite.y = this.gamecharacter.sprite.y;
         this.stage.addChild(this._sprite);
     }
 

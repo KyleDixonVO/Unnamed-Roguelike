@@ -1098,6 +1098,18 @@ exports.ASSET_MANIFEST = [
         data: 0
     },
     {
+        type: "json",
+        src: "./lib/spritesheets/glyphs.json",
+        id: "glyphs",
+        data: 0
+    },
+    {
+        type: "image",
+        src: "./lib/spritesheets/glyphs.png",
+        id: "glyphs",
+        data: 0
+    },
+    {
         type: "sound",
         src: "./lib/sounds/beep.ogg",
         id: "beep",
@@ -1132,6 +1144,7 @@ class Enemy extends GameCharacter_1.GameCharacter {
         this._state = GameCharacter_1.GameCharacter.STATE_MOVING;
         this._speed = 2;
         this.eventPlayerHit = new createjs.Event("playerHit", true, false);
+        this.eventEnemyKilled = new createjs.Event("enemyKilled", true, false);
     }
     get used() {
         return this._used;
@@ -1141,10 +1154,12 @@ class Enemy extends GameCharacter_1.GameCharacter {
     }
     onKilled() {
         this._state = GameCharacter_1.GameCharacter.STATE_DEAD;
-        createjs.Tween.get(this._sprite, { useTicks: true }).to({ alpha: 0 }, 30).wait(10).call(this.reset);
+        createjs.Tween.get(this._sprite, { useTicks: true }).to({ alpha: 0 }, 30).wait(10).call(() => {
+            this.reset();
+        });
     }
     trackPlayer(player) {
-        if (this._state == GameCharacter_1.GameCharacter.STATE_PAUSED)
+        if (this._state == GameCharacter_1.GameCharacter.STATE_PAUSED || this._state == GameCharacter_1.GameCharacter.STATE_IDLE || this._state == GameCharacter_1.GameCharacter.STATE_DEAD)
             return;
         this.player = player;
         this._sprite.play();
@@ -1158,6 +1173,7 @@ class Enemy extends GameCharacter_1.GameCharacter {
         this._health = Constants_1.DEFAULT_HEALTH;
         this._state = GameCharacter_1.GameCharacter.STATE_IDLE;
         this._used = false;
+        createjs.Tween.removeTweens(this._sprite);
         this.removeFromStage();
     }
     killed() {
@@ -1194,6 +1210,20 @@ class Enemy extends GameCharacter_1.GameCharacter {
             this.sprite.dispatchEvent(this.eventPlayerHit);
         }
     }
+    takeDamage(value) {
+        if (this._state == GameCharacter_1.GameCharacter.STATE_DEAD || this._state == GameCharacter_1.GameCharacter.STATE_DYING || this._state == GameCharacter_1.GameCharacter.STATE_PAUSED)
+            return;
+        if (value <= 0 || value >= Number.MAX_SAFE_INTEGER || value <= Number.MIN_SAFE_INTEGER)
+            return;
+        this._health -= value;
+        if (this._health < 0) {
+            this._health = 0;
+        }
+        if (this.health == 0) {
+            this.killed();
+            this.stage.dispatchEvent(this.eventEnemyKilled);
+        }
+    }
 }
 exports.Enemy = Enemy;
 
@@ -1219,6 +1249,7 @@ const Enemy_1 = __webpack_require__(/*! ./Enemy */ "./src/Enemy.ts");
 const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
 const Projectile_1 = __webpack_require__(/*! ./Projectile */ "./src/Projectile.ts");
 const Inventory_1 = __webpack_require__(/*! ./Inventory */ "./src/Inventory.ts");
+const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 let stage;
 let canvas;
 let assetManager;
@@ -1231,6 +1262,7 @@ let escapePress = false;
 let escapeUp = true;
 let paused = false;
 let iFramesActive = false;
+let projectileTimerActive = false;
 let player;
 let enemyPool = [];
 let enemyInventories = [];
@@ -1241,8 +1273,9 @@ let newProjectile;
 let newEnemy;
 let playerInventory;
 let bank;
-let iframes;
 let invincibleTimer;
+let collisionTimer;
+let collisionPollingRate;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
     screenManager = new ScreenManager_1.ScreenManager(stage, assetManager);
@@ -1264,12 +1297,13 @@ function onReady(e) {
     stage.on("gameStarted", onGameEvent);
     stage.on("gameReset", onGameEvent);
     stage.on("titleActive", onGameEvent);
-    stage.on("gameOverActive", onGameEvent);
+    stage.on("gameWin", onGameEvent);
     stage.on("openSettings", onGameEvent);
     stage.on("closeSettings", onGameEvent);
     stage.on("gamePaused", onGameEvent);
     stage.on("gameUnpaused", onGameEvent);
     stage.on("playerHit", onGameEvent);
+    stage.on("enemyKilled", onGameEvent);
     createjs.Ticker.framerate = Constants_1.FRAME_RATE;
     createjs.Ticker.on("tick", onTick);
     console.log(">> game ready");
@@ -1298,10 +1332,15 @@ function onGameEvent(e) {
             player.takeDamage(Constants_1.ALIEN_CONTACT_DAMAGE);
             invincibleTimer = window.setInterval(onInvincibleTimer, Constants_1.I_FRAMES_DEFAULT);
             break;
+        case "enemyKilled":
+            userInterface.incrementScore();
+            break;
         case "gameStarted":
             console.log("received dispatch: gameStarted ");
             screenManager.showGame();
             player.addToStage();
+            player.startMovement();
+            console.log(player.state);
             userInterface.showPlayerHUD();
             onAddEnemy();
             break;
@@ -1316,7 +1355,19 @@ function onGameEvent(e) {
             userInterface.onStartClick();
             userInterface.onSettingsClick();
             break;
-        case "gameOverActive":
+        case "gameWin":
+            screenManager.showWinScreen();
+            userInterface.removeAll();
+            player.removeFromStage();
+            player.reset();
+            for (let enemy of enemyPool) {
+                if (enemy.used)
+                    enemy.reset();
+            }
+            for (let projectile of projectilePool) {
+                if (projectile.used)
+                    projectile.reset();
+            }
             break;
         case "openSettings":
             console.log("recieved dispatch: openSettings");
@@ -1361,7 +1412,7 @@ function onGameEvent(e) {
     }
 }
 function onAddProjectile() {
-    if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD)
+    if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
         return;
     for (newProjectile of projectilePool) {
         if (newProjectile.used == false) {
@@ -1389,6 +1440,33 @@ function onInvincibleTimer() {
     window.clearInterval(invincibleTimer);
     iFramesActive = false;
     console.log("I frames no longer active");
+}
+function startCollsionTimer() {
+    if (projectileTimerActive == true)
+        return;
+    projectileTimerActive = true;
+    collisionTimer = window.setInterval(onCollsionTimer, 1);
+}
+function onCollsionTimer() {
+    projectileTimerActive = false;
+    window.clearInterval(collisionTimer);
+    projectileEnemyCollision();
+}
+function projectileEnemyCollision() {
+    for (let projectile of projectilePool) {
+        if (!projectile.used)
+            return;
+        if (projectile.gamecharacter != player)
+            return;
+        for (let enemy of enemyPool) {
+            if (!enemy.used)
+                return;
+            if ((0, Toolkit_1.radiusHit)(projectile.sprite, 16, enemy.sprite, 32)) {
+                enemy.takeDamage(Constants_1.PISTOL_DAMAGE);
+                projectile.reset();
+            }
+        }
+    }
 }
 function monitorKeys() {
     if (upKey == true) {
@@ -1492,6 +1570,7 @@ function onTick(e) {
         }
     }
     userInterface.updateHUD();
+    startCollsionTimer();
     stage.update();
 }
 function main() {
@@ -1610,8 +1689,6 @@ class GameCharacter {
                 this.deltaY = 0;
                 break;
         }
-        this._sprite.play();
-        this._state = GameCharacter.STATE_MOVING;
     }
     stopMovement() {
         if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) {
@@ -1620,6 +1697,15 @@ class GameCharacter {
         ;
         this._sprite.stop();
         this._state = GameCharacter.STATE_IDLE;
+    }
+    startMovement() {
+        if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) {
+            return;
+        }
+        ;
+        console.log("started movement");
+        this.sprite.play();
+        this._state = GameCharacter.STATE_MOVING;
     }
     update() {
         this.spriteDirection();
@@ -1737,6 +1823,7 @@ class Player extends GameCharacter_1.GameCharacter {
     }
     reset() {
         this._sprite.gotoAndStop("sprites/firstplayable/player forward");
+        this.stopMovement();
         this._sprite.x = 300;
         this._sprite.y = 300;
         this._speed = Constants_1.DEFAULT_SPEED;
@@ -1819,8 +1906,14 @@ class Projectile {
     set gamePaused(value) {
         this._gamePaused = value;
     }
+    get gamecharacter() {
+        return this._gameCharacter;
+    }
+    set gamecharacter(value) {
+        this._gameCharacter = value;
+    }
     passIn(gameCharacter, inventory) {
-        this.gameCharacter = gameCharacter;
+        this._gameCharacter = gameCharacter;
         this.inventory = inventory;
         this.weaponType = inventory.currentWeapon;
     }
@@ -1834,7 +1927,7 @@ class Projectile {
         this.stage.removeChild(this._sprite);
     }
     activate() {
-        switch (this.gameCharacter.facing) {
+        switch (this.gamecharacter.facing) {
             case GameCharacter_1.GameCharacter.DIR_UP:
                 this.deltaX = 0;
                 this.deltaY = -1;
@@ -1857,8 +1950,8 @@ class Projectile {
                 break;
         }
         this.used = true;
-        this._sprite.x = this.gameCharacter.sprite.x;
-        this._sprite.y = this.gameCharacter.sprite.y;
+        this._sprite.x = this.gamecharacter.sprite.x;
+        this._sprite.y = this.gamecharacter.sprite.y;
         this.stage.addChild(this._sprite);
     }
     update() {
@@ -1903,10 +1996,13 @@ class ScreenManager {
         let gameOverSprite = assetManager.getSprite("sprites", "sprites/other/gameOverScreen", 300, 300);
         this.gameOverScreen.addChild(gameOverSprite);
         this.gameScreen = assetManager.getSprite("sprites", "sprites/other/background", 0, 0);
+        this.winScreen = new createjs.Container();
+        let winSprite = assetManager.getSprite("sprites", "sprites/other/winScreen", 300, 300);
+        this.winScreen.addChild(winSprite);
         this.eventStartGame = new createjs.Event("gameStarted", true, false);
         this.eventResetGame = new createjs.Event("gameReset", true, false);
         this.eventTitleActive = new createjs.Event("titleActive", true, false);
-        this.eventGameOverActive = new createjs.Event("gameOverActive", true, false);
+        this.eventWin = new createjs.Event("gameWin", true, false);
         this.eventOpenSettings = new createjs.Event("openSettings", true, false);
         this.eventCloseSettings = new createjs.Event("closeSettings", true, false);
         this.eventPaused = new createjs.Event("gamePaused", true, false);
@@ -1916,6 +2012,7 @@ class ScreenManager {
         this.stage.removeChild(this.titleScreen);
         this.stage.removeChild(this.gameOverScreen);
         this.stage.removeChild(this.gameScreen);
+        this.stage.removeChild(this.winScreen);
     }
     showTitleScreen() {
         this.hideAll();
@@ -1943,6 +2040,9 @@ class ScreenManager {
         this.stage.dispatchEvent(this.eventUnpaused);
         console.log("event dispatched: gameUnpaused");
     }
+    dispatchWinScreen() {
+        this.stage.dispatchEvent(this.eventWin);
+    }
     showGame() {
         this.hideAll();
         this.gameScreen.x = 300;
@@ -1955,6 +2055,15 @@ class ScreenManager {
         this.gameOverScreen.y = 0;
         this.stage.addChild(this.gameOverScreen);
         this.gameOverScreen.on("click", () => {
+            this.stage.dispatchEvent(this.eventResetGame);
+        });
+    }
+    showWinScreen() {
+        this.hideAll();
+        this.winScreen.x = 0;
+        this.winScreen.y = 0;
+        this.stage.addChild(this.winScreen);
+        this.winScreen.on("click", () => {
             this.stage.dispatchEvent(this.eventResetGame);
         });
     }
@@ -2048,7 +2157,7 @@ class UserInterface {
     constructor(stage, assetManager) {
         this.stage = stage;
         this.txtScore = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
-        this.txtScore.x = 200;
+        this.txtScore.x = 250;
         this.txtScore.y = 20;
         this.txtScore.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -2127,6 +2236,7 @@ class UserInterface {
         this.stage.removeChild(this.pauseOverlay);
         this.stage.removeChild(this.healthBar);
         this.stage.removeChild(this.healthOutline);
+        this.stage.removeChild(this.txtScore);
     }
     showSettingsMenu() {
         this._paused = true;
@@ -2153,11 +2263,18 @@ class UserInterface {
         this.healthOutline.scaleX = 1.05;
         this.stage.addChild(this.healthOutline);
         this.stage.addChild(this.healthBar);
+        this.stage.addChild(this.txtScore);
     }
     updateHUD() {
         let scaleFactor;
         scaleFactor = this.player.health / this.player.healthMax;
         this.healthBar.scaleX = scaleFactor;
+    }
+    incrementScore() {
+        this._score++;
+        if (this._score > 0) {
+            this.screenManager.dispatchWinScreen();
+        }
     }
 }
 exports.UserInterface = UserInterface;
@@ -4496,7 +4613,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("789d671d8d23c3b32a81")
+/******/ 		__webpack_require__.h = () => ("a6ebd862dde6522256fd")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

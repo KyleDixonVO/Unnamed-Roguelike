@@ -31,7 +31,7 @@ export class UserInterface {
 
         //need to create glyphs for score text
         this.txtScore = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
-        this.txtScore.x = 200;
+        this.txtScore.x = 250;
         this.txtScore.y = 20;
         this.txtScore.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -126,6 +126,7 @@ export class UserInterface {
         this.stage.removeChild(this.pauseOverlay);
         this.stage.removeChild(this.healthBar);
         this.stage.removeChild(this.healthOutline);
+        this.stage.removeChild(this.txtScore);
     }
 
     public showSettingsMenu(){
@@ -155,11 +156,19 @@ export class UserInterface {
         this.healthOutline.scaleX = 1.05;
         this.stage.addChild(this.healthOutline);
         this.stage.addChild(this.healthBar);
+        this.stage.addChild(this.txtScore);
     }
 
     public updateHUD(){
         let scaleFactor:number;
         scaleFactor = this.player.health/this.player.healthMax;
         this.healthBar.scaleX = scaleFactor;
+    }
+
+    public incrementScore(){
+        this._score++;
+        if (this._score > 0){
+            this.screenManager.dispatchWinScreen();
+        }
     }
 }

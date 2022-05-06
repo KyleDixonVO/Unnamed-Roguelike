@@ -44,7 +44,8 @@
     [435, 63, 600, 600, 0, 300, 300],
     [1037, 63, 600, 600, 0, 300, 300],
     [1, 665, 600, 600, 0, 300, 300],
-    [603, 665, 600, 600, 0, 300, 300]
+    [603, 665, 600, 600, 0, 300, 300],
+    [1205, 665, 600, 600, 0, 300, 300]
 ],
 
 "animations": {
@@ -86,11 +87,12 @@
     "sprites/other/background": { "frames": [35] },
     "sprites/other/gameOverScreen": { "frames": [36] },
     "sprites/other/pauseOverlay": { "frames": [37] },
-    "sprites/other/titleScreen": { "frames": [38] }
+    "sprites/other/titleScreen": { "frames": [38] },
+    "sprites/other/winScreen": { "frames": [39] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:3c10b3d8c7aeecee2992a29e0fd1993e:afd3522415dc5c7b1827823e117a1f7f:1eabdf11f75e3a4fe3147baf7b5be24b$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:5476042a805fba40f4e31487d798492b:b91114fe16cca7fd6b972f7dff7e5600:1eabdf11f75e3a4fe3147baf7b5be24b$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

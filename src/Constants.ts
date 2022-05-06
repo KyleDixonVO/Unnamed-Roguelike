@@ -44,6 +44,18 @@ export const ASSET_MANIFEST:Object[] = [
         data:0
     },
     {
+        type:"json",
+        src:"./lib/spritesheets/glyphs.json",
+        id:"glyphs",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./lib/spritesheets/glyphs.png",
+        id:"glyphs",
+        data:0
+    },
+    {
         type:"sound",
         src:"./lib/sounds/beep.ogg",
         id:"beep",

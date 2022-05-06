@@ -160,8 +160,6 @@ public spriteDirection():void {
             this.deltaY = 0
             break;
     }
-    this._sprite.play();
-    this._state = GameCharacter.STATE_MOVING;
 }
 
 public stopMovement():void {
@@ -169,6 +167,14 @@ public stopMovement():void {
 
     this._sprite.stop();
     this._state = GameCharacter.STATE_IDLE;
+}
+
+public startMovement():void{
+    if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) { return };
+    console.log("started movement");
+    this.sprite.play();
+    this._state = GameCharacter.STATE_MOVING;
+
 }
 
 public update():void {

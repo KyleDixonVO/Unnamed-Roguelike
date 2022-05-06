@@ -60,6 +60,7 @@ public killed(): void {
 
 public reset():void{
     this._sprite.gotoAndStop("sprites/firstplayable/player forward");
+    this.stopMovement();
     this._sprite.x = 300;
     this._sprite.y = 300;
     this._speed = DEFAULT_SPEED;

@@ -404,6 +404,7 @@
             <key type="filename">sprites/other/gameOverScreen.png</key>
             <key type="filename">sprites/other/pauseOverlay.png</key>
             <key type="filename">sprites/other/titleScreen.png</key>
+            <key type="filename">sprites/other/winScreen.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

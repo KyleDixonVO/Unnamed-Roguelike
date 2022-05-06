@@ -11,6 +11,7 @@ export class Enemy extends GameCharacter{
     private shooting:boolean;
     private _used:boolean;
     private eventPlayerHit:createjs.Event;
+    private eventEnemyKilled:createjs.Event;
 
     constructor (stage:createjs.StageGL, assetManager:AssetManager, player:Player) {
       super(stage, assetManager, "sprites/firstplayable/smol boi front");
@@ -22,6 +23,7 @@ export class Enemy extends GameCharacter{
       this._state = GameCharacter.STATE_MOVING;
       this._speed = 2;
       this.eventPlayerHit = new createjs.Event("playerHit", true, false);
+      this.eventEnemyKilled = new createjs.Event("enemyKilled", true, false);
     }
 
     // -------------------------------------------------------------------------------------------- getters/setters
@@ -39,7 +41,9 @@ export class Enemy extends GameCharacter{
     private onKilled():void {
       this._state = GameCharacter.STATE_DEAD;
       //temporary tween alpha to zero
-      createjs.Tween.get(this._sprite, {useTicks:true}).to({alpha:0}, 30).wait(10).call(this.reset);
+      createjs.Tween.get(this._sprite, {useTicks:true}).to({alpha:0}, 30).wait(10).call(()=>{
+        this.reset();
+      });
   
       // this.stopMovement();
       // this._sprite.on("animationend", ()=> {
@@ -54,7 +58,7 @@ export class Enemy extends GameCharacter{
 
   // ------------------------------------------------------------------------------------------------- public methods
     public trackPlayer(player:Player):void{
-      if (this._state == GameCharacter.STATE_PAUSED) return;
+      if (this._state == GameCharacter.STATE_PAUSED || this._state == GameCharacter.STATE_IDLE || this._state == GameCharacter.STATE_DEAD) return;
       this.player = player;
       this._sprite.play();
       this._state = GameCharacter.STATE_MOVING;
@@ -69,6 +73,7 @@ export class Enemy extends GameCharacter{
       this._health = DEFAULT_HEALTH;
       this._state = GameCharacter.STATE_IDLE;
       this._used = false;
+      createjs.Tween.removeTweens(this._sprite);
       this.removeFromStage();
   }
 
@@ -104,6 +109,24 @@ export class Enemy extends GameCharacter{
       }
 
     }
+
+    public takeDamage(value:number):void{
+      if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_DYING || this._state == GameCharacter.STATE_PAUSED) return;
+  
+      if (value <= 0 || value >= Number.MAX_SAFE_INTEGER || value <= Number.MIN_SAFE_INTEGER) return;
+      
+      this._health -= value;
+  
+      if (this._health < 0){
+        this._health = 0;
+      }
+  
+      if (this.health == 0){
+        this.killed();
+        this.stage.dispatchEvent(this.eventEnemyKilled);
+
+      }
+  }
 
 
 }

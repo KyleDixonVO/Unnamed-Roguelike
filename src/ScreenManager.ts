@@ -7,10 +7,11 @@ export class ScreenManager {
     private titleScreen:createjs.Container;
     private gameScreen:createjs.Sprite;
     private gameOverScreen:createjs.Container;
+    private winScreen:createjs.Container;
 
     //custom events
     private eventTitleActive:createjs.Event;
-    private eventGameOverActive:createjs.Event;
+    private eventWin:createjs.Event;
     private eventStartGame:createjs.Event;
     private eventResetGame:createjs.Event;
     private eventOpenSettings:createjs.Event;
@@ -35,12 +36,17 @@ export class ScreenManager {
 
         this.gameScreen = assetManager.getSprite("sprites", "sprites/other/background", 0,0);
 
+        this.winScreen = new createjs.Container();
+
+        let winSprite:createjs.Sprite = assetManager.getSprite("sprites", "sprites/other/winScreen", 300, 300);
+        this.winScreen.addChild(winSprite);
+
         //custom event instantiation
 
         this.eventStartGame = new createjs.Event("gameStarted", true, false);
         this.eventResetGame = new createjs.Event("gameReset", true, false);
         this.eventTitleActive = new createjs.Event("titleActive", true, false);
-        this.eventGameOverActive = new createjs.Event("gameOverActive", true, false);
+        this.eventWin = new createjs.Event("gameWin", true, false);
         this.eventOpenSettings = new createjs.Event("openSettings", true, false);
         this.eventCloseSettings = new createjs.Event("closeSettings", true, false);
         this.eventPaused = new createjs.Event("gamePaused", true, false);
@@ -55,6 +61,7 @@ export class ScreenManager {
         this.stage.removeChild(this.titleScreen);
         this.stage.removeChild(this.gameOverScreen);
         this.stage.removeChild(this.gameScreen);
+        this.stage.removeChild(this.winScreen);
     }
 
     //public methods
@@ -95,6 +102,10 @@ export class ScreenManager {
         console.log("event dispatched: gameUnpaused");
     }
 
+    public dispatchWinScreen():void{
+        this.stage.dispatchEvent(this.eventWin);
+    }
+
     public showGame():void{
         this.hideAll();
         this.gameScreen.x = 300;
@@ -108,6 +119,16 @@ export class ScreenManager {
         this.gameOverScreen.y = 0;
         this.stage.addChild(this.gameOverScreen);
         this.gameOverScreen.on("click", ()=> {
+            this.stage.dispatchEvent(this.eventResetGame);
+        })
+    }
+
+    public showWinScreen():void{
+        this.hideAll();
+        this.winScreen.x = 0;
+        this.winScreen.y = 0;
+        this.stage.addChild(this.winScreen);
+        this.winScreen.on("click", ()=> {
             this.stage.dispatchEvent(this.eventResetGame);
         })
     }
