@@ -219,6 +219,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">sprites/firstplayable/ammo.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,11,9</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,11,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">sprites/firstplayable/bullet.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -238,7 +253,7 @@
             <key type="filename">sprites/firstplayable/door back right.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
+                <point_f>0,0</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
@@ -247,6 +262,37 @@
                 <rect>5,9,9,17</rect>
                 <key>scale9Paddings</key>
                 <rect>5,9,9,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/electric bullet.png</key>
+            <key type="filename">sprites/firstplayable/medkit.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/electric splash.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>37,4,73,7</rect>
+                <key>scale9Paddings</key>
+                <rect>37,4,73,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -261,7 +307,7 @@
             <key type="filename">sprites/firstplayable/wall small right 1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
+                <point_f>0,0</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
@@ -270,6 +316,21 @@
                 <rect>10,10,20,20</rect>
                 <key>scale9Paddings</key>
                 <rect>10,10,20,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/laser.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -319,6 +380,38 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">sprites/firstplayable/player back idle1.png</key>
+            <key type="filename">sprites/firstplayable/player forward idle1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,7,9,14</rect>
+                <key>scale9Paddings</key>
+                <rect>5,7,9,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/player back idle2.png</key>
+            <key type="filename">sprites/firstplayable/player forward idle2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,7,9,13</rect>
+                <key>scale9Paddings</key>
+                <rect>5,7,9,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">sprites/firstplayable/player back.png</key>
             <key type="filename">sprites/firstplayable/player forward.png</key>
             <struct type="IndividualSpriteSettings">
@@ -332,6 +425,38 @@
                 <rect>5,7,9,15</rect>
                 <key>scale9Paddings</key>
                 <rect>5,7,9,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/player left idle1.png</key>
+            <key type="filename">sprites/firstplayable/player right idle1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,7,9,14</rect>
+                <key>scale9Paddings</key>
+                <rect>4,7,9,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/player left idle2.png</key>
+            <key type="filename">sprites/firstplayable/player right idle2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,7,9,13</rect>
+                <key>scale9Paddings</key>
+                <rect>4,7,9,13</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -351,6 +476,88 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">sprites/firstplayable/possessed boi back.png</key>
+            <key type="filename">sprites/firstplayable/possessed boi front.png</key>
+            <key type="filename">sprites/firstplayable/possessed boi left.png</key>
+            <key type="filename">sprites/firstplayable/possessed boi right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,9,10,17</rect>
+                <key>scale9Paddings</key>
+                <rect>5,9,10,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/railgun bullet.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,8,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,8,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/rocket.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,6,3</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,6,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/smol boi back walk 1.png</key>
+            <key type="filename">sprites/firstplayable/smol boi back walk 3.png</key>
+            <key type="filename">sprites/firstplayable/smol boi front walk 1.png</key>
+            <key type="filename">sprites/firstplayable/smol boi front walk 3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,6,6,11</rect>
+                <key>scale9Paddings</key>
+                <rect>3,6,6,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/smol boi back walk 2.png</key>
+            <key type="filename">sprites/firstplayable/smol boi front walk 2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,6,6,12</rect>
+                <key>scale9Paddings</key>
+                <rect>3,6,6,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">sprites/firstplayable/smol boi back.png</key>
             <key type="filename">sprites/firstplayable/smol boi front.png</key>
             <struct type="IndividualSpriteSettings">
@@ -364,6 +571,54 @@
                 <rect>3,5,6,11</rect>
                 <key>scale9Paddings</key>
                 <rect>3,5,6,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/smol boi left walk 1.png</key>
+            <key type="filename">sprites/firstplayable/smol boi right walk 1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,9,12</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,9,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/smol boi left walk 2.png</key>
+            <key type="filename">sprites/firstplayable/smol boi right walk 2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,10,12</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,10,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/smol boi left walk 3.png</key>
+            <key type="filename">sprites/firstplayable/smol boi right walk 3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,10,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,10,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -387,7 +642,7 @@
             <key type="filename">sprites/firstplayable/wall back curve right 1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
+                <point_f>0,0</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>

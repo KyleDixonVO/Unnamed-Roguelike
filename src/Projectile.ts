@@ -18,6 +18,7 @@ export class Projectile {
     private deltaX:number;
     private deltaY:number;
     private _gamePaused:boolean;
+    private _shouldBounce:boolean;
 
     constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string){
 
@@ -30,6 +31,7 @@ export class Projectile {
         this.deltaX = 0;
         this.deltaY = 0;
         this._gamePaused = false;
+        this._shouldBounce = false;
     }
 
 
@@ -129,6 +131,11 @@ export class Projectile {
         this._sprite.x = this.gamecharacter.sprite.x;
         this._sprite.y = this.gamecharacter.sprite.y;
         this.stage.addChild(this._sprite);
+    }
+
+    public applyWeaponCharacteristics():void{
+        this._damage = this.inventory.weaponDamage;
+        this._speed = this.inventory.currentProjectileSpeed;
     }
 
     public update():void{

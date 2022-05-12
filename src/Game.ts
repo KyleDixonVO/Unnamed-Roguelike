@@ -4,7 +4,7 @@
 // importing createjs framework
 import "createjs";
 // importing game constants
-import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX, I_FRAMES_DEFAULT, ALIEN_CONTACT_DAMAGE, PISTOL, PISTOL_DAMAGE } from "./Constants";
+import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX, I_FRAMES_DEFAULT, ALIEN_CONTACT_DAMAGE, PISTOL, PISTOL_DAMAGE, WIDTH_IN_TILES, HEIGHT_IN_TILES, NUMBER_OF_LEVELS, LEVEL_DATA, PLAYER_PROJECTILE_MAX} from "./Constants";
 import { AssetManager } from "./AssetManager";
 import { UserInterface } from "./UserInterface";
 import { ScreenManager } from "./ScreenManager";
@@ -14,6 +14,7 @@ import { GameCharacter } from "./GameCharacter";
 import { Projectile } from "./Projectile";
 import { Inventory } from "./Inventory";
 import { boxHit, radiusHit } from "./Toolkit";
+import { Tile } from "./Tile"; 
 
 
 // game variables
@@ -37,6 +38,9 @@ let player:Player;
 let enemyPool:Enemy[] = [];
 let enemyInventories:Inventory[] = [];
 let projectilePool:Projectile[] = [];
+let playerProjectilePool:Projectile[] = [];
+let tilePool:Array<Array<Tile>> = [];
+let levelData:Array<Array<Array<String>>> = [];
 let userInterface:UserInterface;
 let screenManager:ScreenManager;
 let newProjectile:Projectile;
@@ -86,6 +90,31 @@ function onReady(e:createjs.Event):void {
         projectilePool.push(new Projectile(stage, assetManager, "sprites/firstplayable/bullet"));
     }
 
+    //playerProjectile pool
+    for (let i:number =0; i < PLAYER_PROJECTILE_MAX; i++){
+        playerProjectilePool.push(new Projectile(stage, assetManager, "sprites/firstplayable/bullet"));
+    }
+
+    //tile pool
+    for (let i:number = 0; i < (HEIGHT_IN_TILES); i++){
+        tilePool.push(new Array<any>());
+        for (let j:number = 0; j < WIDTH_IN_TILES; j++){
+            tilePool[i].push( new Tile(stage, assetManager, "sprites/firstplayable/floor1"));
+            tilePool[i][j].setPosition(i * 40, j * 40);
+        }
+    }
+
+    //level data
+    for (let i:number = NUMBER_OF_LEVELS; i < NUMBER_OF_LEVELS; i++){
+        levelData.push(new Array<any>());
+        for (let j:number =  0; j < HEIGHT_IN_TILES; j++ ){
+            levelData[i].push(new Array<any>());
+            for (let k:number = 0; k < HEIGHT_IN_TILES; k++){
+                levelData[i][j].fill(LEVEL_DATA[i][j][k]);
+            }
+        }
+    }
+
     //listen for custom game events
     stage.on("playerKilled", onGameEvent);
     stage.on("playerDamaged", onGameEvent);
@@ -115,15 +144,8 @@ function onGameEvent(e:createjs.Event):void {
         case "playerKilled":
             userInterface.removeAll();
             player.removeFromStage();
-
-            for (let enemy of enemyPool){
-                if (enemy.used) enemy.reset();
-            }
-
-            for (let projectile of projectilePool){
-                if (projectile.used) projectile.reset();
-            }
-
+            hideLevel();
+            resetPools();
             screenManager.showGameOverScreen();
             break;
     
@@ -144,6 +166,8 @@ function onGameEvent(e:createjs.Event):void {
         case "gameStarted":
             console.log("received dispatch: gameStarted ");
             screenManager.showGame();
+            showLevel();
+            loadLevel(1);
             player.addToStage();
             player.startMovement();
             console.log(player.state);
@@ -155,12 +179,14 @@ function onGameEvent(e:createjs.Event):void {
         case "gameReset":
             player.reset();
             userInterface.reset();
+            hideLevel();
             screenManager.showTitleScreen();
             break;
         
 
         case "titleActive":
             console.log("received dispatch: titleActive ");
+            hideLevel();
             userInterface.showStartMenu();
             userInterface.onStartClick();
             userInterface.onSettingsClick();
@@ -170,17 +196,12 @@ function onGameEvent(e:createjs.Event):void {
         case "gameWin":
             screenManager.showWinScreen();
             userInterface.removeAll();
-            
+            hideLevel();
+
             player.removeFromStage();
             player.reset();
 
-            for (let enemy of enemyPool){
-                if (enemy.used) enemy.reset();
-            }
-
-            for (let projectile of projectilePool){
-                if (projectile.used) projectile.reset();
-            }
+            resetPools();
             break;
 
 
@@ -208,6 +229,11 @@ function onGameEvent(e:createjs.Event):void {
                 if (projectile.used) projectile.gamePaused = true;
             }
 
+            for (let projectile of playerProjectilePool)
+            {
+                if (projectile.used) projectile.gamePaused = true;
+            }
+
             for (let enemy of enemyPool)
             {
                 if (enemy.used) enemy.pause();
@@ -225,6 +251,11 @@ function onGameEvent(e:createjs.Event):void {
                 if (projectile.used) projectile.gamePaused = false;
             }
 
+            for (let projectile of playerProjectilePool)
+            {
+                if (projectile.used) projectile.gamePaused = false;
+            }
+
             for (let enemy of enemyPool)
             {
                 if (enemy.used) enemy.unpause();
@@ -235,6 +266,18 @@ function onGameEvent(e:createjs.Event):void {
 
 function onAddProjectile():void{
     if (escapePress == true || player.state == GameCharacter.STATE_DEAD || player.state == GameCharacter.STATE_IDLE) return;
+    for (newProjectile of playerProjectilePool){
+        if (newProjectile.used == false){
+            newProjectile.used = true;
+            newProjectile.passIn(player, playerInventory);
+            newProjectile.activate();
+            break;
+        }
+    }
+}
+
+function onAddEnemyProjectile():void{
+    if (escapePress == true || player.state == GameCharacter.STATE_IDLE) return;
     for (newProjectile of projectilePool){
         if (newProjectile.used == false){
             newProjectile.used = true;
@@ -244,6 +287,7 @@ function onAddProjectile():void{
         }
     }
 }
+
 
 function onAddEnemy():void{
     if (escapePress == true) return;
@@ -257,6 +301,48 @@ function onAddEnemy():void{
         }
     }
 }
+
+function showLevel():void{
+    for (let array of tilePool){
+        for (let tile of array){
+            tile.addToStage();
+        }
+    }
+}
+
+function hideLevel():void{
+    for (let array of tilePool){
+        for (let tile of array){
+            tile.removeFromStage();
+        }
+    }
+}
+
+function loadLevel(value:number):void{
+    let i = value - 1;
+    for (let j:number =  0; j < HEIGHT_IN_TILES; j++ ){
+        for (let k:number = 0; k < WIDTH_IN_TILES; k++){
+            console.log(LEVEL_DATA[i][j][k]);
+            tilePool[k][j].sprite.gotoAndStop(LEVEL_DATA[i][j][k]);
+        }
+    }
+}
+
+function resetPools():void{
+    for (let enemy of enemyPool){
+        if (enemy.used) enemy.reset();
+    }
+
+    for (let projectile of projectilePool){
+        if (projectile.used) projectile.reset();
+    }
+
+    for (let projectile of playerProjectilePool){
+        if (projectile.used) projectile.reset();
+    }
+
+}
+
 
 function onInvincibleTimer():void{
     window.clearInterval(invincibleTimer);
@@ -277,12 +363,11 @@ function onCollsionTimer():void{
 }
 
 function projectileEnemyCollision(){
-    for (let projectile of projectilePool){
+    for (let projectile of playerProjectilePool){
         if (!projectile.used) return;
-        if (projectile.gamecharacter != player) return;
         for (let enemy of enemyPool){
             if (!enemy.used) return;
-            if (radiusHit(projectile.sprite, 16, enemy.sprite, 32)){
+            if (radiusHit(projectile.sprite, 2, enemy.sprite, 28)){
                 enemy.takeDamage(PISTOL_DAMAGE);
                 projectile.reset();
             }
@@ -290,6 +375,19 @@ function projectileEnemyCollision(){
 
     }
 }
+
+function projectilePlayerCollision(){
+    for (let projectile of projectilePool){
+        if (!projectile.used) return;
+        if (radiusHit(projectile.sprite, 2, player.sprite, 28)){
+            player.takeDamage(PISTOL_DAMAGE);
+            projectile.reset();
+        }
+
+    }
+}
+
+
 
 function monitorKeys():void {
     if (upKey == true){
@@ -405,7 +503,7 @@ function onTick(e:createjs.Event) {
     monitorKeys();
     player.update();
 
-    for (let projectile of projectilePool)
+    for (let projectile of playerProjectilePool)
     {
         if (projectile.used) projectile.update();
     }
@@ -419,6 +517,7 @@ function onTick(e:createjs.Event) {
     }
     userInterface.updateHUD();
     startCollsionTimer();
+    projectilePlayerCollision();
 
     // update the stage
     stage.update();
