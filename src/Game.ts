@@ -4,7 +4,7 @@
 // importing createjs framework
 import "createjs";
 // importing game constants
-import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX, I_FRAMES_DEFAULT, ALIEN_CONTACT_DAMAGE, PISTOL, PISTOL_DAMAGE, WIDTH_IN_TILES, HEIGHT_IN_TILES, NUMBER_OF_LEVELS, LEVEL_DATA, PLAYER_PROJECTILE_MAX} from "./Constants";
+import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX, I_FRAMES_DEFAULT, ALIEN_CONTACT_DAMAGE, PISTOL, PISTOL_DAMAGE, WIDTH_IN_TILES, HEIGHT_IN_TILES, NUMBER_OF_LEVELS, LEVEL_DATA, PLAYER_PROJECTILE_MAX, RAILGUN, LASER, ROCKET} from "./Constants";
 import { AssetManager } from "./AssetManager";
 import { UserInterface } from "./UserInterface";
 import { ScreenManager } from "./ScreenManager";
@@ -29,9 +29,12 @@ let rightKey:boolean = false;
 let spacePress:boolean = false;
 let escapePress:boolean = false;
 let escapeUp:boolean = true;
+let reloadKey:boolean = false;
+let reloadActive:boolean = false;
 let paused:boolean = false;
 let iFramesActive:boolean = false;
 let projectileTimerActive:boolean = false;
+let fireDelayActive:boolean = false;
 
 // game objects
 let player:Player;
@@ -49,9 +52,12 @@ let playerInventory:Inventory;
 let bank:Inventory;
 
 
+
 // timers
 let invincibleTimer:number;
 let collisionTimer:number;
+let fireDelayTimer:number;
+let reloadTimer:number;
 let collisionPollingRate:number;
 
 
@@ -93,6 +99,7 @@ function onReady(e:createjs.Event):void {
     //playerProjectile pool
     for (let i:number =0; i < PLAYER_PROJECTILE_MAX; i++){
         playerProjectilePool.push(new Projectile(stage, assetManager, "sprites/firstplayable/bullet"));
+        playerProjectilePool[i].passIn(player, playerInventory);
     }
 
     //tile pool
@@ -170,6 +177,8 @@ function onGameEvent(e:createjs.Event):void {
             loadLevel(1);
             player.addToStage();
             player.startMovement();
+            playerInventory.currentWeapon = ROCKET;
+
             console.log(player.state);
             userInterface.showPlayerHUD();
             onAddEnemy();
@@ -276,6 +285,30 @@ function onAddProjectile():void{
     }
 }
 
+function startFireDelayTimer():void{
+    if (fireDelayActive == true) return;
+    fireDelayActive = true;
+    onAddProjectile();
+    fireDelayTimer = window.setInterval(onFireDelayTimer, playerInventory.fireDelay);
+}
+
+function onFireDelayTimer():void{
+    fireDelayActive = false;
+    window.clearInterval(fireDelayTimer);
+}
+
+function startReloadTimer():void{
+    if (reloadActive == true) return;
+    reloadActive = true;
+    reloadTimer = window.setInterval(reload, playerInventory.currentReloadSpeed);
+}
+
+function reload():void{
+    playerInventory.reload();
+    reloadActive = false;
+}
+
+
 function onAddEnemyProjectile():void{
     if (escapePress == true || player.state == GameCharacter.STATE_IDLE) return;
     for (newProjectile of projectilePool){
@@ -368,8 +401,8 @@ function projectileEnemyCollision(){
         for (let enemy of enemyPool){
             if (!enemy.used) return;
             if (radiusHit(projectile.sprite, 2, enemy.sprite, 28)){
-                enemy.takeDamage(PISTOL_DAMAGE);
-                projectile.reset();
+                enemy.takeDamage(projectile.damage);
+                projectile.secondaryEffect(enemy);
             }
         }
 
@@ -417,7 +450,7 @@ function monitorKeys():void {
 
     if (spacePress == true){      
         console.log("Fired a projectile!");
-        onAddProjectile();
+        startFireDelayTimer();
     }
 
     if (escapePress == true){
@@ -432,6 +465,10 @@ function monitorKeys():void {
         if (paused == false) return;
         console.log("escape toggle inactive");
         screenManager.closeSettings();
+    }
+
+    if (reloadKey == true && reloadActive == false){
+        startReloadTimer();
     }
 }
 
@@ -468,6 +505,10 @@ function onKeyDown(e:KeyboardEvent):void {
         escapeUp = false;
     }
 
+    if (e.key == 'r' || e.key == 'R'){
+        reloadKey = true;
+    }
+
 
 }
 
@@ -492,6 +533,11 @@ function onKeyUp(e:KeyboardEvent):void {
     if (e.key == "Escape"){
         escapeUp = true;
     }
+
+    if (e.key == 'r' || e.key == 'R'){
+        reloadKey = false;
+    }
+    
 }
 
 function onTick(e:createjs.Event) {
@@ -518,6 +564,7 @@ function onTick(e:createjs.Event) {
     userInterface.updateHUD();
     startCollsionTimer();
     projectilePlayerCollision();
+    playerInventory.update();
 
     // update the stage
     stage.update();

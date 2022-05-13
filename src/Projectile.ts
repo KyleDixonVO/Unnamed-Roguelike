@@ -1,8 +1,9 @@
  import { AssetManager } from "./AssetManager";
-import { DEF_PROJECTILE_DAMAGE, DEF_PROJECTILE_SPEED, STAGE_HEIGHT, STAGE_WIDTH } from "./Constants";
+import { ALIEN_BEAM, DEF_PROJECTILE_DAMAGE, DEF_PROJECTILE_SPEED, LASER, PISTOL, RAILGUN, ROCKET, STAGE_HEIGHT, STAGE_WIDTH, TESLA } from "./Constants";
 import { Inventory } from "./Inventory";
 import { Pickup } from "./Pickup";
 import { GameCharacter } from "./GameCharacter";
+import { Tile } from "./Tile";
 
 export class Projectile {
 
@@ -12,8 +13,7 @@ export class Projectile {
     private _bounces:number;
     private stage:createjs.StageGL;
     private _gameCharacter:GameCharacter;
-    private weaponType:string;
-    private inventory:Inventory;
+    private _inventory:Inventory;
     private _used:boolean;
     private deltaX:number;
     private deltaY:number;
@@ -57,6 +57,10 @@ export class Projectile {
         return this._used;
     }
 
+    get controllerInventory(){
+        return this._inventory;
+    }
+
     set used(value:boolean){
         this._used = value;
     }
@@ -86,8 +90,7 @@ export class Projectile {
 
     public passIn(gameCharacter:GameCharacter, inventory:Inventory):void {
         this._gameCharacter = gameCharacter;
-        this.inventory = inventory;
-        this.weaponType = inventory.currentWeapon;
+        this._inventory = inventory;
     }
 
     public reset():void{
@@ -130,17 +133,20 @@ export class Projectile {
         this.used = true;
         this._sprite.x = this.gamecharacter.sprite.x;
         this._sprite.y = this.gamecharacter.sprite.y;
+        console.log("about to add projectile of type to stage: " + this.controllerInventory.currentProjectileSprite);
         this.stage.addChild(this._sprite);
+        this.applyWeaponCharacteristics();
+        console.log("added projectile of type: " + this.controllerInventory.currentProjectileSprite);
     }
 
     public applyWeaponCharacteristics():void{
-        this._damage = this.inventory.weaponDamage;
-        this._speed = this.inventory.currentProjectileSpeed;
+        this._damage = this.controllerInventory.weaponDamage;
+        this._speed = this.controllerInventory.currentProjectileSpeed;
+        this._sprite.gotoAndStop(this.controllerInventory.currentProjectileSprite);
     }
 
     public update():void{
         if (this._gamePaused == true) return;
-
         this._sprite.x += this.deltaX * this._speed;
         this._sprite.y += this.deltaY * this._speed;
 
@@ -156,5 +162,45 @@ export class Projectile {
             console.log("projectile reclaimed");
          }
 
+    }
+
+    public secondaryEffect(collsionTrigger:any):void{
+        switch (this.controllerInventory.currentWeapon){
+            case PISTOL:
+                this.reset();
+                break;
+            
+            case LASER:
+                if (collsionTrigger.type != Tile) return;
+                this._bounces++;
+                if (this._bounces >= 5){
+                    this.reset();
+                }
+                break;
+            
+            case RAILGUN:
+                if (collsionTrigger.type != Tile) return;
+                this.reset();
+                break;
+
+            case ROCKET:
+                this.reset();
+                //need to replace this with deployment of secondary sprites and their logic
+                break;
+            
+            case TESLA:
+                this.reset();
+                //need to replace this with deployment of secondary sprites and their logic
+                break;
+            
+            case ALIEN_BEAM:
+                this.reset();
+                break;
+
+            default:
+                this.reset();
+                break;
+
+        }
     }
 }
