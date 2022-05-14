@@ -197,7 +197,7 @@ function onGameEvent(e:createjs.Event):void {
             console.log(player.state);
             userInterface.showPlayerHUD();
             addPickUp();
-            // onAddEnemy();
+            onAddEnemy();
             // onAddEnemy();
             // onAddEnemy();
             // onAddEnemy();
@@ -306,7 +306,6 @@ function addProjectile():void{
     if (escapePress == true || player.state == GameCharacter.STATE_DEAD || player.state == GameCharacter.STATE_IDLE) return;
     if (playerInventory.currentWeaponAmmo == 0) return;
     playerInventory.decrementAmmo();
-
     for (newProjectile of playerProjectilePool){
         if (newProjectile.used == false){
             newProjectile.used = true;
