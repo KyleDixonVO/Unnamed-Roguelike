@@ -4,7 +4,7 @@
 // importing createjs framework
 import "createjs";
 // importing game constants
-import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX, I_FRAMES_DEFAULT, ALIEN_CONTACT_DAMAGE, PISTOL, PISTOL_DAMAGE, WIDTH_IN_TILES, HEIGHT_IN_TILES, NUMBER_OF_LEVELS, LEVEL_DATA, PLAYER_PROJECTILE_MAX, RAILGUN, LASER, ROCKET} from "./Constants";
+import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST, ENEMY_MAX, PROJECTILE_MAX, I_FRAMES_DEFAULT, ALIEN_CONTACT_DAMAGE, PISTOL, PISTOL_DAMAGE, WIDTH_IN_TILES, HEIGHT_IN_TILES, NUMBER_OF_LEVELS, LEVEL_DATA, PLAYER_PROJECTILE_MAX, RAILGUN, LASER, ROCKET, TESLA, PICKUP_MAX} from "./Constants";
 import { AssetManager } from "./AssetManager";
 import { UserInterface } from "./UserInterface";
 import { ScreenManager } from "./ScreenManager";
@@ -13,8 +13,9 @@ import { Enemy } from "./Enemy";
 import { GameCharacter } from "./GameCharacter";
 import { Projectile } from "./Projectile";
 import { Inventory } from "./Inventory";
-import { boxHit, radiusHit } from "./Toolkit";
+import { boxHit, radiusHit, randomMe } from "./Toolkit";
 import { Tile } from "./Tile"; 
+import { Pickup } from "./Pickup";
 
 
 // game variables
@@ -29,12 +30,17 @@ let rightKey:boolean = false;
 let spacePress:boolean = false;
 let escapePress:boolean = false;
 let escapeUp:boolean = true;
-let reloadKey:boolean = false;
-let reloadActive:boolean = false;
 let paused:boolean = false;
 let iFramesActive:boolean = false;
 let projectileTimerActive:boolean = false;
 let fireDelayActive:boolean = false;
+let shiftPress:boolean = false;
+let shiftUp:boolean = true;
+let LKey:boolean = false;
+let LUp:boolean = true;
+
+let weaponNum:number = 0;
+let stageNum:number = 1;
 
 // game objects
 let player:Player;
@@ -44,10 +50,12 @@ let projectilePool:Projectile[] = [];
 let playerProjectilePool:Projectile[] = [];
 let tilePool:Array<Array<Tile>> = [];
 let levelData:Array<Array<Array<String>>> = [];
+let pickupPool:Pickup[] = [];
 let userInterface:UserInterface;
 let screenManager:ScreenManager;
 let newProjectile:Projectile;
 let newEnemy:Enemy;
+let newPickup:Pickup;
 let playerInventory:Inventory;
 let bank:Inventory;
 
@@ -58,7 +66,6 @@ let invincibleTimer:number;
 let collisionTimer:number;
 let fireDelayTimer:number;
 let reloadTimer:number;
-let collisionPollingRate:number;
 
 
 
@@ -73,13 +80,13 @@ function onReady(e:createjs.Event):void {
     // construct game objects here
     screenManager = new ScreenManager(stage, assetManager);
     
-    userInterface = new UserInterface(stage, assetManager);
+    
 
     player = new Player(stage, assetManager);
 
     playerInventory = new Inventory(player);
 
-    userInterface.passIn(player, screenManager);
+    userInterface = new UserInterface(stage, assetManager, player, screenManager, playerInventory);
     
     //enemy pool
     for (let i:number =0; i < ENEMY_MAX; i++){
@@ -122,6 +129,11 @@ function onReady(e:createjs.Event):void {
         }
     }
 
+    //pickup pool
+    for (let i:number = 0; i < PICKUP_MAX; i++){
+        pickupPool.push(new Pickup(stage, assetManager, player));
+    }
+
     //listen for custom game events
     stage.on("playerKilled", onGameEvent);
     stage.on("playerDamaged", onGameEvent);
@@ -135,6 +147,8 @@ function onReady(e:createjs.Event):void {
     stage.on("gameUnpaused", onGameEvent);
     stage.on("playerHit", onGameEvent);
     stage.on("enemyKilled", onGameEvent);
+    stage.on("pickupMedkit", onGameEvent);
+    stage.on("pickupAmmo", onGameEvent);
 
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
@@ -166,7 +180,9 @@ function onGameEvent(e:createjs.Event):void {
 
 
         case "enemyKilled":
+            console.log("received dispatch: enemyKilled");
             userInterface.incrementScore();
+            userInterface.updateHUD();
             break;
         
 
@@ -177,11 +193,14 @@ function onGameEvent(e:createjs.Event):void {
             loadLevel(1);
             player.addToStage();
             player.startMovement();
-            playerInventory.currentWeapon = ROCKET;
 
             console.log(player.state);
             userInterface.showPlayerHUD();
-            onAddEnemy();
+            addPickUp();
+            // onAddEnemy();
+            // onAddEnemy();
+            // onAddEnemy();
+            // onAddEnemy();
             break;
 
 
@@ -270,11 +289,24 @@ function onGameEvent(e:createjs.Event):void {
                 if (enemy.used) enemy.unpause();
             }
             break;
+        
+        case "pickupMedkit":
+            console.log("received dispatch: pickupHealth");
+            player.heal();
+            break;
+        
+        case "pickupAmmo":
+            console.log("received dispatch: pickupAmmo");
+            playerInventory.refillAmmo();
+            break;
     }
 }
 
-function onAddProjectile():void{
+function addProjectile():void{
     if (escapePress == true || player.state == GameCharacter.STATE_DEAD || player.state == GameCharacter.STATE_IDLE) return;
+    if (playerInventory.currentWeaponAmmo == 0) return;
+    playerInventory.decrementAmmo();
+
     for (newProjectile of playerProjectilePool){
         if (newProjectile.used == false){
             newProjectile.used = true;
@@ -285,10 +317,24 @@ function onAddProjectile():void{
     }
 }
 
+function addPickUp():void{
+    if (escapePress == true) return;
+    
+    for (newPickup of pickupPool){
+        console.log("adding pickup");
+        if (newPickup.used == false){
+            newPickup.used = true;
+            newPickup.randomizeType();
+            newPickup.addToStage();
+            break;
+        }
+    }
+}
+
 function startFireDelayTimer():void{
     if (fireDelayActive == true) return;
     fireDelayActive = true;
-    onAddProjectile();
+    addProjectile();
     fireDelayTimer = window.setInterval(onFireDelayTimer, playerInventory.fireDelay);
 }
 
@@ -297,19 +343,7 @@ function onFireDelayTimer():void{
     window.clearInterval(fireDelayTimer);
 }
 
-function startReloadTimer():void{
-    if (reloadActive == true) return;
-    reloadActive = true;
-    reloadTimer = window.setInterval(reload, playerInventory.currentReloadSpeed);
-}
-
-function reload():void{
-    playerInventory.reload();
-    reloadActive = false;
-}
-
-
-function onAddEnemyProjectile():void{
+function addEnemyProjectile():void{
     if (escapePress == true || player.state == GameCharacter.STATE_IDLE) return;
     for (newProjectile of projectilePool){
         if (newProjectile.used == false){
@@ -328,8 +362,8 @@ function onAddEnemy():void{
         if (newEnemy.used == false){
             newEnemy.used = true;
             newEnemy.addToStage();
-            newEnemy.sprite.x = 1;
-            newEnemy.sprite.y = 1;
+            newEnemy.sprite.x = randomMe(50, 550);
+            newEnemy.sprite.y = randomMe(50, 550);
             break;
         }
     }
@@ -374,6 +408,10 @@ function resetPools():void{
         if (projectile.used) projectile.reset();
     }
 
+    for (let pickup of pickupPool){
+        if (pickup.used) pickup.reset();
+    }
+
 }
 
 
@@ -386,12 +424,12 @@ function onInvincibleTimer():void{
 function startCollsionTimer():void{
     if (projectileTimerActive == true) return;
     projectileTimerActive = true;
-    collisionTimer = window.setInterval(onCollsionTimer, 1);
+    collisionTimer = window.setInterval(onCollsionTimer, 3);
 }
 
 function onCollsionTimer():void{
     projectileTimerActive = false;
-    window.clearInterval(collisionTimer);
+    //window.clearInterval(collisionTimer);
     projectileEnemyCollision();
 }
 
@@ -400,7 +438,7 @@ function projectileEnemyCollision(){
         if (!projectile.used) return;
         for (let enemy of enemyPool){
             if (!enemy.used) return;
-            if (radiusHit(projectile.sprite, 2, enemy.sprite, 28)){
+            if (radiusHit( enemy.sprite, 16, projectile.sprite, 2)){
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
             }
@@ -412,7 +450,7 @@ function projectileEnemyCollision(){
 function projectilePlayerCollision(){
     for (let projectile of projectilePool){
         if (!projectile.used) return;
-        if (radiusHit(projectile.sprite, 2, player.sprite, 28)){
+        if (radiusHit(projectile.sprite, 2, player.sprite, 16)){
             player.takeDamage(PISTOL_DAMAGE);
             projectile.reset();
         }
@@ -420,27 +458,36 @@ function projectilePlayerCollision(){
     }
 }
 
+function tileCollisionDetection(){
+
+    // for (let tile of tilePool)
+    // for (let enemy of enemyPool){
+    //     if (!enemy.used) return;
+    //     if (boxHit())
+    // }
+}
+
 
 
 function monitorKeys():void {
     if (upKey == true){
         player.direction = GameCharacter.DIR_UP;
-        console.log("W");
+        //console.log("W");
     }
 
     if (downKey == true){
         player.direction = GameCharacter.DIR_DOWN;
-        console.log("S");
+        //console.log("S");
     }
 
     if (leftKey == true){
         player.direction = GameCharacter.DIR_LEFT;
-        console.log("A");
+        //console.log("A");
     }
 
     if (rightKey == true){
         player.direction = GameCharacter.DIR_RIGHT;
-        console.log("D");
+        //console.log("D");
     }
 
     if (rightKey == false && leftKey == false && upKey == false && downKey == false){
@@ -451,6 +498,69 @@ function monitorKeys():void {
     if (spacePress == true){      
         console.log("Fired a projectile!");
         startFireDelayTimer();
+    }
+
+    if (shiftPress == true){
+        console.log("attempting weapon swap");
+        if (shiftUp == false || paused == true) return;
+        console.log("changing weapons");
+        shiftUp = false;
+        weaponNum ++;
+        if (weaponNum > 4){
+            weaponNum = 0;
+        }
+        switch (weaponNum){
+            case 0:
+                playerInventory.currentWeapon = PISTOL;
+                break;
+            case 1:
+                playerInventory.currentWeapon = LASER;
+                break;
+            case 2:
+                playerInventory.currentWeapon = TESLA;
+                break;
+            case 3:
+                playerInventory.currentWeapon = ROCKET;
+                break;
+            case 4:
+                playerInventory.currentWeapon = RAILGUN;
+                break;
+
+        }
+    }
+
+    if (LKey == true){
+        console.log("attempting stage swap");
+        if (LUp == false || paused == true) return;
+        console.log("changing stage");
+        LUp = false;
+        stageNum++;
+        if (stageNum > 7){
+            stageNum = 1;
+        }
+        switch (stageNum){
+            case 1:
+                loadLevel(1);
+                break;
+            case 2:
+                loadLevel(2);
+                break;
+            case 3:
+                loadLevel(3);
+                break;
+            case 4:
+                loadLevel(4);
+                break;
+            case 5:
+                loadLevel(5);
+                break;
+            case 6:
+                loadLevel(6);
+                break;
+            case 7:
+                loadLevel(7);
+                break;
+        }
     }
 
     if (escapePress == true){
@@ -465,10 +575,6 @@ function monitorKeys():void {
         if (paused == false) return;
         console.log("escape toggle inactive");
         screenManager.closeSettings();
-    }
-
-    if (reloadKey == true && reloadActive == false){
-        startReloadTimer();
     }
 }
 
@@ -505,8 +611,12 @@ function onKeyDown(e:KeyboardEvent):void {
         escapeUp = false;
     }
 
-    if (e.key == 'r' || e.key == 'R'){
-        reloadKey = true;
+    if (e.key == "Shift"){
+        shiftPress = true;
+    }
+
+    if (e.key == "l" || e.key == "L"){
+        LKey = true;
     }
 
 
@@ -534,8 +644,14 @@ function onKeyUp(e:KeyboardEvent):void {
         escapeUp = true;
     }
 
-    if (e.key == 'r' || e.key == 'R'){
-        reloadKey = false;
+    if (e.key == "Shift"){
+        shiftPress = false;
+        shiftUp = true;
+    }
+
+    if (e.key == "l" || e.key == "L"){
+        LKey = false;
+        LUp = true;
     }
     
 }
@@ -561,6 +677,13 @@ function onTick(e:createjs.Event) {
             enemy.update();
         }
     }
+
+    for (let pickup of pickupPool){
+        if(pickup.used){
+            pickup.update();
+        }
+    }
+
     userInterface.updateHUD();
     startCollsionTimer();
     projectilePlayerCollision();

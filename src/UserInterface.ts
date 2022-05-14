@@ -1,4 +1,5 @@
 import { AssetManager } from "./AssetManager";
+import { Inventory } from "./Inventory";
 import { Player } from "./Player";
 import { ScreenManager } from "./ScreenManager";
 
@@ -7,6 +8,7 @@ export class UserInterface {
     //private property vars
     private _score:number;
     private _paused:boolean;
+    private _ammo:number;
 
 
     //private vars
@@ -19,14 +21,13 @@ export class UserInterface {
     private settingsMenu:createjs.Sprite;
     private pauseOverlay:createjs.Sprite;
     private settingsHeader:createjs.Sprite;
-    private playerInventory:createjs.Sprite;
-    private weaponSlot1:createjs.Sprite;
-    private weaponSlot2:createjs.Sprite;
+    private playerInventory:Inventory;
     private screenManager:ScreenManager;
     private healthBar:createjs.Sprite;
     private healthOutline:createjs.Sprite;
+    private txtAmmo:createjs.BitmapText;
 
-    constructor(stage:createjs.StageGL, assetManager:AssetManager) {
+    constructor(stage:createjs.StageGL, assetManager:AssetManager, player:Player, screenManager:ScreenManager, inventory:Inventory) {
         this.stage = stage;
 
         //need to create glyphs for score text
@@ -34,6 +35,10 @@ export class UserInterface {
         this.txtScore.x = 250;
         this.txtScore.y = 20;
         this.txtScore.letterSpacing = 1;
+        this.txtAmmo = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
+        this.txtAmmo.x = 525;
+        this.txtAmmo.y = 20;
+        this.txtAmmo.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.startButton.gotoAndStop("sprites/button/up");
         this.settingsButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -47,6 +52,10 @@ export class UserInterface {
         this.healthOutline = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.healthOutline.gotoAndStop("sprites/other/healthOutline");
         this._paused = false;
+        this.player = player;
+        this.screenManager = screenManager;
+        this.playerInventory = inventory;
+        this._ammo = this.playerInventory.currentWeaponAmmo;
 
 
         //intstantialise properties
@@ -73,15 +82,20 @@ export class UserInterface {
         return this._paused;
     }
 
-
-    // ---------------------------------------------------------------------------------------- public methods
-    public passIn(player:Player, screenManager:ScreenManager):void{
-        this.player = player;
-        this.screenManager = screenManager;
+    set ammo(value:number) {
+        this._ammo = value;
+        this.txtAmmo.text = String(this._ammo);
+    }
+    
+    get ammo():number{
+        return this._ammo;
     }
 
+
+    // ---------------------------------------------------------------------------------------- public methods
     public reset():void{
         this.score = 0;
+        this.ammo = 0;
     }
 
     public showStartMenu(){
@@ -127,6 +141,7 @@ export class UserInterface {
         this.stage.removeChild(this.healthBar);
         this.stage.removeChild(this.healthOutline);
         this.stage.removeChild(this.txtScore);
+        this.stage.removeChild(this.txtScore);
     }
 
     public showSettingsMenu(){
@@ -157,17 +172,21 @@ export class UserInterface {
         this.stage.addChild(this.healthOutline);
         this.stage.addChild(this.healthBar);
         this.stage.addChild(this.txtScore);
+        this.stage.addChild(this.txtAmmo);
     }
 
     public updateHUD(){
+        this._ammo = this.playerInventory.currentWeaponAmmo;
         let scaleFactor:number;
         scaleFactor = this.player.health/this.player.healthMax;
         this.healthBar.scaleX = scaleFactor;
+        this.txtScore.text = this._score.toString();
+        this.txtAmmo.text = this._ammo.toString();
     }
 
     public incrementScore(){
         this._score++;
-        if (this._score > 0){
+        if (this._score > 3){
             this.screenManager.dispatchWinScreen();
         }
     }

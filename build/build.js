@@ -1054,8 +1054,8 @@ exports.AssetManager = AssetManager;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ROCKET_AMMO_MAX = exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = exports.TESLA_CHAIN_DAMAGE = exports.TESLA_IMPACT_DAMAGE = exports.TESLA_ROUND = exports.TESLA = exports.RAILGUN_SPEED = exports.RAILGUN_FIRE_DELAY = exports.RAILGUN_RELOAD_DELAY = exports.RAILGUN_MAG_SIZE = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN_ROUND = exports.RAILGUN = exports.LASER_SPEED = exports.LASER_FIRE_DELAY = exports.LASER_RELOAD_DELAY = exports.LASER_MAG_SIZE = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER_ROUND = exports.LASER = exports.PISTOL_SPEED = exports.PISTOL_FIRE_DELAY = exports.PISTOL_RELOAD_DELAY = exports.PISTOL_MAG_SIZE = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL_ROUND = exports.PISTOL = exports.DEF_FIRE_DELAY = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.PLAYER_PROJECTILE_MAX = exports.PROJECTILE_MAX = exports.ENEMY_MAX = exports.I_FRAMES_DEFAULT = exports.DEFAULT_HEALTH = exports.DEFAULT_SPEED = exports.FRAME_RATE = exports.HEIGHT_IN_TILES = exports.WIDTH_IN_TILES = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
-exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = void 0;
+exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = exports.TESLA_CHAIN_DAMAGE = exports.TESLA_IMPACT_DAMAGE = exports.TESLA_ROUND = exports.TESLA = exports.RAILGUN_SPEED = exports.RAILGUN_FIRE_DELAY = exports.RAILGUN_RELOAD_DELAY = exports.RAILGUN_MAG_SIZE = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN_ROUND = exports.RAILGUN = exports.LASER_SPEED = exports.LASER_FIRE_DELAY = exports.LASER_RELOAD_DELAY = exports.LASER_MAG_SIZE = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER_ROUND = exports.LASER = exports.PISTOL_SPEED = exports.PISTOL_FIRE_DELAY = exports.PISTOL_RELOAD_DELAY = exports.PISTOL_MAG_SIZE = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL_ROUND = exports.PISTOL = exports.DEF_FIRE_DELAY = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.PLAYER_PROJECTILE_MAX = exports.PROJECTILE_MAX = exports.PICKUP_MAX = exports.ENEMY_MAX = exports.I_FRAMES_DEFAULT = exports.DEFAULT_HEALTH = exports.DEFAULT_SPEED = exports.FRAME_RATE = exports.HEIGHT_IN_TILES = exports.WIDTH_IN_TILES = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
+exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = exports.ROCKET_AMMO_MAX = void 0;
 exports.STAGE_WIDTH = 600;
 exports.STAGE_HEIGHT = 600;
 exports.WIDTH_IN_TILES = exports.STAGE_WIDTH / 40;
@@ -1065,6 +1065,7 @@ exports.DEFAULT_SPEED = 5;
 exports.DEFAULT_HEALTH = 10;
 exports.I_FRAMES_DEFAULT = 1000;
 exports.ENEMY_MAX = 25;
+exports.PICKUP_MAX = 4;
 exports.PROJECTILE_MAX = 20;
 exports.PLAYER_PROJECTILE_MAX = 10;
 exports.DEF_PROJECTILE_SPEED = 10;
@@ -1138,107 +1139,107 @@ exports.LEVEL_DATA = [
         ["sprites/firstplayable/wall small right 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall small left 1"],
     ],
     [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall small right 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall small left 1"],
     ],
     [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall small right 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall small left 1"],
     ],
     [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall small right 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall small left 1"],
     ],
     [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall small right 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall small left 1"],
     ],
     [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall small right 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall small left 1"],
     ],
     [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-    ]
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall right 1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/floor1", "sprites/firstplayable/wall left 1"],
+        ["sprites/firstplayable/wall small right 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall forward 1", "sprites/firstplayable/wall small left 1"],
+    ],
 ];
 exports.ASSET_MANIFEST = [
     {
@@ -1417,6 +1418,7 @@ const Projectile_1 = __webpack_require__(/*! ./Projectile */ "./src/Projectile.t
 const Inventory_1 = __webpack_require__(/*! ./Inventory */ "./src/Inventory.ts");
 const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 const Tile_1 = __webpack_require__(/*! ./Tile */ "./src/Tile.ts");
+const Pickup_1 = __webpack_require__(/*! ./Pickup */ "./src/Pickup.ts");
 let stage;
 let canvas;
 let assetManager;
@@ -1431,6 +1433,12 @@ let paused = false;
 let iFramesActive = false;
 let projectileTimerActive = false;
 let fireDelayActive = false;
+let shiftPress = false;
+let shiftUp = true;
+let LKey = false;
+let LUp = true;
+let weaponNum = 0;
+let stageNum = 1;
 let player;
 let enemyPool = [];
 let enemyInventories = [];
@@ -1438,23 +1446,24 @@ let projectilePool = [];
 let playerProjectilePool = [];
 let tilePool = [];
 let levelData = [];
+let pickupPool = [];
 let userInterface;
 let screenManager;
 let newProjectile;
 let newEnemy;
+let newPickup;
 let playerInventory;
 let bank;
 let invincibleTimer;
 let collisionTimer;
 let fireDelayTimer;
-let collisionPollingRate;
+let reloadTimer;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
     screenManager = new ScreenManager_1.ScreenManager(stage, assetManager);
-    userInterface = new UserInterface_1.UserInterface(stage, assetManager);
     player = new Player_1.Player(stage, assetManager);
     playerInventory = new Inventory_1.Inventory(player);
-    userInterface.passIn(player, screenManager);
+    userInterface = new UserInterface_1.UserInterface(stage, assetManager, player, screenManager, playerInventory);
     for (let i = 0; i < Constants_1.ENEMY_MAX; i++) {
         enemyPool.push(new Enemy_1.Enemy(stage, assetManager, player));
     }
@@ -1484,6 +1493,9 @@ function onReady(e) {
             }
         }
     }
+    for (let i = 0; i < Constants_1.PICKUP_MAX; i++) {
+        pickupPool.push(new Pickup_1.Pickup(stage, assetManager, player));
+    }
     stage.on("playerKilled", onGameEvent);
     stage.on("playerDamaged", onGameEvent);
     stage.on("gameStarted", onGameEvent);
@@ -1496,6 +1508,8 @@ function onReady(e) {
     stage.on("gameUnpaused", onGameEvent);
     stage.on("playerHit", onGameEvent);
     stage.on("enemyKilled", onGameEvent);
+    stage.on("pickupMedkit", onGameEvent);
+    stage.on("pickupAmmo", onGameEvent);
     createjs.Ticker.framerate = Constants_1.FRAME_RATE;
     createjs.Ticker.on("tick", onTick);
     console.log(">> game ready");
@@ -1519,7 +1533,9 @@ function onGameEvent(e) {
             invincibleTimer = window.setInterval(onInvincibleTimer, Constants_1.I_FRAMES_DEFAULT);
             break;
         case "enemyKilled":
+            console.log("received dispatch: enemyKilled");
             userInterface.incrementScore();
+            userInterface.updateHUD();
             break;
         case "gameStarted":
             console.log("received dispatch: gameStarted ");
@@ -1528,10 +1544,9 @@ function onGameEvent(e) {
             loadLevel(1);
             player.addToStage();
             player.startMovement();
-            playerInventory.currentWeapon = Constants_1.ROCKET;
             console.log(player.state);
             userInterface.showPlayerHUD();
-            onAddEnemy();
+            addPickUp();
             break;
         case "gameReset":
             player.reset();
@@ -1602,11 +1617,22 @@ function onGameEvent(e) {
                     enemy.unpause();
             }
             break;
+        case "pickupMedkit":
+            console.log("received dispatch: pickupHealth");
+            player.heal();
+            break;
+        case "pickupAmmo":
+            console.log("received dispatch: pickupAmmo");
+            playerInventory.refillAmmo();
+            break;
     }
 }
-function onAddProjectile() {
+function addProjectile() {
     if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
         return;
+    if (playerInventory.currentWeaponAmmo == 0)
+        return;
+    playerInventory.decrementAmmo();
     for (newProjectile of playerProjectilePool) {
         if (newProjectile.used == false) {
             newProjectile.used = true;
@@ -1616,18 +1642,31 @@ function onAddProjectile() {
         }
     }
 }
+function addPickUp() {
+    if (escapePress == true)
+        return;
+    for (newPickup of pickupPool) {
+        console.log("adding pickup");
+        if (newPickup.used == false) {
+            newPickup.used = true;
+            newPickup.randomizeType();
+            newPickup.addToStage();
+            break;
+        }
+    }
+}
 function startFireDelayTimer() {
     if (fireDelayActive == true)
         return;
     fireDelayActive = true;
-    onAddProjectile();
+    addProjectile();
     fireDelayTimer = window.setInterval(onFireDelayTimer, playerInventory.fireDelay);
 }
 function onFireDelayTimer() {
     fireDelayActive = false;
     window.clearInterval(fireDelayTimer);
 }
-function onAddEnemyProjectile() {
+function addEnemyProjectile() {
     if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
         return;
     for (newProjectile of projectilePool) {
@@ -1646,8 +1685,8 @@ function onAddEnemy() {
         if (newEnemy.used == false) {
             newEnemy.used = true;
             newEnemy.addToStage();
-            newEnemy.sprite.x = 1;
-            newEnemy.sprite.y = 1;
+            newEnemy.sprite.x = (0, Toolkit_1.randomMe)(50, 550);
+            newEnemy.sprite.y = (0, Toolkit_1.randomMe)(50, 550);
             break;
         }
     }
@@ -1688,6 +1727,10 @@ function resetPools() {
         if (projectile.used)
             projectile.reset();
     }
+    for (let pickup of pickupPool) {
+        if (pickup.used)
+            pickup.reset();
+    }
 }
 function onInvincibleTimer() {
     window.clearInterval(invincibleTimer);
@@ -1698,11 +1741,10 @@ function startCollsionTimer() {
     if (projectileTimerActive == true)
         return;
     projectileTimerActive = true;
-    collisionTimer = window.setInterval(onCollsionTimer, 1);
+    collisionTimer = window.setInterval(onCollsionTimer, 3);
 }
 function onCollsionTimer() {
     projectileTimerActive = false;
-    window.clearInterval(collisionTimer);
     projectileEnemyCollision();
 }
 function projectileEnemyCollision() {
@@ -1712,7 +1754,7 @@ function projectileEnemyCollision() {
         for (let enemy of enemyPool) {
             if (!enemy.used)
                 return;
-            if ((0, Toolkit_1.radiusHit)(projectile.sprite, 2, enemy.sprite, 28)) {
+            if ((0, Toolkit_1.radiusHit)(enemy.sprite, 16, projectile.sprite, 2)) {
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
             }
@@ -1723,28 +1765,26 @@ function projectilePlayerCollision() {
     for (let projectile of projectilePool) {
         if (!projectile.used)
             return;
-        if ((0, Toolkit_1.radiusHit)(projectile.sprite, 2, player.sprite, 28)) {
+        if ((0, Toolkit_1.radiusHit)(projectile.sprite, 2, player.sprite, 16)) {
             player.takeDamage(Constants_1.PISTOL_DAMAGE);
             projectile.reset();
         }
     }
 }
+function tileCollisionDetection() {
+}
 function monitorKeys() {
     if (upKey == true) {
         player.direction = GameCharacter_1.GameCharacter.DIR_UP;
-        console.log("W");
     }
     if (downKey == true) {
         player.direction = GameCharacter_1.GameCharacter.DIR_DOWN;
-        console.log("S");
     }
     if (leftKey == true) {
         player.direction = GameCharacter_1.GameCharacter.DIR_LEFT;
-        console.log("A");
     }
     if (rightKey == true) {
         player.direction = GameCharacter_1.GameCharacter.DIR_RIGHT;
-        console.log("D");
     }
     if (rightKey == false && leftKey == false && upKey == false && downKey == false) {
         player.direction = GameCharacter_1.GameCharacter.DIR_NEUTRAL;
@@ -1753,6 +1793,68 @@ function monitorKeys() {
     if (spacePress == true) {
         console.log("Fired a projectile!");
         startFireDelayTimer();
+    }
+    if (shiftPress == true) {
+        console.log("attempting weapon swap");
+        if (shiftUp == false || paused == true)
+            return;
+        console.log("changing weapons");
+        shiftUp = false;
+        weaponNum++;
+        if (weaponNum > 4) {
+            weaponNum = 0;
+        }
+        switch (weaponNum) {
+            case 0:
+                playerInventory.currentWeapon = Constants_1.PISTOL;
+                break;
+            case 1:
+                playerInventory.currentWeapon = Constants_1.LASER;
+                break;
+            case 2:
+                playerInventory.currentWeapon = Constants_1.TESLA;
+                break;
+            case 3:
+                playerInventory.currentWeapon = Constants_1.ROCKET;
+                break;
+            case 4:
+                playerInventory.currentWeapon = Constants_1.RAILGUN;
+                break;
+        }
+    }
+    if (LKey == true) {
+        console.log("attempting stage swap");
+        if (LUp == false || paused == true)
+            return;
+        console.log("changing stage");
+        LUp = false;
+        stageNum++;
+        if (stageNum > 7) {
+            stageNum = 1;
+        }
+        switch (stageNum) {
+            case 1:
+                loadLevel(1);
+                break;
+            case 2:
+                loadLevel(2);
+                break;
+            case 3:
+                loadLevel(3);
+                break;
+            case 4:
+                loadLevel(4);
+                break;
+            case 5:
+                loadLevel(5);
+                break;
+            case 6:
+                loadLevel(6);
+                break;
+            case 7:
+                loadLevel(7);
+                break;
+        }
     }
     if (escapePress == true) {
         if (escapeUp == true)
@@ -1795,6 +1897,12 @@ function onKeyDown(e) {
         }
         escapeUp = false;
     }
+    if (e.key == "Shift") {
+        shiftPress = true;
+    }
+    if (e.key == "l" || e.key == "L") {
+        LKey = true;
+    }
 }
 function onKeyUp(e) {
     if (e.key == 'w' || e.key == 'W') {
@@ -1815,6 +1923,14 @@ function onKeyUp(e) {
     if (e.key == "Escape") {
         escapeUp = true;
     }
+    if (e.key == "Shift") {
+        shiftPress = false;
+        shiftUp = true;
+    }
+    if (e.key == "l" || e.key == "L") {
+        LKey = false;
+        LUp = true;
+    }
 }
 function onTick(e) {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
@@ -1828,6 +1944,11 @@ function onTick(e) {
         if (enemy.used) {
             enemy.trackPlayer(player);
             enemy.update();
+        }
+    }
+    for (let pickup of pickupPool) {
+        if (pickup.used) {
+            pickup.update();
         }
     }
     userInterface.updateHUD();
@@ -1875,6 +1996,7 @@ class GameCharacter {
         this._facing = GameCharacter.DIR_DOWN;
         this._healthMax = Constants_1.DEFAULT_HEALTH;
         this._sprite = assetManager.getSprite("sprites", animation, Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2);
+        this._weaponSprite = assetManager.getSprite("sprites", "sprites/firstplayable/pistol front", this._sprite.x, this._sprite.y);
     }
     set speed(value) {
         this._speed = value;
@@ -1903,6 +2025,9 @@ class GameCharacter {
     get sprite() {
         return this._sprite;
     }
+    get weaponSprite() {
+        return this._weaponSprite;
+    }
     set healthMax(value) {
         this._healthMax = value;
     }
@@ -1911,11 +2036,15 @@ class GameCharacter {
     }
     addToStage() {
         this.stage.addChild(this._sprite);
+        this.stage.addChild(this.weaponSprite);
         this.stage.setChildIndex(this._sprite, this.stage.numChildren);
+        this.stage.setChildIndex(this._weaponSprite, this.stage.numChildren);
     }
     removeFromStage() {
         this._sprite.stop();
+        this._weaponSprite.stop();
         this.stage.removeChild(this._sprite);
+        this.stage.removeChild(this._weaponSprite);
     }
     spriteDirection() {
         if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) {
@@ -1927,24 +2056,36 @@ class GameCharacter {
                 this.deltaX = 0;
                 this.deltaY = -1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player back");
+                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol back");
+                this._weaponSprite.x = this._sprite.x;
+                this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height / 2;
                 this._facing = GameCharacter.DIR_UP;
                 break;
             case GameCharacter.DIR_DOWN:
                 this.deltaX = 0;
                 this.deltaY = 1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
+                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol front");
+                this._weaponSprite.x = this._sprite.x;
+                this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_DOWN;
                 break;
             case GameCharacter.DIR_LEFT:
                 this.deltaX = -1;
                 this.deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player left");
+                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol left");
+                this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width / 2;
+                this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_LEFT;
                 break;
             case GameCharacter.DIR_RIGHT:
                 this.deltaX = 1;
                 this.deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player right");
+                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol right");
+                this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width / 2;
+                this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_RIGHT;
                 break;
             case GameCharacter.DIR_NEUTRAL:
@@ -1959,6 +2100,7 @@ class GameCharacter {
         }
         ;
         this._sprite.stop();
+        this._weaponSprite.stop();
         this._state = GameCharacter.STATE_IDLE;
     }
     startMovement() {
@@ -1968,6 +2110,7 @@ class GameCharacter {
         ;
         console.log("started movement");
         this.sprite.play();
+        this.weaponSprite.play();
         this._state = GameCharacter.STATE_MOVING;
     }
     update() {
@@ -1978,6 +2121,8 @@ class GameCharacter {
         ;
         this._sprite.x += this.deltaX * this.speed;
         this._sprite.y += this.deltaY * this.speed;
+        this._weaponSprite.x += this.deltaX * this.speed;
+        this._weaponSprite.y += this.deltaY * this.speed;
     }
     pause() {
         this._stateBeforePause = this._state;
@@ -2023,10 +2168,14 @@ const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts")
 class Inventory {
     constructor(gameCharacter) {
         this.gameCharacter = gameCharacter;
-        this._weaponSlot1 = Constants_1.PISTOL;
-        this._weaponMagazine1 = Constants_1.PISTOL_MAG_SIZE;
-        this._weaponSlot2 = null;
-        this._currentWeapon = this._weaponSlot1;
+        this._currentWeapon = Constants_1.PISTOL;
+        this._currentReloadDelay = Constants_1.PISTOL_RELOAD_DELAY;
+        this._pistolAmmo = Constants_1.PISTOL_AMMO_MAX;
+        this._railgunAmmo = Constants_1.RAILGUN_AMMO_MAX;
+        this._rocketAmmo = Constants_1.ROCKET_AMMO_MAX;
+        this._teslagunAmmo = Constants_1.TESLA_AMMO_MAX;
+        this._laserAmmo = Constants_1.LASER_AMMO_MAX;
+        this._currentWeaponAmmo = this._pistolAmmo;
     }
     set currentWeapon(value) {
         this._currentWeapon = value;
@@ -2055,12 +2204,6 @@ class Inventory {
     get weaponDamage() {
         return this._currentWeaponDamage;
     }
-    get weaponSlot1() {
-        return this._weaponSlot1;
-    }
-    get weaponSlot2() {
-        return this._weaponSlot2;
-    }
     get splashDamage() {
         return this._splashDamage;
     }
@@ -2073,6 +2216,12 @@ class Inventory {
     get currentWeaponSprite() {
         return this._currentWeaponSprite;
     }
+    get currentWeaponAmmo() {
+        return this._currentWeaponAmmo;
+    }
+    set currentWeaponAmmo(value) {
+        this._currentWeaponAmmo = value;
+    }
     checkEquippedWeapon() {
         switch (this._currentWeapon) {
             case Constants_1.PISTOL:
@@ -2082,6 +2231,7 @@ class Inventory {
                 this._currentWeaponSprite = "";
                 this._currentProjectileSprite = Constants_1.PISTOL_ROUND;
                 this._currentProjectileSpeed = Constants_1.PISTOL_SPEED;
+                this._currentWeaponAmmo = this._pistolAmmo;
                 break;
             case Constants_1.TESLA:
                 this._currentFireDelay = Constants_1.TESLA_FIRE_DELAY;
@@ -2089,6 +2239,7 @@ class Inventory {
                 this._splashDamage = Constants_1.TESLA_CHAIN_DAMAGE;
                 this._currentProjectileSprite = Constants_1.TESLA_ROUND;
                 this._currentProjectileSpeed = Constants_1.TESLA_SPEED;
+                this._currentWeaponAmmo = this._teslagunAmmo;
                 break;
             case Constants_1.LASER:
                 this._currentFireDelay = Constants_1.LASER_FIRE_DELAY;
@@ -2096,6 +2247,7 @@ class Inventory {
                 this._splashDamage = 0;
                 this._currentProjectileSprite = Constants_1.LASER_ROUND;
                 this._currentProjectileSpeed = Constants_1.LASER_SPEED;
+                this._currentWeaponAmmo = this._laserAmmo;
                 break;
             case Constants_1.ROCKET:
                 this._currentFireDelay = Constants_1.ROCKET_FIRE_DELAY;
@@ -2103,6 +2255,7 @@ class Inventory {
                 this._splashDamage = Constants_1.ROCKET_SPLASH_DAMAGE;
                 this._currentProjectileSprite = Constants_1.ROCKET_ROUND;
                 this._currentProjectileSpeed = Constants_1.ROCKET_SPEED;
+                this._currentWeaponAmmo = this._rocketAmmo;
                 break;
             case Constants_1.RAILGUN:
                 this._currentFireDelay = Constants_1.RAILGUN_FIRE_DELAY;
@@ -2110,6 +2263,7 @@ class Inventory {
                 this._splashDamage = 0;
                 this._currentProjectileSprite = Constants_1.RAILGUN_ROUND;
                 this._currentProjectileSpeed = Constants_1.RAILGUN_SPEED;
+                this._currentWeaponAmmo = this._railgunAmmo;
                 break;
             case Constants_1.ALIEN_BEAM:
                 this._currentFireDelay = Constants_1.ALIEN_BEAM_DELAY;
@@ -2127,34 +2281,139 @@ class Inventory {
         }
     }
     update() {
+        console.log(this._currentWeaponAmmo);
         this.checkEquippedWeapon();
     }
-    reload() {
+    refillAmmo() {
+        this._pistolAmmo = Constants_1.PISTOL_AMMO_MAX;
+        this._laserAmmo = Constants_1.LASER_AMMO_MAX;
+        this._teslagunAmmo = Constants_1.TESLA_AMMO_MAX;
+        this._rocketAmmo = Constants_1.ROCKET_AMMO_MAX;
+        this._railgunAmmo = Constants_1.RAILGUN_AMMO_MAX;
+    }
+    decrementAmmo() {
         switch (this._currentWeapon) {
             case Constants_1.PISTOL:
-                break;
-            case Constants_1.TESLA:
+                this._pistolAmmo--;
                 break;
             case Constants_1.LASER:
-                break;
-            case Constants_1.ROCKET:
+                this._laserAmmo--;
                 break;
             case Constants_1.RAILGUN:
+                this._railgunAmmo--;
                 break;
-        }
-    }
-    swapWeapons() {
-        if (this._currentWeapon == this._weaponSlot1) {
-            this._currentWeapon = this._weaponSlot2;
-            this._currentWeaponMagazine = this._weaponMagazine2;
-        }
-        else {
-            this._currentWeapon = this._weaponSlot1;
-            this._currentWeaponMagazine = this._weaponMagazine1;
+            case Constants_1.ROCKET:
+                this._rocketAmmo--;
+                break;
+            case Constants_1.TESLA:
+                this._teslagunAmmo--;
+                break;
         }
     }
 }
 exports.Inventory = Inventory;
+
+
+/***/ }),
+
+/***/ "./src/Pickup.ts":
+/*!***********************!*\
+  !*** ./src/Pickup.ts ***!
+  \***********************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Pickup = void 0;
+const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
+const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
+class Pickup {
+    constructor(stage, assetManager, player) {
+        this.medkit = "sprites/firstplayable/medkit";
+        this.ammoBox = "sprites/firstplayable/ammo";
+        this.typeMedkit = "medkit";
+        this.typeAmmo = "ammo";
+        this.stage = stage;
+        this.player = player;
+        this._pickupType = this.typeMedkit;
+        this._used = false;
+        this._sprite = assetManager.getSprite("sprites", this.typeMedkit, 50, 50);
+        this._hit = false;
+        this.eventPickupAmmo = new createjs.Event("pickupAmmo", true, false);
+        this.eventPickupMedkit = new createjs.Event("pickupMedkit", true, false);
+    }
+    get pickupType() {
+        return this._pickupType;
+    }
+    set pickupType(value) {
+        this._pickupType = value;
+    }
+    get used() {
+        return this._used;
+    }
+    set used(value) {
+        this._used = value;
+    }
+    checkType() {
+        if (this.pickupType == this.typeMedkit) {
+            this._sprite.gotoAndStop(this.medkit);
+        }
+        else if (this.pickupType == this.typeAmmo) {
+            this._sprite.gotoAndStop(this.ammoBox);
+        }
+    }
+    update() {
+        if (this.player.state == GameCharacter_1.GameCharacter.STATE_PAUSED)
+            return;
+        this.checkType();
+        if (this._hit == true)
+            return;
+        if ((0, Toolkit_1.boxHit)(this._sprite, this.player.sprite)) {
+            this._hit = true;
+            console.log(this._pickupType);
+            if (this._pickupType == this.typeMedkit) {
+                this.stage.dispatchEvent(this.eventPickupMedkit);
+                console.log("dispatching event: pickupMedkit");
+                this.removeFromStage();
+            }
+            else if (this._pickupType == this.typeAmmo) {
+                this.stage.dispatchEvent(this.eventPickupAmmo);
+                console.log("dispatching event: pickupAmmo");
+                this.removeFromStage();
+            }
+        }
+    }
+    addToStage() {
+        this.checkType();
+        this.stage.addChild(this._sprite);
+    }
+    removeFromStage() {
+        this.stage.removeChild(this._sprite);
+        this.reset();
+    }
+    randomizeType() {
+        let randomize;
+        console.log("randomizing");
+        randomize = (0, Toolkit_1.randomMe)(0, 1);
+        if (randomize == 0) {
+            this._pickupType = this.typeAmmo;
+        }
+        else if (randomize == 1) {
+            this._pickupType = this.typeMedkit;
+        }
+        console.log(this._pickupType);
+    }
+    setPostion(valueX, valueY) {
+        this._sprite.x = valueX;
+        this._sprite.y = valueY;
+    }
+    reset() {
+        this._used = false;
+        this._hit = false;
+    }
+}
+exports.Pickup = Pickup;
 
 
 /***/ }),
@@ -2222,6 +2481,12 @@ class Player extends GameCharacter_1.GameCharacter {
     dispatchKilled() {
         this.stage.dispatchEvent(this.eventKilled);
         console.log("dispatched event: playerKilled");
+    }
+    heal() {
+        this._health += 50;
+        if (this._health > this._healthMax) {
+            this._health = this._healthMax;
+        }
     }
 }
 exports.Player = Player;
@@ -2603,12 +2868,16 @@ exports.radiusHit = radiusHit;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserInterface = void 0;
 class UserInterface {
-    constructor(stage, assetManager) {
+    constructor(stage, assetManager, player, screenManager, inventory) {
         this.stage = stage;
         this.txtScore = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
         this.txtScore.x = 250;
         this.txtScore.y = 20;
         this.txtScore.letterSpacing = 1;
+        this.txtAmmo = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
+        this.txtAmmo.x = 525;
+        this.txtAmmo.y = 20;
+        this.txtAmmo.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.startButton.gotoAndStop("sprites/button/up");
         this.settingsButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -2622,6 +2891,10 @@ class UserInterface {
         this.healthOutline = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.healthOutline.gotoAndStop("sprites/other/healthOutline");
         this._paused = false;
+        this.player = player;
+        this.screenManager = screenManager;
+        this.playerInventory = inventory;
+        this._ammo = this.playerInventory.currentWeaponAmmo;
         this.reset();
     }
     set score(value) {
@@ -2637,12 +2910,16 @@ class UserInterface {
     get paused() {
         return this._paused;
     }
-    passIn(player, screenManager) {
-        this.player = player;
-        this.screenManager = screenManager;
+    set ammo(value) {
+        this._ammo = value;
+        this.txtAmmo.text = String(this._ammo);
+    }
+    get ammo() {
+        return this._ammo;
     }
     reset() {
         this.score = 0;
+        this.ammo = 0;
     }
     showStartMenu() {
         this.startButton.x = 200;
@@ -2686,6 +2963,7 @@ class UserInterface {
         this.stage.removeChild(this.healthBar);
         this.stage.removeChild(this.healthOutline);
         this.stage.removeChild(this.txtScore);
+        this.stage.removeChild(this.txtScore);
     }
     showSettingsMenu() {
         this._paused = true;
@@ -2713,15 +2991,19 @@ class UserInterface {
         this.stage.addChild(this.healthOutline);
         this.stage.addChild(this.healthBar);
         this.stage.addChild(this.txtScore);
+        this.stage.addChild(this.txtAmmo);
     }
     updateHUD() {
+        this._ammo = this.playerInventory.currentWeaponAmmo;
         let scaleFactor;
         scaleFactor = this.player.health / this.player.healthMax;
         this.healthBar.scaleX = scaleFactor;
+        this.txtScore.text = this._score.toString();
+        this.txtAmmo.text = this._ammo.toString();
     }
     incrementScore() {
         this._score++;
-        if (this._score > 0) {
+        if (this._score > 3) {
             this.screenManager.dispatchWinScreen();
         }
     }
@@ -5062,7 +5344,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("5278623bf180538eeff0")
+/******/ 		__webpack_require__.h = () => ("f35e3bc0da78db5aaec0")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

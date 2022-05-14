@@ -11,9 +11,11 @@ private eventReloading:createjs.Event;
 //private vars
 private shooting:boolean;
 
+
 constructor(stage:createjs.StageGL, assetManager:AssetManager) {
     //need to pass in animation frame
     super(stage, assetManager, "sprites/firstplayable/player forward");
+
 
     //custom event objects
     this.eventKilled = new createjs.Event("playerKilled", true, false);
@@ -93,5 +95,12 @@ public update(): void {
 public dispatchKilled():void{
     this.stage.dispatchEvent(this.eventKilled);
     console.log("dispatched event: playerKilled");
+}
+
+public heal():void{
+    this._health += 50;
+    if (this._health > this._healthMax){
+        this._health = this._healthMax;
+    }
 }
 }

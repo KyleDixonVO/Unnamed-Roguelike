@@ -52,6 +52,7 @@ export class Enemy extends GameCharacter{
   private onKilled():void {
     this._state = GameCharacter.STATE_DEAD;
     //temporary tween alpha to zero
+
     createjs.Tween.get(this._sprite, {useTicks:true}).to({alpha:0}, 30).wait(10).call(()=>{
       this.reset();
     });

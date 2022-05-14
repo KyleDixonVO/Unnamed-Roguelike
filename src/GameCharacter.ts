@@ -37,6 +37,8 @@ protected stage:createjs.StageGL;
 protected deltaX:number;
 protected deltaY:number;
 
+protected _weaponSprite:createjs.Sprite;
+
 constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string){
     //initialization
     this.stage = stage;
@@ -52,6 +54,7 @@ constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string
 
     //construct and place sprite
     this._sprite = assetManager.getSprite("sprites", animation, STAGE_WIDTH/2, STAGE_HEIGHT/2);
+    this._weaponSprite = assetManager.getSprite("sprites", "sprites/firstplayable/pistol front", this._sprite.x, this._sprite.y);
 }
 
 //---------------------------------------------------------------------------------------------------------------- getters/setters
@@ -99,6 +102,10 @@ get sprite():createjs.Sprite {
     return this._sprite;
 }
 
+get weaponSprite():createjs.Sprite {
+    return this._weaponSprite;
+}
+
 set healthMax(value:number){
     this._healthMax = value;
 }
@@ -110,12 +117,16 @@ get healthMax(){
 
 public addToStage():void {
     this.stage.addChild(this._sprite);
+    this.stage.addChild(this.weaponSprite);
     this.stage.setChildIndex(this._sprite, this.stage.numChildren);
+    this.stage.setChildIndex(this._weaponSprite, this.stage.numChildren);
 }
 
 public removeFromStage():void {
     this._sprite.stop();
+    this._weaponSprite.stop();
     this.stage.removeChild(this._sprite);
+    this.stage.removeChild(this._weaponSprite);
 }
 
 //could be renamed later
@@ -127,6 +138,9 @@ public spriteDirection():void {
             this.deltaX = 0;
             this.deltaY = -1;
             this._sprite.gotoAndPlay("sprites/firstplayable/player back");
+            this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol back");
+            this._weaponSprite.x = this._sprite.x;
+            this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height/2;
             this._facing = GameCharacter.DIR_UP;
             //console.log("up");
             break;
@@ -135,6 +149,9 @@ public spriteDirection():void {
             this.deltaX = 0;
             this.deltaY = 1;
             this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
+            this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol front");
+            this._weaponSprite.x = this._sprite.x;
+            this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_DOWN;
             //console.log("down");
             break;
@@ -143,6 +160,9 @@ public spriteDirection():void {
             this.deltaX = -1;
             this.deltaY = 0;
             this._sprite.gotoAndPlay("sprites/firstplayable/player left");
+            this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol left");
+            this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width/2;
+            this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_LEFT;
             //console.log("left");
             break;
@@ -151,6 +171,9 @@ public spriteDirection():void {
             this.deltaX = 1;
             this.deltaY = 0;
             this._sprite.gotoAndPlay("sprites/firstplayable/player right");
+            this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol right");
+            this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width/2;
+            this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_RIGHT;
             //console.log("right");
             break;
@@ -166,6 +189,7 @@ public stopMovement():void {
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) { return };
 
     this._sprite.stop();
+    this._weaponSprite.stop();
     this._state = GameCharacter.STATE_IDLE;
 }
 
@@ -173,6 +197,7 @@ public startMovement():void{
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) { return };
     console.log("started movement");
     this.sprite.play();
+    this.weaponSprite.play();
     this._state = GameCharacter.STATE_MOVING;
 
 }
@@ -185,6 +210,8 @@ public update():void {
     //move based on displacements
     this._sprite.x += this.deltaX * this.speed;
     this._sprite.y += this.deltaY * this.speed;
+    this._weaponSprite.x += this.deltaX * this.speed;
+    this._weaponSprite.y += this.deltaY * this.speed;
 }
 
 public pause():void{
