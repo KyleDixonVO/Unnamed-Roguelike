@@ -166,7 +166,7 @@ export class Inventory {
     // ----------------------------------------------------------------------------------------------- public methods
 
     public update():void{
-        console.log(this._currentWeaponAmmo);
+        //console.log(this._currentWeaponAmmo);
         this.checkEquippedWeapon();
     }
 

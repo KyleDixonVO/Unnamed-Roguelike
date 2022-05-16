@@ -1298,7 +1298,7 @@ const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts")
 const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
 const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 class Enemy extends GameCharacter_1.GameCharacter {
-    constructor(stage, assetManager, player) {
+    constructor(stage, assetManager, player, placeInArray) {
         super(stage, assetManager, "sprites/firstplayable/smol boi front");
         this.melee = "melee";
         this.ranged = "ranged";
@@ -1312,6 +1312,7 @@ class Enemy extends GameCharacter_1.GameCharacter {
         this._speed = 2;
         this.eventPlayerHit = new createjs.Event("playerHit", true, false);
         this.eventEnemyKilled = new createjs.Event("enemyKilled", true, false);
+        this._arrayNumber = placeInArray;
     }
     get used() {
         return this._used;
@@ -1324,6 +1325,9 @@ class Enemy extends GameCharacter_1.GameCharacter {
     }
     set enemyType(value) {
         this._enemyType = value;
+    }
+    get arrayNumber() {
+        return this._arrayNumber;
     }
     onKilled() {
         this._state = GameCharacter_1.GameCharacter.STATE_DEAD;
@@ -1380,7 +1384,6 @@ class Enemy extends GameCharacter_1.GameCharacter {
         if (this.player.state == GameCharacter_1.GameCharacter.STATE_DEAD)
             return;
         if ((0, Toolkit_1.boxHit)(this._sprite, this.player.sprite)) {
-            console.log("dispatching event: playerHit");
             this.sprite.dispatchEvent(this.eventPlayerHit);
         }
     }
@@ -1426,6 +1429,7 @@ const Inventory_1 = __webpack_require__(/*! ./Inventory */ "./src/Inventory.ts")
 const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 const Tile_1 = __webpack_require__(/*! ./Tile */ "./src/Tile.ts");
 const Pickup_1 = __webpack_require__(/*! ./Pickup */ "./src/Pickup.ts");
+const LevelManager_1 = __webpack_require__(/*! ./LevelManager */ "./src/LevelManager.ts");
 let stage;
 let canvas;
 let assetManager;
@@ -1444,6 +1448,7 @@ let shiftPress = false;
 let shiftUp = true;
 let LKey = false;
 let LUp = true;
+let gameStarted = false;
 let weaponNum = 0;
 let stageNum = 1;
 let player;
@@ -1460,19 +1465,20 @@ let newProjectile;
 let newEnemy;
 let newPickup;
 let playerInventory;
-let bank;
+let levelManager;
+let poolManager;
 let invincibleTimer;
 let collisionTimer;
 let fireDelayTimer;
-let reloadTimer;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
     screenManager = new ScreenManager_1.ScreenManager(stage, assetManager);
+    levelManager = new LevelManager_1.LevelManager(stage);
     player = new Player_1.Player(stage, assetManager);
     playerInventory = new Inventory_1.Inventory(player);
     userInterface = new UserInterface_1.UserInterface(stage, assetManager, player, screenManager, playerInventory);
     for (let i = 0; i < Constants_1.ENEMY_MAX; i++) {
-        enemyPool.push(new Enemy_1.Enemy(stage, assetManager, player));
+        enemyPool.push(new Enemy_1.Enemy(stage, assetManager, player, i));
     }
     for (let i = 0; i < Constants_1.ENEMY_MAX; i++) {
         enemyInventories.push(new Inventory_1.Inventory(enemyPool[i]));
@@ -1514,9 +1520,12 @@ function onReady(e) {
     stage.on("gamePaused", onGameEvent);
     stage.on("gameUnpaused", onGameEvent);
     stage.on("playerHit", onGameEvent);
-    stage.on("enemyKilled", onGameEvent);
+    stage.on("enemyKilled", onGameEvent, false);
     stage.on("pickupMedkit", onGameEvent);
     stage.on("pickupAmmo", onGameEvent);
+    stage.on("spawnWave", onGameEvent);
+    stage.on("completeLevel", onGameEvent);
+    stage.on("loadNextLevel", onGameEvent);
     createjs.Ticker.framerate = Constants_1.FRAME_RATE;
     createjs.Ticker.on("tick", onTick);
     console.log(">> game ready");
@@ -1541,6 +1550,9 @@ function onGameEvent(e) {
             break;
         case "enemyKilled":
             console.log("received dispatch: enemyKilled");
+            levelManager.defeatedEnemies++;
+            console.log(levelManager.defeatedEnemies);
+            levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
             break;
@@ -1548,19 +1560,21 @@ function onGameEvent(e) {
             console.log("received dispatch: gameStarted ");
             screenManager.showGame();
             showLevel();
-            loadLevel(1);
+            loadLevel(levelManager.activeLevel);
             player.addToStage();
             player.startMovement();
             console.log(player.state);
             userInterface.showPlayerHUD();
             addPickUp();
-            onAddEnemy();
+            gameStarted = true;
             break;
         case "gameReset":
             player.reset();
             userInterface.reset();
             hideLevel();
             screenManager.showTitleScreen();
+            levelManager.reset();
+            gameStarted == false;
             break;
         case "titleActive":
             console.log("received dispatch: titleActive ");
@@ -1576,6 +1590,7 @@ function onGameEvent(e) {
             player.removeFromStage();
             player.reset();
             resetPools();
+            levelManager.reset();
             break;
         case "openSettings":
             console.log("recieved dispatch: openSettings");
@@ -1632,6 +1647,32 @@ function onGameEvent(e) {
         case "pickupAmmo":
             console.log("received dispatch: pickupAmmo");
             playerInventory.refillAmmo();
+            break;
+        case "spawnWave":
+            console.log("received dispatch: spawnWave");
+            console.log(levelManager.enemiesSpawned, levelManager.threshold);
+            for (let i = 0; i < levelManager.activeLevel; i++) {
+                console.log("spawning enemy");
+                onAddEnemy();
+            }
+            break;
+        case "completeLevel":
+            console.log("received dispatch: completeLevel");
+            screenManager.showLevelComplete();
+            levelManager.resetForNextLevel();
+            resetPools();
+            gameStarted = false;
+            break;
+        case "loadNextLevel":
+            console.log("received dispatch: loadNextLevel");
+            screenManager.showGame();
+            showLevel();
+            loadLevel(levelManager.activeLevel);
+            player.addToStage();
+            player.startMovement();
+            gameStarted = true;
+            console.log(player.state);
+            userInterface.showPlayerHUD();
             break;
     }
 }
@@ -1695,6 +1736,7 @@ function onAddEnemy() {
             newEnemy.addToStage();
             newEnemy.sprite.x = (0, Toolkit_1.randomMe)(50, 550);
             newEnemy.sprite.y = (0, Toolkit_1.randomMe)(50, 550);
+            console.log(newEnemy);
             break;
         }
     }
@@ -1758,11 +1800,14 @@ function onCollsionTimer() {
 function projectileEnemyCollision() {
     for (let projectile of playerProjectilePool) {
         if (!projectile.used)
-            return;
+            continue;
         for (let enemy of enemyPool) {
             if (!enemy.used)
-                return;
+                continue;
             if ((0, Toolkit_1.radiusHit)(enemy.sprite, 16, projectile.sprite, 2)) {
+                if (enemy.state == GameCharacter_1.GameCharacter.STATE_DEAD || enemy.state == GameCharacter_1.GameCharacter.STATE_DYING || enemy.state == GameCharacter_1.GameCharacter.STATE_IDLE)
+                    continue;
+                console.log("hit!");
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
             }
@@ -1780,6 +1825,28 @@ function projectilePlayerCollision() {
     }
 }
 function tileCollisionDetection() {
+    for (let tile of tilePool) {
+        for (let i = 0; i < Constants_1.WIDTH_IN_TILES; i++) {
+            for (let enemy of enemyPool) {
+                if (!enemy.used)
+                    continue;
+                if ((0, Toolkit_1.boxHit)(enemy.sprite, tile[i].sprite)) {
+                }
+            }
+            for (let projectile of projectilePool) {
+                if (!projectile.used)
+                    continue;
+                if ((0, Toolkit_1.boxHit)(projectile.sprite, tile[i].sprite)) {
+                }
+            }
+            for (let projectile of playerProjectilePool) {
+                if (!projectile.used)
+                    continue;
+                if ((0, Toolkit_1.boxHit)(projectile.sprite, tile[i].sprite)) {
+                }
+            }
+        }
+    }
 }
 function monitorKeys() {
     if (upKey == true) {
@@ -1796,10 +1863,8 @@ function monitorKeys() {
     }
     if (rightKey == false && leftKey == false && upKey == false && downKey == false) {
         player.direction = GameCharacter_1.GameCharacter.DIR_NEUTRAL;
-        console.log("No Input");
     }
     if (spacePress == true) {
-        console.log("Fired a projectile!");
         startFireDelayTimer();
     }
     if (shiftPress == true) {
@@ -1962,6 +2027,10 @@ function onTick(e) {
     userInterface.updateHUD();
     startCollsionTimer();
     projectilePlayerCollision();
+    levelManager.checkWinCondition();
+    if (gameStarted == true && paused == false) {
+        levelManager.checkWaveStatus();
+    }
     playerInventory.update();
     stage.update();
 }
@@ -2044,9 +2113,7 @@ class GameCharacter {
     }
     addToStage() {
         this.stage.addChild(this._sprite);
-        this.stage.addChild(this.weaponSprite);
         this.stage.setChildIndex(this._sprite, this.stage.numChildren);
-        this.stage.setChildIndex(this._weaponSprite, this.stage.numChildren);
     }
     removeFromStage() {
         this._sprite.stop();
@@ -2289,7 +2356,6 @@ class Inventory {
         }
     }
     update() {
-        console.log(this._currentWeaponAmmo);
         this.checkEquippedWeapon();
     }
     refillAmmo() {
@@ -2320,6 +2386,129 @@ class Inventory {
     }
 }
 exports.Inventory = Inventory;
+
+
+/***/ }),
+
+/***/ "./src/LevelManager.ts":
+/*!*****************************!*\
+  !*** ./src/LevelManager.ts ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LevelManager = void 0;
+const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
+class LevelManager {
+    constructor(stage) {
+        this.stage = stage;
+        this._activeLevel = 1;
+        this._enemiesSpawned = 0;
+        this._readyToSpawn = true;
+        this._threshold = 0;
+        this._defeatedEnemies = 0;
+        this.eventCompleteLevel = new createjs.Event("completeLevel", true, false);
+        this.eventSpawnWave = new createjs.Event("spawnWave", true, false);
+    }
+    get activeLevel() {
+        return this._activeLevel;
+    }
+    set activeLevel(value) {
+        this._activeLevel = value;
+    }
+    get defeatedEnemies() {
+        return this._defeatedEnemies;
+    }
+    set defeatedEnemies(value) {
+        this._defeatedEnemies = value;
+    }
+    get enemiesSpawned() {
+        return this._enemiesSpawned;
+    }
+    set enemiesSpawned(value) {
+        this._enemiesSpawned = value;
+    }
+    get readyToSpawn() {
+        return this._readyToSpawn;
+    }
+    set readyToSpawn(value) {
+        this._readyToSpawn = value;
+    }
+    get threshold() {
+        return this._threshold;
+    }
+    checkWinCondition() {
+        switch (this._activeLevel) {
+            case 1:
+                this._threshold = Constants_1.LEVEL_ONE_THRESHOLD;
+                if (this._defeatedEnemies >= Constants_1.LEVEL_ONE_THRESHOLD) {
+                    this.stage.dispatchEvent(this.eventCompleteLevel);
+                    this._activeLevel++;
+                }
+                break;
+            case 2:
+                this._threshold = Constants_1.LEVEL_TWO_THRESHOLD;
+                if (this._defeatedEnemies >= Constants_1.LEVEL_TWO_THRESHOLD) {
+                    this.stage.dispatchEvent(this.eventCompleteLevel);
+                    this._activeLevel++;
+                }
+                break;
+            case 3:
+                this._threshold = Constants_1.LEVEL_THREE_THRESHOLD;
+                if (this._defeatedEnemies >= Constants_1.LEVEL_THREE_THRESHOLD) {
+                    this.stage.dispatchEvent(this.eventCompleteLevel);
+                    this._activeLevel++;
+                }
+                break;
+            case 4:
+                this._threshold = Constants_1.LEVEL_FOUR_THRESHOLD;
+                if (this._defeatedEnemies >= Constants_1.LEVEL_FOUR_THRESHOLD) {
+                    this.stage.dispatchEvent(this.eventCompleteLevel);
+                    this._activeLevel++;
+                }
+            case 5:
+                this._threshold = Constants_1.LEVEL_FIVE_THRESHOLD;
+                if (this._defeatedEnemies >= Constants_1.LEVEL_FIVE_THRESHOLD) {
+                    this.stage.dispatchEvent(this.eventCompleteLevel);
+                    this._activeLevel++;
+                }
+            case 6:
+                this._threshold = Constants_1.LEVEL_SIX_THRESHOLD;
+                if (this._defeatedEnemies >= Constants_1.LEVEL_SIX_THRESHOLD) {
+                    this.stage.dispatchEvent(this.eventCompleteLevel);
+                    this._activeLevel++;
+                }
+            case 7:
+                this._threshold = Constants_1.LEVEL_SEVEN_THRESHOLD;
+                if (this._defeatedEnemies >= Constants_1.LEVEL_SEVEN_THRESHOLD) {
+                    this.stage.dispatchEvent(this.eventCompleteLevel);
+                    this._activeLevel++;
+                }
+        }
+    }
+    resetForNextLevel() {
+        this._defeatedEnemies = 0;
+        this._enemiesSpawned = 0;
+    }
+    reset() {
+        this._activeLevel = 1;
+        this._defeatedEnemies = 0;
+        this._enemiesSpawned = 0;
+    }
+    checkWaveStatus() {
+        if (this._readyToSpawn == false) {
+            return;
+        }
+        if (this._defeatedEnemies % this._activeLevel == 1 || this._enemiesSpawned == 0) {
+            this.stage.dispatchEvent(this.eventSpawnWave);
+            console.log("event dispatched: spawnWave");
+            this._readyToSpawn = false;
+        }
+    }
+}
+exports.LevelManager = LevelManager;
 
 
 /***/ }),
@@ -2495,6 +2684,12 @@ class Player extends GameCharacter_1.GameCharacter {
         if (this._health > this._healthMax) {
             this._health = this._healthMax;
         }
+    }
+    addToStage() {
+        this.stage.addChild(this._sprite);
+        this.stage.addChild(this.weaponSprite);
+        this.stage.setChildIndex(this._sprite, this.stage.numChildren);
+        this.stage.setChildIndex(this._weaponSprite, this.stage.numChildren);
     }
 }
 exports.Player = Player;
@@ -2687,6 +2882,9 @@ class ScreenManager {
         this.winScreen = new createjs.Container();
         let winSprite = assetManager.getSprite("sprites", "sprites/other/winScreen", 300, 300);
         this.winScreen.addChild(winSprite);
+        this.levelCompleteScreen = new createjs.Container();
+        let levelCompleteSprite = assetManager.getSprite("sprites", "sprites/other/levelComplete", 300, 300);
+        this.levelCompleteScreen.addChild(levelCompleteSprite);
         this.eventStartGame = new createjs.Event("gameStarted", true, false);
         this.eventResetGame = new createjs.Event("gameReset", true, false);
         this.eventTitleActive = new createjs.Event("titleActive", true, false);
@@ -2695,12 +2893,14 @@ class ScreenManager {
         this.eventCloseSettings = new createjs.Event("closeSettings", true, false);
         this.eventPaused = new createjs.Event("gamePaused", true, false);
         this.eventUnpaused = new createjs.Event("gameUnpaused", true, false);
+        this.eventLoadNextLevel = new createjs.Event("loadNextLevel", true, false);
     }
     hideAll() {
         this.stage.removeChild(this.titleScreen);
         this.stage.removeChild(this.gameOverScreen);
         this.stage.removeChild(this.gameScreen);
         this.stage.removeChild(this.winScreen);
+        this.stage.removeChild(this.levelCompleteScreen);
     }
     showTitleScreen() {
         this.hideAll();
@@ -2753,6 +2953,15 @@ class ScreenManager {
         this.stage.addChild(this.winScreen);
         this.winScreen.on("click", () => {
             this.stage.dispatchEvent(this.eventResetGame);
+        });
+    }
+    showLevelComplete() {
+        this.hideAll();
+        this.levelCompleteScreen.x = 0;
+        this.levelCompleteScreen.y = 0;
+        this.stage.addChild(this.levelCompleteScreen);
+        this.levelCompleteScreen.on("click", () => {
+            this.stage.dispatchEvent(this.eventLoadNextLevel);
         });
     }
 }
@@ -3011,9 +3220,6 @@ class UserInterface {
     }
     incrementScore() {
         this._score++;
-        if (this._score > 3) {
-            this.screenManager.dispatchWinScreen();
-        }
     }
 }
 exports.UserInterface = UserInterface;
@@ -5352,7 +5558,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("aafeace73d1d20b75978")
+/******/ 		__webpack_require__.h = () => ("e4c0e3e5a12b20fabd0e")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

@@ -15,8 +15,9 @@ export class Enemy extends GameCharacter{
   private _used:boolean;
   private eventPlayerHit:createjs.Event;
   private eventEnemyKilled:createjs.Event;
+  private _arrayNumber:number;
 
-  constructor (stage:createjs.StageGL, assetManager:AssetManager, player:Player) {
+  constructor (stage:createjs.StageGL, assetManager:AssetManager, player:Player, placeInArray:number) {
     super(stage, assetManager, "sprites/firstplayable/smol boi front");
     this.player = player;
     this.shooting = false;
@@ -27,6 +28,7 @@ export class Enemy extends GameCharacter{
     this._speed = 2;
     this.eventPlayerHit = new createjs.Event("playerHit", true, false);
     this.eventEnemyKilled = new createjs.Event("enemyKilled", true, false);
+    this._arrayNumber = placeInArray;
   }
 
   // -------------------------------------------------------------------------------------------- getters/setters
@@ -46,6 +48,15 @@ export class Enemy extends GameCharacter{
   set enemyType(value:string){
     this._enemyType = value;
   }
+
+  get arrayNumber():number{
+    return this._arrayNumber;
+  }
+
+
+  // set arrayNumber(value:number){
+  //   this._arrayNumber = value;
+  // }
 
   // --------------------------------------------------------------------------------------------- private methods
 
@@ -117,7 +128,7 @@ export class Enemy extends GameCharacter{
     if (this.player.state == GameCharacter.STATE_DEAD) return;
 
     if (boxHit(this._sprite, this.player.sprite)){
-      console.log("dispatching event: playerHit");
+      //console.log("dispatching event: playerHit");
       this.sprite.dispatchEvent(this.eventPlayerHit);
     }
 

@@ -5,18 +5,23 @@ import { LEVEL_FIVE_THRESHOLD, LEVEL_FOUR_THRESHOLD, LEVEL_ONE_THRESHOLD, LEVEL_
 export class LevelManager{
 
     private stage:createjs.StageGL;
+    
     private _activeLevel:number;
     private _defeatedEnemies:number;
     private _enemiesSpawned:number;
+    private _readyToSpawn:boolean;
+    private _threshold:number;
+
     private eventCompleteLevel:createjs.Event;
     private eventSpawnWave:createjs.Event;
-    private _readyToSpawn:boolean;
 
     constructor(stage:createjs.StageGL){
         this.stage = stage;
         this._activeLevel = 1;
         this._enemiesSpawned = 0;
         this._readyToSpawn = true;
+        this._threshold = 0;
+        this._defeatedEnemies = 0;
 
         this.eventCompleteLevel = new createjs.Event("completeLevel", true, false);
         this.eventSpawnWave = new createjs.Event("spawnWave", true, false);
@@ -46,49 +51,68 @@ export class LevelManager{
         this._enemiesSpawned = value;
     }
 
+    get readyToSpawn():boolean{
+        return this._readyToSpawn;
+    }
+
+    set readyToSpawn(value:boolean){
+        this._readyToSpawn = value;
+    }
+
+    get threshold():number{
+        return this._threshold;
+    }
+
     public checkWinCondition():void{
         switch (this._activeLevel){
             case 1:
-                if (this._defeatedEnemies == LEVEL_ONE_THRESHOLD){
+                this._threshold = LEVEL_ONE_THRESHOLD;
+                if (this._defeatedEnemies >= LEVEL_ONE_THRESHOLD){
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
                 break;
             
             case 2:
-                if (this._defeatedEnemies == LEVEL_TWO_THRESHOLD){
+                this._threshold = LEVEL_TWO_THRESHOLD;
+                if (this._defeatedEnemies >= LEVEL_TWO_THRESHOLD){
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
                 break;
             
             case 3:
-                if (this._defeatedEnemies == LEVEL_THREE_THRESHOLD){
+                this._threshold = LEVEL_THREE_THRESHOLD;
+                if (this._defeatedEnemies >= LEVEL_THREE_THRESHOLD){
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
                 break;
             
             case 4:
-                if (this._defeatedEnemies == LEVEL_FOUR_THRESHOLD){
+                this._threshold = LEVEL_FOUR_THRESHOLD;
+                if (this._defeatedEnemies >= LEVEL_FOUR_THRESHOLD){
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
             
             case 5:
-                if (this._defeatedEnemies == LEVEL_FIVE_THRESHOLD){
+                this._threshold = LEVEL_FIVE_THRESHOLD;
+                if (this._defeatedEnemies >= LEVEL_FIVE_THRESHOLD){
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
             
             case 6:
-                if (this._defeatedEnemies == LEVEL_SIX_THRESHOLD){
+                this._threshold = LEVEL_SIX_THRESHOLD;
+                if (this._defeatedEnemies >= LEVEL_SIX_THRESHOLD){
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
             
             case 7:
-                if (this._defeatedEnemies == LEVEL_SEVEN_THRESHOLD){
+                this._threshold = LEVEL_SEVEN_THRESHOLD;
+                if (this._defeatedEnemies >= LEVEL_SEVEN_THRESHOLD){
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
@@ -107,12 +131,18 @@ export class LevelManager{
     }
 
     public checkWaveStatus(){
-        if (this._readyToSpawn == false) return;
-        if (this._defeatedEnemies % this._activeLevel == 1){
-            this._readyToSpawn = false;
+        if (this._readyToSpawn == false) {
+            //console.log("not ready to spawn"); 
+            return;
+        }
+
+        if (this._defeatedEnemies % this._activeLevel == 1 || this._enemiesSpawned == 0){
             this.stage.dispatchEvent(this.eventSpawnWave);
+            console.log("event dispatched: spawnWave");
+            this._readyToSpawn = false;
         }
     }
+
 
 
 }

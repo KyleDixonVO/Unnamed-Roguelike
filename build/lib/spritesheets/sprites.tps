@@ -657,6 +657,7 @@
             <key type="filename">sprites/other/background.png</key>
             <key type="filename">sprites/other/cloud.png</key>
             <key type="filename">sprites/other/gameOverScreen.png</key>
+            <key type="filename">sprites/other/levelComplete.png</key>
             <key type="filename">sprites/other/pauseOverlay.png</key>
             <key type="filename">sprites/other/titleScreen.png</key>
             <key type="filename">sprites/other/winScreen.png</key>

@@ -186,8 +186,5 @@ export class UserInterface {
 
     public incrementScore(){
         this._score++;
-        if (this._score > 3){
-            this.screenManager.dispatchWinScreen();
-        }
     }
 }

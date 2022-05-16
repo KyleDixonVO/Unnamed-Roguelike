@@ -103,4 +103,11 @@ public heal():void{
         this._health = this._healthMax;
     }
 }
+
+public override addToStage(): void {
+    this.stage.addChild(this._sprite);
+    this.stage.addChild(this.weaponSprite);
+    this.stage.setChildIndex(this._sprite, this.stage.numChildren);
+    this.stage.setChildIndex(this._weaponSprite, this.stage.numChildren);
+}
 }

@@ -16,6 +16,8 @@ import { Inventory } from "./Inventory";
 import { boxHit, radiusHit, randomMe } from "./Toolkit";
 import { Tile } from "./Tile"; 
 import { Pickup } from "./Pickup";
+import { LevelManager } from "./LevelManager";
+import { PoolManager } from "./PoolManager";
 
 
 // game variables
@@ -38,6 +40,7 @@ let shiftPress:boolean = false;
 let shiftUp:boolean = true;
 let LKey:boolean = false;
 let LUp:boolean = true;
+let gameStarted:boolean = false;
 
 let weaponNum:number = 0;
 let stageNum:number = 1;
@@ -57,7 +60,9 @@ let newProjectile:Projectile;
 let newEnemy:Enemy;
 let newPickup:Pickup;
 let playerInventory:Inventory;
-let bank:Inventory;
+let levelManager:LevelManager;
+let poolManager:PoolManager;
+
 
 
 
@@ -65,7 +70,6 @@ let bank:Inventory;
 let invincibleTimer:number;
 let collisionTimer:number;
 let fireDelayTimer:number;
-let reloadTimer:number;
 
 
 
@@ -80,7 +84,7 @@ function onReady(e:createjs.Event):void {
     // construct game objects here
     screenManager = new ScreenManager(stage, assetManager);
     
-    
+    levelManager = new LevelManager(stage);
 
     player = new Player(stage, assetManager);
 
@@ -90,7 +94,7 @@ function onReady(e:createjs.Event):void {
     
     //enemy pool
     for (let i:number =0; i < ENEMY_MAX; i++){
-        enemyPool.push(new Enemy(stage, assetManager, player));
+        enemyPool.push(new Enemy(stage, assetManager, player, i));
     }
 
     //enemy inventories
@@ -146,9 +150,12 @@ function onReady(e:createjs.Event):void {
     stage.on("gamePaused", onGameEvent);
     stage.on("gameUnpaused", onGameEvent);
     stage.on("playerHit", onGameEvent);
-    stage.on("enemyKilled", onGameEvent);
+    stage.on("enemyKilled", onGameEvent, false);
     stage.on("pickupMedkit", onGameEvent);
     stage.on("pickupAmmo", onGameEvent);
+    stage.on("spawnWave", onGameEvent);
+    stage.on("completeLevel", onGameEvent);
+    stage.on("loadNextLevel", onGameEvent);
 
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
@@ -181,6 +188,9 @@ function onGameEvent(e:createjs.Event):void {
 
         case "enemyKilled":
             console.log("received dispatch: enemyKilled");
+            levelManager.defeatedEnemies++;
+            console.log(levelManager.defeatedEnemies);
+            levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
             break;
@@ -190,17 +200,14 @@ function onGameEvent(e:createjs.Event):void {
             console.log("received dispatch: gameStarted ");
             screenManager.showGame();
             showLevel();
-            loadLevel(1);
+            loadLevel(levelManager.activeLevel);
             player.addToStage();
             player.startMovement();
 
             console.log(player.state);
             userInterface.showPlayerHUD();
             addPickUp();
-            onAddEnemy();
-            // onAddEnemy();
-            // onAddEnemy();
-            // onAddEnemy();
+            gameStarted = true;
             break;
 
 
@@ -209,6 +216,8 @@ function onGameEvent(e:createjs.Event):void {
             userInterface.reset();
             hideLevel();
             screenManager.showTitleScreen();
+            levelManager.reset();
+            gameStarted == false;
             break;
         
 
@@ -230,6 +239,7 @@ function onGameEvent(e:createjs.Event):void {
             player.reset();
 
             resetPools();
+            levelManager.reset();
             break;
 
 
@@ -299,6 +309,37 @@ function onGameEvent(e:createjs.Event):void {
             console.log("received dispatch: pickupAmmo");
             playerInventory.refillAmmo();
             break;
+        
+        case "spawnWave":
+            console.log("received dispatch: spawnWave");
+            console.log(levelManager.enemiesSpawned, levelManager.threshold);
+            //if (levelManager.enemiesSpawned > levelManager.threshold) return;
+            for (let i = 0; i < levelManager.activeLevel; i++){
+                console.log("spawning enemy");
+                onAddEnemy();
+            }
+            break;
+        
+        case "completeLevel":
+            console.log("received dispatch: completeLevel");
+            screenManager.showLevelComplete();
+            levelManager.resetForNextLevel();
+            resetPools();
+            gameStarted = false;
+            break;
+        
+        case "loadNextLevel":
+            console.log("received dispatch: loadNextLevel");
+            screenManager.showGame();
+            showLevel();
+            loadLevel(levelManager.activeLevel);
+            player.addToStage();
+            player.startMovement();
+            gameStarted = true;
+
+            console.log(player.state);
+            userInterface.showPlayerHUD();
+            break;
     }
 }
 
@@ -363,6 +404,7 @@ function onAddEnemy():void{
             newEnemy.addToStage();
             newEnemy.sprite.x = randomMe(50, 550);
             newEnemy.sprite.y = randomMe(50, 550);
+            console.log(newEnemy);
             break;
         }
     }
@@ -413,7 +455,6 @@ function resetPools():void{
 
 }
 
-
 function onInvincibleTimer():void{
     window.clearInterval(invincibleTimer);
     iFramesActive = false;
@@ -434,10 +475,14 @@ function onCollsionTimer():void{
 
 function projectileEnemyCollision(){
     for (let projectile of playerProjectilePool){
-        if (!projectile.used) return;
+        if (!projectile.used) continue;
         for (let enemy of enemyPool){
-            if (!enemy.used) return;
+            if (!enemy.used) continue;
+            //console.log(enemy);
+            //console.log("enemy state: " + enemy.state);
             if (radiusHit( enemy.sprite, 16, projectile.sprite, 2)){
+                if (enemy.state == GameCharacter.STATE_DEAD || enemy.state == GameCharacter.STATE_DYING || enemy.state == GameCharacter.STATE_IDLE) continue;
+                console.log("hit!");
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
             }
@@ -459,14 +504,33 @@ function projectilePlayerCollision(){
 
 function tileCollisionDetection(){
 
-    // for (let tile of tilePool)
-    // for (let enemy of enemyPool){
-    //     if (!enemy.used) return;
-    //     if (boxHit())
-    // }
+    for (let tile of tilePool){
+        for (let i = 0; i < WIDTH_IN_TILES; i++){
+            for (let enemy of enemyPool){
+                if (!enemy.used) continue;
+                if (boxHit(enemy.sprite, tile[i].sprite)){
+                    //needs behaviours
+                }
+            }
+
+            for (let projectile of projectilePool){
+                if (!projectile.used) continue;
+                if (boxHit(projectile.sprite, tile[i].sprite)){
+                    //needs behaviours
+                }
+            }
+
+            for (let projectile of playerProjectilePool){
+                if (!projectile.used) continue;
+                if (boxHit(projectile.sprite, tile[i].sprite)){
+                    //needs behaviours
+                }
+            }
+        }
+
+    }
+
 }
-
-
 
 function monitorKeys():void {
     if (upKey == true){
@@ -491,11 +555,11 @@ function monitorKeys():void {
 
     if (rightKey == false && leftKey == false && upKey == false && downKey == false){
         player.direction = GameCharacter.DIR_NEUTRAL;
-        console.log("No Input");
+        //console.log("No Input");
     }
 
     if (spacePress == true){      
-        console.log("Fired a projectile!");
+        //console.log("Fired a projectile!");
         startFireDelayTimer();
     }
 
@@ -686,6 +750,13 @@ function onTick(e:createjs.Event) {
     userInterface.updateHUD();
     startCollsionTimer();
     projectilePlayerCollision();
+    
+    levelManager.checkWinCondition();
+    //console.log(paused, gameStarted);
+    if (gameStarted == true && paused == false){
+        //console.log("update checking wave");
+        levelManager.checkWaveStatus();
+    }
     playerInventory.update();
 
     // update the stage

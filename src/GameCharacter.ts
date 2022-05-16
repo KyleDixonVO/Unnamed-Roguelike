@@ -117,9 +117,9 @@ get healthMax(){
 
 public addToStage():void {
     this.stage.addChild(this._sprite);
-    this.stage.addChild(this.weaponSprite);
+    //this.stage.addChild(this.weaponSprite);
     this.stage.setChildIndex(this._sprite, this.stage.numChildren);
-    this.stage.setChildIndex(this._weaponSprite, this.stage.numChildren);
+    //this.stage.setChildIndex(this._weaponSprite, this.stage.numChildren);
 }
 
 public removeFromStage():void {
@@ -224,5 +224,4 @@ public unpause():void{
     this._state = this._stateBeforePause;
     console.log("state after pausing: " + this._state);
 }
-
 }

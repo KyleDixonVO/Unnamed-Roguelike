@@ -8,6 +8,7 @@ export class ScreenManager {
     private gameScreen:createjs.Sprite;
     private gameOverScreen:createjs.Container;
     private winScreen:createjs.Container;
+    private levelCompleteScreen:createjs.Container;
 
     //custom events
     private eventTitleActive:createjs.Event;
@@ -18,6 +19,7 @@ export class ScreenManager {
     private eventPaused:createjs.Event;
     private eventCloseSettings:createjs.Event;
     private eventUnpaused:createjs.Event;
+    private eventLoadNextLevel:createjs.Event;
 
     constructor(stage:createjs.StageGL, assetManager:AssetManager) {
         this.stage = stage;
@@ -41,6 +43,11 @@ export class ScreenManager {
         let winSprite:createjs.Sprite = assetManager.getSprite("sprites", "sprites/other/winScreen", 300, 300);
         this.winScreen.addChild(winSprite);
 
+        this.levelCompleteScreen = new createjs.Container();
+
+        let levelCompleteSprite:createjs.Sprite = assetManager.getSprite("sprites", "sprites/other/levelComplete", 300, 300);
+        this.levelCompleteScreen.addChild(levelCompleteSprite);
+
         //custom event instantiation
 
         this.eventStartGame = new createjs.Event("gameStarted", true, false);
@@ -51,6 +58,7 @@ export class ScreenManager {
         this.eventCloseSettings = new createjs.Event("closeSettings", true, false);
         this.eventPaused = new createjs.Event("gamePaused", true, false);
         this.eventUnpaused = new createjs.Event("gameUnpaused", true, false);
+        this.eventLoadNextLevel = new createjs.Event("loadNextLevel", true, false);
 
         
     }
@@ -62,6 +70,7 @@ export class ScreenManager {
         this.stage.removeChild(this.gameOverScreen);
         this.stage.removeChild(this.gameScreen);
         this.stage.removeChild(this.winScreen);
+        this.stage.removeChild(this.levelCompleteScreen);
     }
 
     //public methods
@@ -130,6 +139,16 @@ export class ScreenManager {
         this.stage.addChild(this.winScreen);
         this.winScreen.on("click", ()=> {
             this.stage.dispatchEvent(this.eventResetGame);
+        })
+    }
+
+    public showLevelComplete():void{
+        this.hideAll();
+        this.levelCompleteScreen.x = 0;
+        this.levelCompleteScreen.y = 0;
+        this.stage.addChild(this.levelCompleteScreen);
+        this.levelCompleteScreen.on("click", ()=> {
+            this.stage.dispatchEvent(this.eventLoadNextLevel);
         })
     }
 
