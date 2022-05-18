@@ -34,8 +34,11 @@ protected _stateBeforePause:number;
 
 //Protected variables
 protected stage:createjs.StageGL;
-protected deltaX:number;
-protected deltaY:number;
+protected _deltaX:number;
+protected _deltaY:number;
+protected _lastX:number;
+protected _lastY:number;
+protected _colliding:boolean;
 
 protected _weaponSprite:createjs.Sprite;
 
@@ -46,14 +49,17 @@ constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string
     this._stateBeforePause = GameCharacter.STATE_IDLE;
     this._speed = DEFAULT_SPEED;
     this._health = DEFAULT_HEALTH;
-    this.deltaX = 0;
-    this.deltaY = 0;
+    this._deltaX = 0;
+    this._deltaY = 0;
     this._direction = GameCharacter.DIR_NEUTRAL;
     this._facing = GameCharacter.DIR_DOWN;
     this._healthMax = DEFAULT_HEALTH;
 
     //construct and place sprite
     this._sprite = assetManager.getSprite("sprites", animation, STAGE_WIDTH/2, STAGE_HEIGHT/2);
+    this._lastX = this._sprite.x;
+    this._lastY = this._sprite.y;
+    this._colliding = false;
     this._weaponSprite = assetManager.getSprite("sprites", "sprites/firstplayable/pistol front", this._sprite.x, this._sprite.y);
 }
 
@@ -113,9 +119,49 @@ get healthMax(){
     return this._healthMax;
 }
 
+get deltaX():number{
+    return this._deltaX;
+}
+
+set deltaX(value:number){
+    this._deltaX = value;
+}
+
+get deltaY():number{
+    return this._deltaY;
+}
+
+set deltaY(value:number){
+    this._deltaY = value;
+}
+
+get lastX():number{
+    return this._lastX;
+}
+
+set lastX(value:number){
+    this._lastX = value;
+}
+
+get lastY():number{
+    return this._lastY;
+}
+
+set lastY(value:number){
+    this._lastY = value;
+}
+
+get colliding():boolean{
+    return this._colliding;
+}
+
+set colliding(value:boolean){
+    this._colliding = value;
+}
+
 //--------------------------------------------------------------------------------------------------------------------- public methods
 
-public addToStage():void {
+public addToStage():void{
     this.stage.addChild(this._sprite);
     //this.stage.addChild(this.weaponSprite);
     this.stage.setChildIndex(this._sprite, this.stage.numChildren);
@@ -135,8 +181,8 @@ public spriteDirection():void {
 
     switch (this._direction){
         case GameCharacter.DIR_UP:
-            this.deltaX = 0;
-            this.deltaY = -1;
+            this._deltaX = 0;
+            this._deltaY = -1;
             this._sprite.gotoAndPlay("sprites/firstplayable/player back");
             this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol back");
             this._weaponSprite.x = this._sprite.x;
@@ -146,8 +192,8 @@ public spriteDirection():void {
             break;
 
         case GameCharacter.DIR_DOWN:
-            this.deltaX = 0;
-            this.deltaY = 1;
+            this._deltaX = 0;
+            this._deltaY = 1;
             this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
             this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol front");
             this._weaponSprite.x = this._sprite.x;
@@ -157,8 +203,8 @@ public spriteDirection():void {
             break;
         
         case GameCharacter.DIR_LEFT:
-            this.deltaX = -1;
-            this.deltaY = 0;
+            this._deltaX = -1;
+            this._deltaY = 0;
             this._sprite.gotoAndPlay("sprites/firstplayable/player left");
             this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol left");
             this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width/2;
@@ -168,8 +214,8 @@ public spriteDirection():void {
             break;
 
         case GameCharacter.DIR_RIGHT:
-            this.deltaX = 1;
-            this.deltaY = 0;
+            this._deltaX = 1;
+            this._deltaY = 0;
             this._sprite.gotoAndPlay("sprites/firstplayable/player right");
             this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol right");
             this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width/2;
@@ -179,8 +225,8 @@ public spriteDirection():void {
             break;
 
         case GameCharacter.DIR_NEUTRAL:
-            this.deltaX = 0;
-            this.deltaY = 0
+            this._deltaX = 0;
+            this._deltaY = 0
             break;
     }
 }
@@ -208,10 +254,11 @@ public update():void {
 
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED || this._state == GameCharacter.STATE_IDLE) { return };
     //move based on displacements
-    this._sprite.x += this.deltaX * this.speed;
-    this._sprite.y += this.deltaY * this.speed;
-    this._weaponSprite.x += this.deltaX * this.speed;
-    this._weaponSprite.y += this.deltaY * this.speed;
+    this._sprite.x += this._deltaX * this.speed;
+    this._sprite.y += this._deltaY * this.speed;
+    this._weaponSprite.x += this._deltaX * this.speed;
+    this._weaponSprite.y += this._deltaY * this.speed;
+    this._colliding = false;
 }
 
 public pause():void{
@@ -223,5 +270,15 @@ public pause():void{
 public unpause():void{
     this._state = this._stateBeforePause;
     console.log("state after pausing: " + this._state);
+}
+
+public setLastPosition(){
+    this.lastX = this._sprite.x;
+    this.lastY = this._sprite.y;
+}
+
+public returnToLastPosition(){
+    this._sprite.x = this._lastX;
+    this._sprite.y = this._lastY;
 }
 }

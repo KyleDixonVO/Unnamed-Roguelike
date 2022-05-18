@@ -12,17 +12,17 @@ export const I_FRAMES_DEFAULT:number = 1000;
 export const ENEMY_MAX:number = 25;
 export const PICKUP_MAX:number = 4;
 
-export const LEVEL_ONE_THRESHOLD:number = 3;
-export const LEVEL_TWO_THRESHOLD:number = 6;
-export const LEVEL_THREE_THRESHOLD:number = 10;
-export const LEVEL_FOUR_THRESHOLD:number = 13;
-export const LEVEL_FIVE_THRESHOLD:number = 17;
-export const LEVEL_SIX_THRESHOLD:number = 21;
-export const LEVEL_SEVEN_THRESHOLD:number = 25;
+export const LEVEL_ONE_THRESHOLD:number = 6;
+export const LEVEL_TWO_THRESHOLD:number = 12;
+export const LEVEL_THREE_THRESHOLD:number = 18;
+export const LEVEL_FOUR_THRESHOLD:number = 24;
+export const LEVEL_FIVE_THRESHOLD:number = 30;
+export const LEVEL_SIX_THRESHOLD:number = 36;
+export const LEVEL_SEVEN_THRESHOLD:number = 42;
 
 //general weapon constants
 export const PROJECTILE_MAX:number = 20;
-export const PLAYER_PROJECTILE_MAX:number = 10;
+export const PLAYER_PROJECTILE_MAX:number = 20;
 export const DEF_PROJECTILE_SPEED:number = 10;
 export const DEF_PROJECTILE_DAMAGE:number = 2;
 export const DEF_FIRE_DELAY:number = 500;

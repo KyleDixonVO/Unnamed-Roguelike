@@ -4,6 +4,7 @@ import { Inventory } from "./Inventory";
 import { Pickup } from "./Pickup";
 import { GameCharacter } from "./GameCharacter";
 import { Tile } from "./Tile";
+import { Enemy } from "./Enemy";
 
 export class Projectile {
 
@@ -94,13 +95,14 @@ export class Projectile {
     }
 
     public reset():void{
-        this._bounces = 0;
+        
         this._damage = DEF_PROJECTILE_DAMAGE;
         this._speed = DEF_PROJECTILE_SPEED;
         this._used = false;
         this.deltaX = 0;
         this.deltaY = 0;
         this.stage.removeChild(this._sprite);
+        this._bounces = 0;
     }
 
     public activate():void{
@@ -164,22 +166,24 @@ export class Projectile {
 
     }
 
-    public secondaryEffect(collsionTrigger:any):void{
+    public secondaryEffect(collsionTrigger:unknown):void{
         switch (this.controllerInventory.currentWeapon){
             case PISTOL:
                 this.reset();
                 break;
             
             case LASER:
-                if (collsionTrigger.type != Tile) return;
+                if (collsionTrigger.constructor.name == Enemy.name) return;
                 this._bounces++;
+                if (this._sprite.rotation == 90 || this._sprite.rotation == 270){ this.deltaY = -this.deltaY};
+                if (this._sprite.rotation == 0 || this._sprite.rotation == 180){ this.deltaX = -this.deltaX};
                 if (this._bounces >= 5){
                     this.reset();
                 }
                 break;
             
             case RAILGUN:
-                if (collsionTrigger.type != Tile) return;
+                if (collsionTrigger.constructor.name == Enemy.name) return;
                 this.reset();
                 break;
 

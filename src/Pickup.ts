@@ -85,6 +85,7 @@ export class Pickup{
 
     public addToStage():void{
         this.checkType();
+        this._used = true;
         this.stage.addChild(this._sprite);
     }
 
@@ -114,6 +115,13 @@ export class Pickup{
     public reset():void{
         this._used = false;
         this._hit = false;
+        this.stage.removeChild(this._sprite);
+    }
+
+    public onDrop(valueX:number, valueY:number):void{
+        this.randomizeType();
+        this.setPostion(valueX, valueY);
+        this.addToStage();
     }
 
 

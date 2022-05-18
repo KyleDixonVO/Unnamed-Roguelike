@@ -142,6 +142,7 @@ export class UserInterface {
         this.stage.removeChild(this.healthOutline);
         this.stage.removeChild(this.txtScore);
         this.stage.removeChild(this.txtScore);
+        this.stage.removeChild(this.txtAmmo);
     }
 
     public showSettingsMenu(){

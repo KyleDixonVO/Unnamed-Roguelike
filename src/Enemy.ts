@@ -1,5 +1,5 @@
 import { AssetManager} from "./AssetManager";
-import { DEFAULT_HEALTH, DEFAULT_SPEED } from "./Constants";
+import { DEFAULT_HEALTH, DEFAULT_SPEED, TESLA_CHAIN_DAMAGE } from "./Constants";
 import { GameCharacter } from "./GameCharacter";
 import { Player } from "./Player";
 import { boxHit } from "./Toolkit";
@@ -19,6 +19,8 @@ export class Enemy extends GameCharacter{
 
   constructor (stage:createjs.StageGL, assetManager:AssetManager, player:Player, placeInArray:number) {
     super(stage, assetManager, "sprites/firstplayable/smol boi front");
+    this._healthMax = 5;
+    this._health = 5;
     this.player = player;
     this.shooting = false;
     this._enemyType = this.melee;
@@ -64,9 +66,9 @@ export class Enemy extends GameCharacter{
     this._state = GameCharacter.STATE_DEAD;
     //temporary tween alpha to zero
 
-    createjs.Tween.get(this._sprite, {useTicks:true}).to({alpha:0}, 30).wait(10).call(()=>{
+    //createjs.Tween.get(this._sprite, {useTicks:true}).to({alpha:0}, 30).wait(10).call(()=>{
       this.reset();
-    });
+    //});
 
     // this.stopMovement();
     // this._sprite.on("animationend", ()=> {
@@ -81,7 +83,7 @@ export class Enemy extends GameCharacter{
 
   // ------------------------------------------------------------------------------------------------- public methods
   public trackPlayer(player:Player):void{
-    if (this._state == GameCharacter.STATE_PAUSED || this._state == GameCharacter.STATE_IDLE || this._state == GameCharacter.STATE_DEAD) return;
+    if (this._state == GameCharacter.STATE_PAUSED  || this._state == GameCharacter.STATE_DEAD) return;
     this.player = player;
     this._sprite.play();
     this._state = GameCharacter.STATE_MOVING;
@@ -93,11 +95,12 @@ export class Enemy extends GameCharacter{
     this._sprite.x = 300;
     this._sprite.y = 300;
     this._speed = 2;
-    this._health = DEFAULT_HEALTH;
+    this._health = this._healthMax;
     this._state = GameCharacter.STATE_IDLE;
     this._used = false;
     this._enemyType = this.melee;
-    createjs.Tween.removeTweens(this._sprite);
+    this._colliding = false; 
+    //createjs.Tween.removeTweens(this._sprite);
     this.removeFromStage();
   }
 
@@ -113,7 +116,7 @@ export class Enemy extends GameCharacter{
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED || this._state == GameCharacter.STATE_IDLE) { return };
 
     //replace with trig later to solve diagonal speed boost
-
+    this._colliding = false;
     if (this._sprite.x > this.player.sprite.x){ this.deltaX = -1}
     else if (this._sprite.x < this.player.sprite.x){ this.deltaX = 1}
     else (this.deltaX = 0);
@@ -129,7 +132,9 @@ export class Enemy extends GameCharacter{
 
     if (boxHit(this._sprite, this.player.sprite)){
       //console.log("dispatching event: playerHit");
+      this._colliding = true;
       this.sprite.dispatchEvent(this.eventPlayerHit);
+      this.returnToLastPosition();
     }
 
   }

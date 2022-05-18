@@ -136,7 +136,7 @@ export class LevelManager{
             return;
         }
 
-        if (this._defeatedEnemies % this._activeLevel == 1 || this._enemiesSpawned == 0){
+        if (this._defeatedEnemies % this._activeLevel == 0 || this._enemiesSpawned == 0){
             this.stage.dispatchEvent(this.eventSpawnWave);
             console.log("event dispatched: spawnWave");
             this._readyToSpawn = false;

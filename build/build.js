@@ -1066,15 +1066,15 @@ exports.DEFAULT_HEALTH = 10;
 exports.I_FRAMES_DEFAULT = 1000;
 exports.ENEMY_MAX = 25;
 exports.PICKUP_MAX = 4;
-exports.LEVEL_ONE_THRESHOLD = 3;
-exports.LEVEL_TWO_THRESHOLD = 6;
-exports.LEVEL_THREE_THRESHOLD = 10;
-exports.LEVEL_FOUR_THRESHOLD = 13;
-exports.LEVEL_FIVE_THRESHOLD = 17;
-exports.LEVEL_SIX_THRESHOLD = 21;
-exports.LEVEL_SEVEN_THRESHOLD = 25;
+exports.LEVEL_ONE_THRESHOLD = 6;
+exports.LEVEL_TWO_THRESHOLD = 12;
+exports.LEVEL_THREE_THRESHOLD = 18;
+exports.LEVEL_FOUR_THRESHOLD = 24;
+exports.LEVEL_FIVE_THRESHOLD = 30;
+exports.LEVEL_SIX_THRESHOLD = 36;
+exports.LEVEL_SEVEN_THRESHOLD = 42;
 exports.PROJECTILE_MAX = 20;
-exports.PLAYER_PROJECTILE_MAX = 10;
+exports.PLAYER_PROJECTILE_MAX = 20;
 exports.DEF_PROJECTILE_SPEED = 10;
 exports.DEF_PROJECTILE_DAMAGE = 2;
 exports.DEF_FIRE_DELAY = 500;
@@ -1294,7 +1294,6 @@ exports.ASSET_MANIFEST = [
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Enemy = void 0;
-const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
 const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
 const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 class Enemy extends GameCharacter_1.GameCharacter {
@@ -1303,6 +1302,8 @@ class Enemy extends GameCharacter_1.GameCharacter {
         this.melee = "melee";
         this.ranged = "ranged";
         this.boss = "boss";
+        this._healthMax = 5;
+        this._health = 5;
         this.player = player;
         this.shooting = false;
         this._enemyType = this.melee;
@@ -1331,12 +1332,10 @@ class Enemy extends GameCharacter_1.GameCharacter {
     }
     onKilled() {
         this._state = GameCharacter_1.GameCharacter.STATE_DEAD;
-        createjs.Tween.get(this._sprite, { useTicks: true }).to({ alpha: 0 }, 30).wait(10).call(() => {
-            this.reset();
-        });
+        this.reset();
     }
     trackPlayer(player) {
-        if (this._state == GameCharacter_1.GameCharacter.STATE_PAUSED || this._state == GameCharacter_1.GameCharacter.STATE_IDLE || this._state == GameCharacter_1.GameCharacter.STATE_DEAD)
+        if (this._state == GameCharacter_1.GameCharacter.STATE_PAUSED || this._state == GameCharacter_1.GameCharacter.STATE_DEAD)
             return;
         this.player = player;
         this._sprite.play();
@@ -1347,11 +1346,11 @@ class Enemy extends GameCharacter_1.GameCharacter {
         this._sprite.x = 300;
         this._sprite.y = 300;
         this._speed = 2;
-        this._health = Constants_1.DEFAULT_HEALTH;
+        this._health = this._healthMax;
         this._state = GameCharacter_1.GameCharacter.STATE_IDLE;
         this._used = false;
         this._enemyType = this.melee;
-        createjs.Tween.removeTweens(this._sprite);
+        this._colliding = false;
         this.removeFromStage();
     }
     killed() {
@@ -1363,6 +1362,7 @@ class Enemy extends GameCharacter_1.GameCharacter {
             return;
         }
         ;
+        this._colliding = false;
         if (this._sprite.x > this.player.sprite.x) {
             this.deltaX = -1;
         }
@@ -1384,7 +1384,9 @@ class Enemy extends GameCharacter_1.GameCharacter {
         if (this.player.state == GameCharacter_1.GameCharacter.STATE_DEAD)
             return;
         if ((0, Toolkit_1.boxHit)(this._sprite, this.player.sprite)) {
+            this._colliding = true;
             this.sprite.dispatchEvent(this.eventPlayerHit);
+            this.returnToLastPosition();
         }
     }
     takeDamage(value) {
@@ -1464,6 +1466,7 @@ let screenManager;
 let newProjectile;
 let newEnemy;
 let newPickup;
+let newTile;
 let playerInventory;
 let levelManager;
 let poolManager;
@@ -1477,6 +1480,7 @@ function onReady(e) {
     player = new Player_1.Player(stage, assetManager);
     playerInventory = new Inventory_1.Inventory(player);
     userInterface = new UserInterface_1.UserInterface(stage, assetManager, player, screenManager, playerInventory);
+    newTile = new Tile_1.Tile(stage, assetManager, "");
     for (let i = 0; i < Constants_1.ENEMY_MAX; i++) {
         enemyPool.push(new Enemy_1.Enemy(stage, assetManager, player, i));
     }
@@ -1520,7 +1524,7 @@ function onReady(e) {
     stage.on("gamePaused", onGameEvent);
     stage.on("gameUnpaused", onGameEvent);
     stage.on("playerHit", onGameEvent);
-    stage.on("enemyKilled", onGameEvent, false);
+    stage.on("enemyKilled", onGameEvent);
     stage.on("pickupMedkit", onGameEvent);
     stage.on("pickupAmmo", onGameEvent);
     stage.on("spawnWave", onGameEvent);
@@ -1532,6 +1536,8 @@ function onReady(e) {
     screenManager.showTitleScreen();
 }
 function onGameEvent(e) {
+    console.log("target:" + e.target);
+    console.log("current target:" + e.currentTarget);
     console.log("called onGameEvent");
     switch (e.type) {
         case "playerKilled":
@@ -1555,6 +1561,15 @@ function onGameEvent(e) {
             levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
+            let rng = (0, Toolkit_1.randomMe)(1, 20);
+            console.log("rng:" + rng);
+            if (rng == 20) {
+                for (let pickup of pickupPool) {
+                    if (!pickup.used) {
+                        pickup.onDrop(100, 100);
+                    }
+                }
+            }
             break;
         case "gameStarted":
             console.log("received dispatch: gameStarted ");
@@ -1575,8 +1590,10 @@ function onGameEvent(e) {
             screenManager.showTitleScreen();
             levelManager.reset();
             gameStarted == false;
+            resetPools();
             break;
         case "titleActive":
+            resetPools();
             console.log("received dispatch: titleActive ");
             hideLevel();
             userInterface.showStartMenu();
@@ -1651,9 +1668,12 @@ function onGameEvent(e) {
         case "spawnWave":
             console.log("received dispatch: spawnWave");
             console.log(levelManager.enemiesSpawned, levelManager.threshold);
+            if (levelManager.enemiesSpawned > levelManager.threshold)
+                return;
             for (let i = 0; i < levelManager.activeLevel; i++) {
                 console.log("spawning enemy");
                 onAddEnemy();
+                levelManager.enemiesSpawned++;
             }
             break;
         case "completeLevel":
@@ -1665,6 +1685,7 @@ function onGameEvent(e) {
             break;
         case "loadNextLevel":
             console.log("received dispatch: loadNextLevel");
+            resetPools();
             screenManager.showGame();
             showLevel();
             loadLevel(levelManager.activeLevel);
@@ -1681,12 +1702,12 @@ function addProjectile() {
         return;
     if (playerInventory.currentWeaponAmmo == 0)
         return;
-    playerInventory.decrementAmmo();
     for (newProjectile of playerProjectilePool) {
         if (newProjectile.used == false) {
             newProjectile.used = true;
             newProjectile.passIn(player, playerInventory);
             newProjectile.activate();
+            playerInventory.decrementAmmo();
             break;
         }
     }
@@ -1827,24 +1848,52 @@ function projectilePlayerCollision() {
 function tileCollisionDetection() {
     for (let tile of tilePool) {
         for (let i = 0; i < Constants_1.WIDTH_IN_TILES; i++) {
+            if (tile[i].sprite.currentAnimation == "sprites/firstplayable/floor1")
+                continue;
             for (let enemy of enemyPool) {
                 if (!enemy.used)
                     continue;
                 if ((0, Toolkit_1.boxHit)(enemy.sprite, tile[i].sprite)) {
-                }
-            }
-            for (let projectile of projectilePool) {
-                if (!projectile.used)
-                    continue;
-                if ((0, Toolkit_1.boxHit)(projectile.sprite, tile[i].sprite)) {
+                    enemy.colliding = true;
+                    enemy.returnToLastPosition();
                 }
             }
             for (let projectile of playerProjectilePool) {
                 if (!projectile.used)
                     continue;
                 if ((0, Toolkit_1.boxHit)(projectile.sprite, tile[i].sprite)) {
+                    console.log("projectile hit a wall");
+                    projectile.secondaryEffect(newTile);
                 }
             }
+            if ((0, Toolkit_1.boxHit)(player.sprite, tile[i].sprite)) {
+                player.colliding = true;
+                player.returnToLastPosition();
+            }
+        }
+    }
+}
+function enemyEnemyCollision() {
+    for (let enemy of enemyPool) {
+        if (!enemy.used)
+            continue;
+        for (let enemy2 of enemyPool) {
+            if (!enemy2.used)
+                continue;
+            if (enemy.arrayNumber == enemy2.arrayNumber)
+                continue;
+            if ((0, Toolkit_1.boxHit)(enemy.sprite, enemy2.sprite)) {
+                enemy.returnToLastPosition();
+            }
+        }
+    }
+}
+function playerEnemyCollision() {
+    for (let enemy of enemyPool) {
+        if (!enemy.used)
+            continue;
+        if ((0, Toolkit_1.boxHit)(enemy.sprite, player.sprite)) {
+            player.returnToLastPosition();
         }
     }
 }
@@ -2007,8 +2056,16 @@ function onKeyUp(e) {
 }
 function onTick(e) {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
+    if (player.colliding == false) {
+        player.setLastPosition();
+    }
     monitorKeys();
     player.update();
+    for (let enemy of enemyPool) {
+        if (enemy.used && enemy.colliding == false) {
+            enemy.setLastPosition();
+        }
+    }
     for (let projectile of playerProjectilePool) {
         if (projectile.used)
             projectile.update();
@@ -2027,6 +2084,9 @@ function onTick(e) {
     userInterface.updateHUD();
     startCollsionTimer();
     projectilePlayerCollision();
+    tileCollisionDetection();
+    enemyEnemyCollision();
+    playerEnemyCollision();
     levelManager.checkWinCondition();
     if (gameStarted == true && paused == false) {
         levelManager.checkWaveStatus();
@@ -2067,12 +2127,15 @@ class GameCharacter {
         this._stateBeforePause = GameCharacter.STATE_IDLE;
         this._speed = Constants_1.DEFAULT_SPEED;
         this._health = Constants_1.DEFAULT_HEALTH;
-        this.deltaX = 0;
-        this.deltaY = 0;
+        this._deltaX = 0;
+        this._deltaY = 0;
         this._direction = GameCharacter.DIR_NEUTRAL;
         this._facing = GameCharacter.DIR_DOWN;
         this._healthMax = Constants_1.DEFAULT_HEALTH;
         this._sprite = assetManager.getSprite("sprites", animation, Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2);
+        this._lastX = this._sprite.x;
+        this._lastY = this._sprite.y;
+        this._colliding = false;
         this._weaponSprite = assetManager.getSprite("sprites", "sprites/firstplayable/pistol front", this._sprite.x, this._sprite.y);
     }
     set speed(value) {
@@ -2111,6 +2174,36 @@ class GameCharacter {
     get healthMax() {
         return this._healthMax;
     }
+    get deltaX() {
+        return this._deltaX;
+    }
+    set deltaX(value) {
+        this._deltaX = value;
+    }
+    get deltaY() {
+        return this._deltaY;
+    }
+    set deltaY(value) {
+        this._deltaY = value;
+    }
+    get lastX() {
+        return this._lastX;
+    }
+    set lastX(value) {
+        this._lastX = value;
+    }
+    get lastY() {
+        return this._lastY;
+    }
+    set lastY(value) {
+        this._lastY = value;
+    }
+    get colliding() {
+        return this._colliding;
+    }
+    set colliding(value) {
+        this._colliding = value;
+    }
     addToStage() {
         this.stage.addChild(this._sprite);
         this.stage.setChildIndex(this._sprite, this.stage.numChildren);
@@ -2128,8 +2221,8 @@ class GameCharacter {
         ;
         switch (this._direction) {
             case GameCharacter.DIR_UP:
-                this.deltaX = 0;
-                this.deltaY = -1;
+                this._deltaX = 0;
+                this._deltaY = -1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player back");
                 this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol back");
                 this._weaponSprite.x = this._sprite.x;
@@ -2137,8 +2230,8 @@ class GameCharacter {
                 this._facing = GameCharacter.DIR_UP;
                 break;
             case GameCharacter.DIR_DOWN:
-                this.deltaX = 0;
-                this.deltaY = 1;
+                this._deltaX = 0;
+                this._deltaY = 1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
                 this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol front");
                 this._weaponSprite.x = this._sprite.x;
@@ -2146,8 +2239,8 @@ class GameCharacter {
                 this._facing = GameCharacter.DIR_DOWN;
                 break;
             case GameCharacter.DIR_LEFT:
-                this.deltaX = -1;
-                this.deltaY = 0;
+                this._deltaX = -1;
+                this._deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player left");
                 this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol left");
                 this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width / 2;
@@ -2155,8 +2248,8 @@ class GameCharacter {
                 this._facing = GameCharacter.DIR_LEFT;
                 break;
             case GameCharacter.DIR_RIGHT:
-                this.deltaX = 1;
-                this.deltaY = 0;
+                this._deltaX = 1;
+                this._deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player right");
                 this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol right");
                 this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width / 2;
@@ -2164,8 +2257,8 @@ class GameCharacter {
                 this._facing = GameCharacter.DIR_RIGHT;
                 break;
             case GameCharacter.DIR_NEUTRAL:
-                this.deltaX = 0;
-                this.deltaY = 0;
+                this._deltaX = 0;
+                this._deltaY = 0;
                 break;
         }
     }
@@ -2194,10 +2287,11 @@ class GameCharacter {
             return;
         }
         ;
-        this._sprite.x += this.deltaX * this.speed;
-        this._sprite.y += this.deltaY * this.speed;
-        this._weaponSprite.x += this.deltaX * this.speed;
-        this._weaponSprite.y += this.deltaY * this.speed;
+        this._sprite.x += this._deltaX * this.speed;
+        this._sprite.y += this._deltaY * this.speed;
+        this._weaponSprite.x += this._deltaX * this.speed;
+        this._weaponSprite.y += this._deltaY * this.speed;
+        this._colliding = false;
     }
     pause() {
         this._stateBeforePause = this._state;
@@ -2207,6 +2301,14 @@ class GameCharacter {
     unpause() {
         this._state = this._stateBeforePause;
         console.log("state after pausing: " + this._state);
+    }
+    setLastPosition() {
+        this.lastX = this._sprite.x;
+        this.lastY = this._sprite.y;
+    }
+    returnToLastPosition() {
+        this._sprite.x = this._lastX;
+        this._sprite.y = this._lastY;
     }
 }
 exports.GameCharacter = GameCharacter;
@@ -2501,7 +2603,7 @@ class LevelManager {
         if (this._readyToSpawn == false) {
             return;
         }
-        if (this._defeatedEnemies % this._activeLevel == 1 || this._enemiesSpawned == 0) {
+        if (this._defeatedEnemies % this._activeLevel == 0 || this._enemiesSpawned == 0) {
             this.stage.dispatchEvent(this.eventSpawnWave);
             console.log("event dispatched: spawnWave");
             this._readyToSpawn = false;
@@ -2583,6 +2685,7 @@ class Pickup {
     }
     addToStage() {
         this.checkType();
+        this._used = true;
         this.stage.addChild(this._sprite);
     }
     removeFromStage() {
@@ -2608,6 +2711,12 @@ class Pickup {
     reset() {
         this._used = false;
         this._hit = false;
+        this.stage.removeChild(this._sprite);
+    }
+    onDrop(valueX, valueY) {
+        this.randomizeType();
+        this.setPostion(valueX, valueY);
+        this.addToStage();
     }
 }
 exports.Pickup = Pickup;
@@ -2709,7 +2818,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Projectile = void 0;
 const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
 const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
-const Tile_1 = __webpack_require__(/*! ./Tile */ "./src/Tile.ts");
+const Enemy_1 = __webpack_require__(/*! ./Enemy */ "./src/Enemy.ts");
 class Projectile {
     constructor(stage, assetManager, animation) {
         this.stage = stage;
@@ -2761,13 +2870,13 @@ class Projectile {
         this._inventory = inventory;
     }
     reset() {
-        this._bounces = 0;
         this._damage = Constants_1.DEF_PROJECTILE_DAMAGE;
         this._speed = Constants_1.DEF_PROJECTILE_SPEED;
         this._used = false;
         this.deltaX = 0;
         this.deltaY = 0;
         this.stage.removeChild(this._sprite);
+        this._bounces = 0;
     }
     activate() {
         switch (this.gamecharacter.facing) {
@@ -2827,15 +2936,23 @@ class Projectile {
                 this.reset();
                 break;
             case Constants_1.LASER:
-                if (collsionTrigger.type != Tile_1.Tile)
+                if (collsionTrigger.constructor.name == Enemy_1.Enemy.name)
                     return;
                 this._bounces++;
+                if (this._sprite.rotation == 90 || this._sprite.rotation == 270) {
+                    this.deltaY = -this.deltaY;
+                }
+                ;
+                if (this._sprite.rotation == 0 || this._sprite.rotation == 180) {
+                    this.deltaX = -this.deltaX;
+                }
+                ;
                 if (this._bounces >= 5) {
                     this.reset();
                 }
                 break;
             case Constants_1.RAILGUN:
-                if (collsionTrigger.type != Tile_1.Tile)
+                if (collsionTrigger.constructor.name == Enemy_1.Enemy.name)
                     return;
                 this.reset();
                 break;
@@ -3181,6 +3298,7 @@ class UserInterface {
         this.stage.removeChild(this.healthOutline);
         this.stage.removeChild(this.txtScore);
         this.stage.removeChild(this.txtScore);
+        this.stage.removeChild(this.txtAmmo);
     }
     showSettingsMenu() {
         this._paused = true;
@@ -5558,7 +5676,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("e4c0e3e5a12b20fabd0e")
+/******/ 		__webpack_require__.h = () => ("a92c23d92804a34975e3")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

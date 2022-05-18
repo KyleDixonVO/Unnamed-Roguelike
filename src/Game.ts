@@ -59,6 +59,7 @@ let screenManager:ScreenManager;
 let newProjectile:Projectile;
 let newEnemy:Enemy;
 let newPickup:Pickup;
+let newTile:Tile;
 let playerInventory:Inventory;
 let levelManager:LevelManager;
 let poolManager:PoolManager;
@@ -91,6 +92,8 @@ function onReady(e:createjs.Event):void {
     playerInventory = new Inventory(player);
 
     userInterface = new UserInterface(stage, assetManager, player, screenManager, playerInventory);
+
+    newTile = new Tile(stage, assetManager, "");
     
     //enemy pool
     for (let i:number =0; i < ENEMY_MAX; i++){
@@ -150,7 +153,7 @@ function onReady(e:createjs.Event):void {
     stage.on("gamePaused", onGameEvent);
     stage.on("gameUnpaused", onGameEvent);
     stage.on("playerHit", onGameEvent);
-    stage.on("enemyKilled", onGameEvent, false);
+    stage.on("enemyKilled", onGameEvent);
     stage.on("pickupMedkit", onGameEvent);
     stage.on("pickupAmmo", onGameEvent);
     stage.on("spawnWave", onGameEvent);
@@ -165,9 +168,9 @@ function onReady(e:createjs.Event):void {
 }
 
 function onGameEvent(e:createjs.Event):void {
-
+    console.log("target:" + e.target);
+    console.log("current target:" + e.currentTarget);
     console.log("called onGameEvent");
-
     switch (e.type) {
         case "playerKilled":
             userInterface.removeAll();
@@ -193,6 +196,15 @@ function onGameEvent(e:createjs.Event):void {
             levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
+            let rng = randomMe(1, 20);
+            console.log("rng:" + rng);
+            if (rng == 20){
+                for (let pickup of pickupPool){
+                    if (!pickup.used){
+                        pickup.onDrop(100,100);
+                    }
+                }
+            }
             break;
         
 
@@ -218,10 +230,12 @@ function onGameEvent(e:createjs.Event):void {
             screenManager.showTitleScreen();
             levelManager.reset();
             gameStarted == false;
+            resetPools();
             break;
         
 
         case "titleActive":
+            resetPools();
             console.log("received dispatch: titleActive ");
             hideLevel();
             userInterface.showStartMenu();
@@ -313,10 +327,11 @@ function onGameEvent(e:createjs.Event):void {
         case "spawnWave":
             console.log("received dispatch: spawnWave");
             console.log(levelManager.enemiesSpawned, levelManager.threshold);
-            //if (levelManager.enemiesSpawned > levelManager.threshold) return;
+            if (levelManager.enemiesSpawned > levelManager.threshold) return;
             for (let i = 0; i < levelManager.activeLevel; i++){
                 console.log("spawning enemy");
                 onAddEnemy();
+                levelManager.enemiesSpawned++;
             }
             break;
         
@@ -330,6 +345,7 @@ function onGameEvent(e:createjs.Event):void {
         
         case "loadNextLevel":
             console.log("received dispatch: loadNextLevel");
+            resetPools();
             screenManager.showGame();
             showLevel();
             loadLevel(levelManager.activeLevel);
@@ -346,12 +362,12 @@ function onGameEvent(e:createjs.Event):void {
 function addProjectile():void{
     if (escapePress == true || player.state == GameCharacter.STATE_DEAD || player.state == GameCharacter.STATE_IDLE) return;
     if (playerInventory.currentWeaponAmmo == 0) return;
-    playerInventory.decrementAmmo();
     for (newProjectile of playerProjectilePool){
         if (newProjectile.used == false){
             newProjectile.used = true;
             newProjectile.passIn(player, playerInventory);
             newProjectile.activate();
+            playerInventory.decrementAmmo();
             break;
         }
     }
@@ -506,30 +522,60 @@ function tileCollisionDetection(){
 
     for (let tile of tilePool){
         for (let i = 0; i < WIDTH_IN_TILES; i++){
+            if (tile[i].sprite.currentAnimation == "sprites/firstplayable/floor1") continue;
             for (let enemy of enemyPool){
                 if (!enemy.used) continue;
                 if (boxHit(enemy.sprite, tile[i].sprite)){
-                    //needs behaviours
+                    enemy.colliding = true;
+                    enemy.returnToLastPosition();
                 }
             }
 
-            for (let projectile of projectilePool){
-                if (!projectile.used) continue;
-                if (boxHit(projectile.sprite, tile[i].sprite)){
-                    //needs behaviours
-                }
-            }
+            // for (let projectile of projectilePool){
+            //     if (!projectile.used) continue;
+            //     if (boxHit(projectile.sprite, tile[i].sprite)){
+            //         //needs behaviours
+            //     }
+            // }
 
             for (let projectile of playerProjectilePool){
                 if (!projectile.used) continue;
                 if (boxHit(projectile.sprite, tile[i].sprite)){
-                    //needs behaviours
+                    console.log("projectile hit a wall");
+                    projectile.secondaryEffect(newTile);
                 }
+            }
+
+            if (boxHit (player.sprite, tile[i].sprite)){
+                player.colliding = true;
+                player.returnToLastPosition();
             }
         }
 
     }
 
+}
+
+function enemyEnemyCollision(){
+    for (let enemy of enemyPool){
+        if (!enemy.used) continue;
+        for (let enemy2 of enemyPool){
+            if (!enemy2.used) continue;
+            if (enemy.arrayNumber == enemy2.arrayNumber) continue;
+            if (boxHit(enemy.sprite, enemy2.sprite)){
+                enemy.returnToLastPosition();
+            }
+        }
+    }
+}
+
+function playerEnemyCollision(){
+    for (let enemy of enemyPool){
+        if (!enemy.used) continue;
+        if (boxHit(enemy.sprite, player.sprite)){
+            player.returnToLastPosition();
+        }
+    }
 }
 
 function monitorKeys():void {
@@ -725,8 +771,17 @@ function onTick(e:createjs.Event) {
 
     // this is your game loop!
     // ...
+    if (player.colliding == false){
+        player.setLastPosition();
+    }
     monitorKeys();
     player.update();
+
+    for (let enemy of enemyPool){
+        if (enemy.used && enemy.colliding == false){
+            enemy.setLastPosition();
+        }
+    }
 
     for (let projectile of playerProjectilePool)
     {
@@ -750,6 +805,9 @@ function onTick(e:createjs.Event) {
     userInterface.updateHUD();
     startCollsionTimer();
     projectilePlayerCollision();
+    tileCollisionDetection();
+    enemyEnemyCollision();
+    playerEnemyCollision();
     
     levelManager.checkWinCondition();
     //console.log(paused, gameStarted);
