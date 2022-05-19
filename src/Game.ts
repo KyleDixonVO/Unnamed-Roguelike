@@ -45,6 +45,7 @@ let gameStarted:boolean = false;
 
 let weaponNum:number = 0;
 let stageNum:number = 1;
+let loopingProps:createjs.PlayPropsConfig;
 
 // game objects
 let player:Player;
@@ -86,6 +87,8 @@ function onReady(e:createjs.Event):void {
 
     // construct game objects here
     settings = new Settings();
+    loopingProps = new createjs.PlayPropsConfig();
+    loopingProps.set({loop: -1, volume: settings.volume});
     screenManager = new ScreenManager(stage, assetManager);
     
     levelManager = new LevelManager(stage);

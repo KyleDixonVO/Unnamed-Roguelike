@@ -1546,6 +1546,7 @@ let LUp = true;
 let gameStarted = false;
 let weaponNum = 0;
 let stageNum = 1;
+let loopingProps;
 let player;
 let enemyPool = [];
 let enemyInventories = [];
@@ -1570,6 +1571,8 @@ let fireDelayTimer;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
     settings = new Settings_1.Settings();
+    loopingProps = new createjs.PlayPropsConfig();
+    loopingProps.set({ loop: -1, volume: settings.volume });
     screenManager = new ScreenManager_1.ScreenManager(stage, assetManager);
     levelManager = new LevelManager_1.LevelManager(stage);
     player = new Player_1.Player(stage, assetManager);
@@ -5847,7 +5850,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("404d8053450cf562b986")
+/******/ 		__webpack_require__.h = () => ("52e869c872f590bc4237")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
