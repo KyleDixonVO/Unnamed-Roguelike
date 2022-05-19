@@ -1767,6 +1767,7 @@ function onGameEvent(e) {
         case "pickupMedkit":
             console.log("received dispatch: pickupHealth");
             player.heal();
+            createjs.Sound.play("Heal", { volume: settings.volume });
             break;
         case "pickupAmmo":
             console.log("received dispatch: pickupAmmo");
@@ -5859,7 +5860,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("432f87c73d529cb22631")
+/******/ 		__webpack_require__.h = () => ("f23f0fa26a3a5f958765")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

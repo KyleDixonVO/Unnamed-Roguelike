@@ -332,6 +332,7 @@ function onGameEvent(e:createjs.Event):void {
         case "pickupMedkit":
             console.log("received dispatch: pickupHealth");
             player.heal();
+            createjs.Sound.play("Heal", {volume: settings.volume});
             break;
         
         case "pickupAmmo":
