@@ -1054,13 +1054,14 @@ exports.AssetManager = AssetManager;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TESLA_CHAIN_DAMAGE = exports.TESLA_IMPACT_DAMAGE = exports.TESLA_ROUND = exports.TESLA = exports.RAILGUN_SPEED = exports.RAILGUN_FIRE_DELAY = exports.RAILGUN_RELOAD_DELAY = exports.RAILGUN_MAG_SIZE = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN_ROUND = exports.RAILGUN = exports.LASER_SPEED = exports.LASER_FIRE_DELAY = exports.LASER_RELOAD_DELAY = exports.LASER_MAG_SIZE = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER_ROUND = exports.LASER = exports.PISTOL_SPEED = exports.PISTOL_FIRE_DELAY = exports.PISTOL_RELOAD_DELAY = exports.PISTOL_MAG_SIZE = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL_ROUND = exports.PISTOL = exports.DEF_FIRE_DELAY = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.PLAYER_PROJECTILE_MAX = exports.PROJECTILE_MAX = exports.LEVEL_SEVEN_THRESHOLD = exports.LEVEL_SIX_THRESHOLD = exports.LEVEL_FIVE_THRESHOLD = exports.LEVEL_FOUR_THRESHOLD = exports.LEVEL_THREE_THRESHOLD = exports.LEVEL_TWO_THRESHOLD = exports.LEVEL_ONE_THRESHOLD = exports.PICKUP_MAX = exports.ENEMY_MAX = exports.I_FRAMES_DEFAULT = exports.DEFAULT_HEALTH = exports.DEFAULT_SPEED = exports.FRAME_RATE = exports.HEIGHT_IN_TILES = exports.WIDTH_IN_TILES = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
-exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = exports.ROCKET_AMMO_MAX = exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = void 0;
+exports.TESLA_IMPACT_DAMAGE = exports.TESLA_ROUND = exports.TESLA = exports.RAILGUN_SPEED = exports.RAILGUN_FIRE_DELAY = exports.RAILGUN_RELOAD_DELAY = exports.RAILGUN_MAG_SIZE = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN_ROUND = exports.RAILGUN = exports.LASER_SPEED = exports.LASER_FIRE_DELAY = exports.LASER_RELOAD_DELAY = exports.LASER_MAG_SIZE = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER_ROUND = exports.LASER = exports.PISTOL_SPEED = exports.PISTOL_FIRE_DELAY = exports.PISTOL_RELOAD_DELAY = exports.PISTOL_MAG_SIZE = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL_ROUND = exports.PISTOL = exports.DEF_FIRE_DELAY = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.PLAYER_PROJECTILE_MAX = exports.PROJECTILE_MAX = exports.LEVEL_SEVEN_THRESHOLD = exports.LEVEL_SIX_THRESHOLD = exports.LEVEL_FIVE_THRESHOLD = exports.LEVEL_FOUR_THRESHOLD = exports.LEVEL_THREE_THRESHOLD = exports.LEVEL_TWO_THRESHOLD = exports.LEVEL_ONE_THRESHOLD = exports.PICKUP_MAX = exports.ENEMY_MAX = exports.I_FRAMES_DEFAULT = exports.DEFAULT_HEALTH = exports.DEFAULT_SPEED = exports.DEFAULT_VOLUME = exports.FRAME_RATE = exports.HEIGHT_IN_TILES = exports.WIDTH_IN_TILES = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
+exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.FLOOR = exports.LEFT_CORNER = exports.RIGHT_CORNER = exports.FRONT_WALL = exports.BACK_WALL = exports.LEFT_WALL = exports.RIGHT_WALL = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = exports.ROCKET_AMMO_MAX = exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = exports.TESLA_CHAIN_DAMAGE = void 0;
 exports.STAGE_WIDTH = 600;
 exports.STAGE_HEIGHT = 600;
 exports.WIDTH_IN_TILES = exports.STAGE_WIDTH / 40;
 exports.HEIGHT_IN_TILES = exports.STAGE_HEIGHT / 40;
 exports.FRAME_RATE = 30;
+exports.DEFAULT_VOLUME = 1;
 exports.DEFAULT_SPEED = 5;
 exports.DEFAULT_HEALTH = 10;
 exports.I_FRAMES_DEFAULT = 1000;
@@ -1127,6 +1128,13 @@ exports.ALIEN_BEAM_DELAY = 2000;
 exports.ALIEN_BEAM_SPEED = 7;
 exports.ALIEN_CONTACT_DAMAGE = 1;
 exports.NUMBER_OF_LEVELS = 5;
+exports.RIGHT_WALL = "sprites/firstplayable/wall right 1";
+exports.LEFT_WALL = "sprites/firstplayable/wall left 1";
+exports.BACK_WALL = "sprites/firstplayable/wall back1";
+exports.FRONT_WALL = "sprites/firstplayable/wall forward 1";
+exports.RIGHT_CORNER = "sprites/firstplayable/wall small right 1";
+exports.LEFT_CORNER = "sprites/firstplayable/wall small left 1";
+exports.FLOOR = "sprites/firstplayable/floor1";
 exports.LEVEL_DATA = [
     [
         ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
@@ -1275,9 +1283,93 @@ exports.ASSET_MANIFEST = [
     },
     {
         type: "sound",
-        src: "./lib/sounds/beep.ogg",
-        id: "beep",
+        src: "./lib/sounds/Ammo.wav",
+        id: "Ammo",
+        data: 2
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Combat.wav",
+        id: "Combat",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/EnemyDeath.wav",
+        id: "EnemyDeath",
+        data: 6
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/EnemyHurt.wav",
+        id: "EnemyHurt",
+        data: 6
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Heal.wav",
+        id: "Heal",
+        data: 2
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Laser.wav",
+        id: "Laser",
         data: 4
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/MainMenu.wav",
+        id: "MainMenu",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/MainMenuAlt.wav",
+        id: "MainMenuAlt",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Pause.wav",
+        id: "Pause",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Pistol.wav",
+        id: "Pistol",
+        data: 4
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/PlayerDamage.wav",
+        id: "PlayerDamage",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/PlayerDeath.wav",
+        id: "PlayerDeath",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Railgun.wav",
+        id: "Railgun",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Select.wav",
+        id: "Select",
+        data: 2
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Unpause.wav",
+        id: "Unpause",
+        data: 1
     }
 ];
 
@@ -5676,7 +5768,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a92c23d92804a34975e3")
+/******/ 		__webpack_require__.h = () => ("d6777804cf304308a52c")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
