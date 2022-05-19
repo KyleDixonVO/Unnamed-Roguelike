@@ -235,6 +235,8 @@
                 <false/>
             </struct>
             <key type="filename">sprites/firstplayable/blanktile.png</key>
+            <key type="filename">sprites/firstplayable/garden open top bottom left right.png</key>
+            <key type="filename">sprites/firstplayable/garden open top right bottom.png</key>
             <key type="filename">sprites/firstplayable/wall left to back.png</key>
             <key type="filename">sprites/firstplayable/wall right to back.png</key>
             <struct type="IndividualSpriteSettings">
@@ -348,6 +350,174 @@
                 <rect>10,10,20,20</rect>
                 <key>scale9Paddings</key>
                 <rect>10,10,20,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden deco open bottom left top.png</key>
+            <key type="filename">sprites/firstplayable/garden deco open bottom left.png</key>
+            <key type="filename">sprites/firstplayable/garden deco open bottom right.png</key>
+            <key type="filename">sprites/firstplayable/garden seco open top right bottom.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,16,19,32</rect>
+                <key>scale9Paddings</key>
+                <rect>10,16,19,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden deco open left top bottom.png</key>
+            <key type="filename">sprites/firstplayable/garden deco open right bottom left.png</key>
+            <key type="filename">sprites/firstplayable/garden deco wall all.png</key>
+            <key type="filename">sprites/firstplayable/garden deco wall left right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,15,20,29</rect>
+                <key>scale9Paddings</key>
+                <rect>10,15,20,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden deco open top left.png</key>
+            <key type="filename">sprites/firstplayable/garden deco open top right.png</key>
+            <key type="filename">sprites/firstplayable/garden deco wall open left.png</key>
+            <key type="filename">sprites/firstplayable/garden deco wall open right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,15,19,29</rect>
+                <key>scale9Paddings</key>
+                <rect>10,15,19,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden deco open top.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,9,18,17</rect>
+                <key>scale9Paddings</key>
+                <rect>9,9,18,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden deco wall open bottom.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,16,18,32</rect>
+                <key>scale9Paddings</key>
+                <rect>9,16,18,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden deco wall open top bottom.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,10,18,20</rect>
+                <key>scale9Paddings</key>
+                <rect>9,10,18,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden open botom left.png</key>
+            <key type="filename">sprites/firstplayable/garden open down.png</key>
+            <key type="filename">sprites/firstplayable/garden open left.png</key>
+            <key type="filename">sprites/firstplayable/garden open right.png</key>
+            <key type="filename">sprites/firstplayable/garden open top left.png</key>
+            <key type="filename">sprites/firstplayable/garden open top.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,19,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,19,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden open botom right.png</key>
+            <key type="filename">sprites/firstplayable/garden open left right.png</key>
+            <key type="filename">sprites/firstplayable/garden open left top right.png</key>
+            <key type="filename">sprites/firstplayable/garden open top right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,20,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,20,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden open bottom left right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,21,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,21,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden open bottom left top.png</key>
+            <key type="filename">sprites/firstplayable/garden open top bottom.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,19,20</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,19,20</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
