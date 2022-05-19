@@ -234,6 +234,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">sprites/firstplayable/blanktile.png</key>
+            <key type="filename">sprites/firstplayable/wall left to back.png</key>
+            <key type="filename">sprites/firstplayable/wall right to back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,20,20</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,20,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">sprites/firstplayable/bullet.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -246,6 +263,21 @@
                 <rect>2,2,5,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,5,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/carrot1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -334,6 +366,38 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">sprites/firstplayable/lazer gun back.png</key>
+            <key type="filename">sprites/firstplayable/lazer gun front.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/lazer gun left.png</key>
+            <key type="filename">sprites/firstplayable/lazer gun right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">sprites/firstplayable/pistol back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -380,8 +444,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/player back idle1.png</key>
-            <key type="filename">sprites/firstplayable/player forward idle1.png</key>
+            <key type="filename">sprites/firstplayable/player back idle_1.png</key>
+            <key type="filename">sprites/firstplayable/player forward idle_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -396,8 +460,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/player back idle2.png</key>
-            <key type="filename">sprites/firstplayable/player forward idle2.png</key>
+            <key type="filename">sprites/firstplayable/player back idle_2.png</key>
+            <key type="filename">sprites/firstplayable/player forward idle_2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -428,8 +492,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/player left idle1.png</key>
-            <key type="filename">sprites/firstplayable/player right idle1.png</key>
+            <key type="filename">sprites/firstplayable/player left idle_1.png</key>
+            <key type="filename">sprites/firstplayable/player right idle_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -444,8 +508,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/player left idle2.png</key>
-            <key type="filename">sprites/firstplayable/player right idle2.png</key>
+            <key type="filename">sprites/firstplayable/player left idle_2.png</key>
+            <key type="filename">sprites/firstplayable/player right idle_2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -494,6 +558,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">sprites/firstplayable/railgun back.png</key>
+            <key type="filename">sprites/firstplayable/railgun front.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,2,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,2,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">sprites/firstplayable/railgun bullet.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -506,6 +586,54 @@
                 <rect>4,2,8,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,2,8,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/railgun left.png</key>
+            <key type="filename">sprites/firstplayable/railgun right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,8,3</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,8,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/rocket launcher back.png</key>
+            <key type="filename">sprites/firstplayable/rocket launcher front.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/rocket launcher left.png</key>
+            <key type="filename">sprites/firstplayable/rocket launcher right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,2,11,3</rect>
+                <key>scale9Paddings</key>
+                <rect>6,2,11,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -524,10 +652,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/smol boi back walk 1.png</key>
-            <key type="filename">sprites/firstplayable/smol boi back walk 3.png</key>
-            <key type="filename">sprites/firstplayable/smol boi front walk 1.png</key>
-            <key type="filename">sprites/firstplayable/smol boi front walk 3.png</key>
+            <key type="filename">sprites/firstplayable/smol boi back walk_1.png</key>
+            <key type="filename">sprites/firstplayable/smol boi back walk_3.png</key>
+            <key type="filename">sprites/firstplayable/smol boi front walk_1.png</key>
+            <key type="filename">sprites/firstplayable/smol boi front walk_3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -542,8 +670,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/smol boi back walk 2.png</key>
-            <key type="filename">sprites/firstplayable/smol boi front walk 2.png</key>
+            <key type="filename">sprites/firstplayable/smol boi back walk_2.png</key>
+            <key type="filename">sprites/firstplayable/smol boi front walk_2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -574,8 +702,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/smol boi left walk 1.png</key>
-            <key type="filename">sprites/firstplayable/smol boi right walk 1.png</key>
+            <key type="filename">sprites/firstplayable/smol boi left walk_1.png</key>
+            <key type="filename">sprites/firstplayable/smol boi right walk_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -590,8 +718,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/smol boi left walk 2.png</key>
-            <key type="filename">sprites/firstplayable/smol boi right walk 2.png</key>
+            <key type="filename">sprites/firstplayable/smol boi left walk_2.png</key>
+            <key type="filename">sprites/firstplayable/smol boi right walk_2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -606,8 +734,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/firstplayable/smol boi left walk 3.png</key>
-            <key type="filename">sprites/firstplayable/smol boi right walk 3.png</key>
+            <key type="filename">sprites/firstplayable/smol boi left walk_3.png</key>
+            <key type="filename">sprites/firstplayable/smol boi right walk_3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -635,6 +763,38 @@
                 <rect>5,5,9,11</rect>
                 <key>scale9Paddings</key>
                 <rect>5,5,9,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/tesla gun back.png</key>
+            <key type="filename">sprites/firstplayable/tesla gun front.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,4,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,4,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/tesla gun left.png</key>
+            <key type="filename">sprites/firstplayable/tesla gun right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,9,5</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,9,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

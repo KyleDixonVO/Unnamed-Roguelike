@@ -92,6 +92,14 @@ export const FRONT_WALL:string = "sprites/firstplayable/wall forward 1";
 export const RIGHT_CORNER:string = "sprites/firstplayable/wall small right 1";
 export const LEFT_CORNER:string = "sprites/firstplayable/wall small left 1";
 export const FLOOR:string = "sprites/firstplayable/floor1";
+export const BLANK:string = "sprites/firstplayable/blanktile";
+export const BACKCURVE_LEFT:string = "sprites/firstplayable/wall back curve left 1";
+export const BACKCURVE_RIGHT:string = "sprites/firstplayable/wall back curve right 1";
+export const FORWARD_LEFT:string = "sprites/firstplayable/wall forward left 1";
+export const FORWARD_RIGHT:string = "sprites/firstplayable/wall forward right 1";
+export const LEFT_TO_BACK:string = "sprites/firstplayable/wall left to back";
+export const RIGHT_TO_BACK:string = "sprites/firstplayable/wall right to back";
+
 
 export const LEVEL_DATA:Array<any> = [
     [ 

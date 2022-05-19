@@ -39,6 +39,8 @@ protected _deltaY:number;
 protected _lastX:number;
 protected _lastY:number;
 protected _colliding:boolean;
+protected _moving:boolean;
+protected _idleAnimating:boolean;
 
 protected _weaponSprite:createjs.Sprite;
 
@@ -54,6 +56,8 @@ constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string
     this._direction = GameCharacter.DIR_NEUTRAL;
     this._facing = GameCharacter.DIR_DOWN;
     this._healthMax = DEFAULT_HEALTH;
+    this._moving = false;
+    this._idleAnimating = false;
 
     //construct and place sprite
     this._sprite = assetManager.getSprite("sprites", animation, STAGE_WIDTH/2, STAGE_HEIGHT/2);
@@ -176,7 +180,7 @@ public removeFromStage():void {
 }
 
 //could be renamed later
-public spriteDirection():void {
+public movingDirection():void {
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) { return };
 
     switch (this._direction){
@@ -188,6 +192,7 @@ public spriteDirection():void {
             this._weaponSprite.x = this._sprite.x;
             this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height/2;
             this._facing = GameCharacter.DIR_UP;
+            this._moving = true;
             //console.log("up");
             break;
 
@@ -199,6 +204,7 @@ public spriteDirection():void {
             this._weaponSprite.x = this._sprite.x;
             this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_DOWN;
+            this._moving = true;
             //console.log("down");
             break;
         
@@ -210,6 +216,7 @@ public spriteDirection():void {
             this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width/2;
             this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_LEFT;
+            this._moving = true;
             //console.log("left");
             break;
 
@@ -221,13 +228,42 @@ public spriteDirection():void {
             this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width/2;
             this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_RIGHT;
+            this._moving;
             //console.log("right");
             break;
 
         case GameCharacter.DIR_NEUTRAL:
             this._deltaX = 0;
             this._deltaY = 0
+            this._moving = false;
             break;
+    }
+}
+
+public idleDirection():void{
+    if (this._moving == true){
+        this._idleAnimating = false;
+        return;
+    } 
+    if (this._idleAnimating == true){ return; }
+    this._idleAnimating = true;
+    switch(this._facing){
+        case GameCharacter.DIR_DOWN:
+            this._sprite.gotoAndPlay("sprites/firstplayable/player forward idle");
+        break;
+
+        case GameCharacter.DIR_UP:
+            this._sprite.gotoAndPlay("sprites/firstplayable/player back idle");
+        break;
+
+        case GameCharacter.DIR_LEFT:
+            this._sprite.gotoAndPlay("sprites/firstplayable/player left idle");
+        break;
+
+        case GameCharacter.DIR_RIGHT:
+            this._sprite.gotoAndPlay("sprites/firstplayable/player right idle");
+        break;
+
     }
 }
 
@@ -250,9 +286,10 @@ public startMovement():void{
 
 public update():void {
 
-    this.spriteDirection();
+    this.movingDirection();
 
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED || this._state == GameCharacter.STATE_IDLE) { return };
+    this.idleDirection();
     //move based on displacements
     this._sprite.x += this._deltaX * this.speed;
     this._sprite.y += this._deltaY * this.speed;

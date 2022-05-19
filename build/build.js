@@ -1055,7 +1055,7 @@ exports.AssetManager = AssetManager;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TESLA_IMPACT_DAMAGE = exports.TESLA_ROUND = exports.TESLA = exports.RAILGUN_SPEED = exports.RAILGUN_FIRE_DELAY = exports.RAILGUN_RELOAD_DELAY = exports.RAILGUN_MAG_SIZE = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN_ROUND = exports.RAILGUN = exports.LASER_SPEED = exports.LASER_FIRE_DELAY = exports.LASER_RELOAD_DELAY = exports.LASER_MAG_SIZE = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER_ROUND = exports.LASER = exports.PISTOL_SPEED = exports.PISTOL_FIRE_DELAY = exports.PISTOL_RELOAD_DELAY = exports.PISTOL_MAG_SIZE = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL_ROUND = exports.PISTOL = exports.DEF_FIRE_DELAY = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.PLAYER_PROJECTILE_MAX = exports.PROJECTILE_MAX = exports.LEVEL_SEVEN_THRESHOLD = exports.LEVEL_SIX_THRESHOLD = exports.LEVEL_FIVE_THRESHOLD = exports.LEVEL_FOUR_THRESHOLD = exports.LEVEL_THREE_THRESHOLD = exports.LEVEL_TWO_THRESHOLD = exports.LEVEL_ONE_THRESHOLD = exports.PICKUP_MAX = exports.ENEMY_MAX = exports.I_FRAMES_DEFAULT = exports.DEFAULT_HEALTH = exports.DEFAULT_SPEED = exports.DEFAULT_VOLUME = exports.FRAME_RATE = exports.HEIGHT_IN_TILES = exports.WIDTH_IN_TILES = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
-exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.FLOOR = exports.LEFT_CORNER = exports.RIGHT_CORNER = exports.FRONT_WALL = exports.BACK_WALL = exports.LEFT_WALL = exports.RIGHT_WALL = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = exports.ROCKET_AMMO_MAX = exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = exports.TESLA_CHAIN_DAMAGE = void 0;
+exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.RIGHT_TO_BACK = exports.LEFT_TO_BACK = exports.FORWARD_RIGHT = exports.FORWARD_LEFT = exports.BACKCURVE_RIGHT = exports.BACKCURVE_LEFT = exports.BLANK = exports.FLOOR = exports.LEFT_CORNER = exports.RIGHT_CORNER = exports.FRONT_WALL = exports.BACK_WALL = exports.LEFT_WALL = exports.RIGHT_WALL = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = exports.ROCKET_AMMO_MAX = exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = exports.TESLA_CHAIN_DAMAGE = void 0;
 exports.STAGE_WIDTH = 600;
 exports.STAGE_HEIGHT = 600;
 exports.WIDTH_IN_TILES = exports.STAGE_WIDTH / 40;
@@ -1135,6 +1135,13 @@ exports.FRONT_WALL = "sprites/firstplayable/wall forward 1";
 exports.RIGHT_CORNER = "sprites/firstplayable/wall small right 1";
 exports.LEFT_CORNER = "sprites/firstplayable/wall small left 1";
 exports.FLOOR = "sprites/firstplayable/floor1";
+exports.BLANK = "sprites/firstplayable/blanktile";
+exports.BACKCURVE_LEFT = "sprites/firstplayable/wall back curve left 1";
+exports.BACKCURVE_RIGHT = "sprites/firstplayable/wall back curve right 1";
+exports.FORWARD_LEFT = "sprites/firstplayable/wall forward left 1";
+exports.FORWARD_RIGHT = "sprites/firstplayable/wall forward right 1";
+exports.LEFT_TO_BACK = "sprites/firstplayable/wall left to back";
+exports.RIGHT_TO_BACK = "sprites/firstplayable/wall right to back";
 exports.LEVEL_DATA = [
     [
         [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
@@ -2205,6 +2212,8 @@ class GameCharacter {
         this._direction = GameCharacter.DIR_NEUTRAL;
         this._facing = GameCharacter.DIR_DOWN;
         this._healthMax = Constants_1.DEFAULT_HEALTH;
+        this._moving = false;
+        this._idleAnimating = false;
         this._sprite = assetManager.getSprite("sprites", animation, Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2);
         this._lastX = this._sprite.x;
         this._lastY = this._sprite.y;
@@ -2287,7 +2296,7 @@ class GameCharacter {
         this.stage.removeChild(this._sprite);
         this.stage.removeChild(this._weaponSprite);
     }
-    spriteDirection() {
+    movingDirection() {
         if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) {
             return;
         }
@@ -2300,6 +2309,7 @@ class GameCharacter {
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height / 2;
                 this._facing = GameCharacter.DIR_UP;
+                this._moving = true;
                 break;
             case GameCharacter.DIR_DOWN:
                 this._deltaX = 0;
@@ -2308,6 +2318,7 @@ class GameCharacter {
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_DOWN;
+                this._moving = true;
                 break;
             case GameCharacter.DIR_LEFT:
                 this._deltaX = -1;
@@ -2316,6 +2327,7 @@ class GameCharacter {
                 this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_LEFT;
+                this._moving = true;
                 break;
             case GameCharacter.DIR_RIGHT:
                 this._deltaX = 1;
@@ -2324,10 +2336,36 @@ class GameCharacter {
                 this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_RIGHT;
+                this._moving;
                 break;
             case GameCharacter.DIR_NEUTRAL:
                 this._deltaX = 0;
                 this._deltaY = 0;
+                this._moving = false;
+                break;
+        }
+    }
+    idleDirection() {
+        if (this._moving == true) {
+            this._idleAnimating = false;
+            return;
+        }
+        if (this._idleAnimating == true) {
+            return;
+        }
+        this._idleAnimating = true;
+        switch (this._facing) {
+            case GameCharacter.DIR_DOWN:
+                this._sprite.gotoAndPlay("sprites/firstplayable/player forward idle");
+                break;
+            case GameCharacter.DIR_UP:
+                this._sprite.gotoAndPlay("sprites/firstplayable/player back idle");
+                break;
+            case GameCharacter.DIR_LEFT:
+                this._sprite.gotoAndPlay("sprites/firstplayable/player left idle");
+                break;
+            case GameCharacter.DIR_RIGHT:
+                this._sprite.gotoAndPlay("sprites/firstplayable/player right idle");
                 break;
         }
     }
@@ -2351,11 +2389,12 @@ class GameCharacter {
         this._state = GameCharacter.STATE_MOVING;
     }
     update() {
-        this.spriteDirection();
+        this.movingDirection();
         if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED || this._state == GameCharacter.STATE_IDLE) {
             return;
         }
         ;
+        this.idleDirection();
         this._sprite.x += this._deltaX * this.speed;
         this._sprite.y += this._deltaY * this.speed;
         this._weaponSprite.x += this._deltaX * this.speed;
@@ -5825,7 +5864,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("9a58778d26989256d711")
+/******/ 		__webpack_require__.h = () => ("f101c9de259a9b3b2024")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
