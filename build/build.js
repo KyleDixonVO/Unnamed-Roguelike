@@ -1941,6 +1941,7 @@ function projectileEnemyCollision() {
                 console.log("hit!");
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
+                createjs.Sound.play("EnemyHurt", { volume: settings.volume });
             }
         }
     }
@@ -5862,7 +5863,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("72185d7f93abfe7821c7")
+/******/ 		__webpack_require__.h = () => ("8baab247e957d7205578")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

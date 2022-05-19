@@ -519,6 +519,7 @@ function projectileEnemyCollision(){
                 console.log("hit!");
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
+                createjs.Sound.play("EnemyHurt", {volume:settings.volume});
             }
         }
 
