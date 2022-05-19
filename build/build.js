@@ -1772,6 +1772,7 @@ function onGameEvent(e) {
         case "pickupAmmo":
             console.log("received dispatch: pickupAmmo");
             playerInventory.refillAmmo();
+            createjs.Sound.play("Ammo", { volume: settings.volume });
             break;
         case "spawnWave":
             console.log("received dispatch: spawnWave");
@@ -5860,7 +5861,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("f23f0fa26a3a5f958765")
+/******/ 		__webpack_require__.h = () => ("6bed5c202c216e606fed")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

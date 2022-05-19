@@ -338,6 +338,7 @@ function onGameEvent(e:createjs.Event):void {
         case "pickupAmmo":
             console.log("received dispatch: pickupAmmo");
             playerInventory.refillAmmo();
+            createjs.Sound.play("Ammo", {volume: settings.volume});
             break;
         
         case "spawnWave":
