@@ -2434,6 +2434,7 @@ GameCharacter.DIR_NEUTRAL = 99;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Inventory = void 0;
 const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
+const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
 class Inventory {
     constructor(gameCharacter) {
         this.gameCharacter = gameCharacter;
@@ -2445,6 +2446,7 @@ class Inventory {
         this._teslagunAmmo = Constants_1.TESLA_AMMO_MAX;
         this._laserAmmo = Constants_1.LASER_AMMO_MAX;
         this._currentWeaponAmmo = this._pistolAmmo;
+        this._currentWeaponSound = "Pistol";
     }
     set currentWeapon(value) {
         this._currentWeapon = value;
@@ -2491,6 +2493,9 @@ class Inventory {
     set currentWeaponAmmo(value) {
         this._currentWeaponAmmo = value;
     }
+    get currentWeaponSound() {
+        return this._currentWeaponSound;
+    }
     checkEquippedWeapon() {
         switch (this._currentWeapon) {
             case Constants_1.PISTOL:
@@ -2501,6 +2506,7 @@ class Inventory {
                 this._currentProjectileSprite = Constants_1.PISTOL_ROUND;
                 this._currentProjectileSpeed = Constants_1.PISTOL_SPEED;
                 this._currentWeaponAmmo = this._pistolAmmo;
+                this._currentWeaponSound = "Pistol";
                 break;
             case Constants_1.TESLA:
                 this._currentFireDelay = Constants_1.TESLA_FIRE_DELAY;
@@ -2517,6 +2523,7 @@ class Inventory {
                 this._currentProjectileSprite = Constants_1.LASER_ROUND;
                 this._currentProjectileSpeed = Constants_1.LASER_SPEED;
                 this._currentWeaponAmmo = this._laserAmmo;
+                this._currentWeaponSound = "Laser";
                 break;
             case Constants_1.ROCKET:
                 this._currentFireDelay = Constants_1.ROCKET_FIRE_DELAY;
@@ -2533,6 +2540,7 @@ class Inventory {
                 this._currentProjectileSprite = Constants_1.RAILGUN_ROUND;
                 this._currentProjectileSpeed = Constants_1.RAILGUN_SPEED;
                 this._currentWeaponAmmo = this._railgunAmmo;
+                this._currentWeaponSound = "Railgun";
                 break;
             case Constants_1.ALIEN_BEAM:
                 this._currentFireDelay = Constants_1.ALIEN_BEAM_DELAY;
@@ -2575,6 +2583,54 @@ class Inventory {
                 break;
             case Constants_1.TESLA:
                 this._teslagunAmmo--;
+                break;
+        }
+    }
+    WeaponSpriteDirection(gameCharacter) {
+        switch (gameCharacter.facing) {
+            case GameCharacter_1.GameCharacter.DIR_DOWN:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol front");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun front");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun front");
+                }
+                break;
+            case GameCharacter_1.GameCharacter.DIR_UP:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol back");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun back");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun back");
+                }
+                break;
+            case GameCharacter_1.GameCharacter.DIR_LEFT:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol left");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun left");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun left");
+                }
+                break;
+            case GameCharacter_1.GameCharacter.DIR_RIGHT:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol right");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun right");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun right");
+                }
                 break;
         }
     }
@@ -5768,7 +5824,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("fc8c60c79671c3a0c787")
+/******/ 		__webpack_require__.h = () => ("20c3320f60801c3d8f9c")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
