@@ -1651,6 +1651,7 @@ function onGameEvent(e) {
             iFramesActive = true;
             player.takeDamage(Constants_1.ALIEN_CONTACT_DAMAGE);
             invincibleTimer = window.setInterval(onInvincibleTimer, Constants_1.I_FRAMES_DEFAULT);
+            createjs.Sound.play("PlayerDamage", { volume: settings.volume });
             break;
         case "enemyKilled":
             console.log("received dispatch: enemyKilled");
@@ -5850,7 +5851,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("52e869c872f590bc4237")
+/******/ 		__webpack_require__.h = () => ("6070ce561e07397adf3c")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

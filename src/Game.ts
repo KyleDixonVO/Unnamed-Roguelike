@@ -191,7 +191,8 @@ function onGameEvent(e:createjs.Event):void {
             if (iFramesActive == true) return;
                 iFramesActive = true;
                 player.takeDamage(ALIEN_CONTACT_DAMAGE);
-                invincibleTimer = window.setInterval(onInvincibleTimer, I_FRAMES_DEFAULT);   
+                invincibleTimer = window.setInterval(onInvincibleTimer, I_FRAMES_DEFAULT);
+                createjs.Sound.play("PlayerDamage", {volume: settings.volume});  
             break;
 
 
