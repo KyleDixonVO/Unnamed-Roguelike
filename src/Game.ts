@@ -18,6 +18,7 @@ import { Tile } from "./Tile";
 import { Pickup } from "./Pickup";
 import { LevelManager } from "./LevelManager";
 import { PoolManager } from "./PoolManager";
+import { Settings } from "./Settings";
 
 
 // game variables
@@ -63,6 +64,7 @@ let newTile:Tile;
 let playerInventory:Inventory;
 let levelManager:LevelManager;
 let poolManager:PoolManager;
+let settings:Settings;
 
 
 
@@ -83,6 +85,7 @@ function onReady(e:createjs.Event):void {
     console.log(">> spritesheet loaded – ready to add sprites to game");
 
     // construct game objects here
+    settings = new Settings();
     screenManager = new ScreenManager(stage, assetManager);
     
     levelManager = new LevelManager(stage);
@@ -91,7 +94,7 @@ function onReady(e:createjs.Event):void {
 
     playerInventory = new Inventory(player);
 
-    userInterface = new UserInterface(stage, assetManager, player, screenManager, playerInventory);
+    userInterface = new UserInterface(stage, assetManager, player, screenManager, playerInventory, settings);
 
     newTile = new Tile(stage, assetManager, "");
     

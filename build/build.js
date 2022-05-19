@@ -1524,6 +1524,7 @@ const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 const Tile_1 = __webpack_require__(/*! ./Tile */ "./src/Tile.ts");
 const Pickup_1 = __webpack_require__(/*! ./Pickup */ "./src/Pickup.ts");
 const LevelManager_1 = __webpack_require__(/*! ./LevelManager */ "./src/LevelManager.ts");
+const Settings_1 = __webpack_require__(/*! ./Settings */ "./src/Settings.ts");
 let stage;
 let canvas;
 let assetManager;
@@ -1562,16 +1563,18 @@ let newTile;
 let playerInventory;
 let levelManager;
 let poolManager;
+let settings;
 let invincibleTimer;
 let collisionTimer;
 let fireDelayTimer;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
+    settings = new Settings_1.Settings();
     screenManager = new ScreenManager_1.ScreenManager(stage, assetManager);
     levelManager = new LevelManager_1.LevelManager(stage);
     player = new Player_1.Player(stage, assetManager);
     playerInventory = new Inventory_1.Inventory(player);
-    userInterface = new UserInterface_1.UserInterface(stage, assetManager, player, screenManager, playerInventory);
+    userInterface = new UserInterface_1.UserInterface(stage, assetManager, player, screenManager, playerInventory, settings);
     newTile = new Tile_1.Tile(stage, assetManager, "");
     for (let i = 0; i < Constants_1.ENEMY_MAX; i++) {
         enemyPool.push(new Enemy_1.Enemy(stage, assetManager, player, i));
@@ -3231,6 +3234,27 @@ exports.ScreenManager = ScreenManager;
 
 /***/ }),
 
+/***/ "./src/Settings.ts":
+/*!*************************!*\
+  !*** ./src/Settings.ts ***!
+  \*************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Settings = void 0;
+const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
+class Settings {
+    constructor() {
+        this.volume = Constants_1.DEFAULT_VOLUME;
+    }
+}
+exports.Settings = Settings;
+
+
+/***/ }),
+
 /***/ "./src/Tile.ts":
 /*!*********************!*\
   !*** ./src/Tile.ts ***!
@@ -3346,7 +3370,7 @@ exports.radiusHit = radiusHit;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserInterface = void 0;
 class UserInterface {
-    constructor(stage, assetManager, player, screenManager, inventory) {
+    constructor(stage, assetManager, player, screenManager, inventory, settings) {
         this.stage = stage;
         this.txtScore = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
         this.txtScore.x = 250;
@@ -3373,6 +3397,7 @@ class UserInterface {
         this.screenManager = screenManager;
         this.playerInventory = inventory;
         this._ammo = this.playerInventory.currentWeaponAmmo;
+        this.settings = settings;
         this.reset();
     }
     set score(value) {
@@ -5820,7 +5845,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("dd18392660b5af2d4a88")
+/******/ 		__webpack_require__.h = () => ("5a09b2bc3834723f3008")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
