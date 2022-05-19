@@ -4,7 +4,6 @@ export const STAGE_HEIGHT:number = 600;
 export const WIDTH_IN_TILES:number = STAGE_WIDTH/40;
 export const HEIGHT_IN_TILES:number = STAGE_HEIGHT/40;
 export const FRAME_RATE:number = 30;
-export const DEFAULT_VOLUME:number = 1;
 
 export const DEFAULT_SPEED:number = 5;
 export const DEFAULT_HEALTH:number = 10;
@@ -84,14 +83,6 @@ export const ALIEN_BEAM_SPEED:number = 7;
 export const ALIEN_CONTACT_DAMAGE:number = 1;
 
 export const NUMBER_OF_LEVELS:number = 5;
-
-export const RIGHT_WALL:string = "sprites/firstplayable/wall right 1";
-export const LEFT_WALL:string = "sprites/firstplayable/wall left 1";
-export const BACK_WALL:string = "sprites/firstplayable/wall back1";
-export const FRONT_WALL:string = "sprites/firstplayable/wall forward 1";
-export const RIGHT_CORNER:string = "sprites/firstplayable/wall small right 1";
-export const LEFT_CORNER:string = "sprites/firstplayable/wall small left 1";
-export const FLOOR:string = "sprites/firstplayable/floor1";
 
 export const LEVEL_DATA:Array<any> = [
 [ 
@@ -243,92 +234,8 @@ export const ASSET_MANIFEST:Object[] = [
     },
     {
         type:"sound",
-        src:"./lib/sounds/Ammo.wav",
-        id:"Ammo",
-        data:2
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Combat.wav",
-        id:"Combat",
-        data:1
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/EnemyDeath.wav",
-        id:"EnemyDeath",
-        data:6
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/EnemyHurt.wav",
-        id:"EnemyHurt",
-        data:6
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Heal.wav",
-        id:"Heal",
-        data:2
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Laser.wav",
-        id:"Laser",
+        src:"./lib/sounds/beep.ogg",
+        id:"beep",
         data:4
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/MainMenu.wav",
-        id:"MainMenu",
-        data:1
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/MainMenuAlt.wav",
-        id:"MainMenuAlt",
-        data:1
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Pause.wav",
-        id:"Pause",
-        data:1
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Pistol.wav",
-        id:"Pistol",
-        data:4
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/PlayerDamage.wav",
-        id:"PlayerDamage",
-        data:1
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/PlayerDeath.wav",
-        id:"PlayerDeath",
-        data:1
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Railgun.wav",
-        id:"Railgun",
-        data:1
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Select.wav",
-        id:"Select",
-        data:2
-    },
-    {
-        type:"sound",
-        src:"./lib/sounds/Unpause.wav",
-        id:"Unpause",
-        data:1
-    }
+    }     
 ];

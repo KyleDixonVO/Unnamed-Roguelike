@@ -18,7 +18,6 @@ import { Tile } from "./Tile";
 import { Pickup } from "./Pickup";
 import { LevelManager } from "./LevelManager";
 import { PoolManager } from "./PoolManager";
-import { Settings } from "./Settings";
 
 
 // game variables
@@ -46,8 +45,6 @@ let gameStarted:boolean = false;
 let weaponNum:number = 0;
 let stageNum:number = 1;
 
-//var loopingProps = new createjs.PlayPropsConfig();
-
 // game objects
 let player:Player;
 let enemyPool:Enemy[] = [];
@@ -66,7 +63,6 @@ let newTile:Tile;
 let playerInventory:Inventory;
 let levelManager:LevelManager;
 let poolManager:PoolManager;
-let settings:Settings;
 
 
 
@@ -87,9 +83,6 @@ function onReady(e:createjs.Event):void {
     console.log(">> spritesheet loaded – ready to add sprites to game");
 
     // construct game objects here
-
-    settings = new Settings();
-    //loopingProps.set({loop: -1, volume: settings.volume});
     screenManager = new ScreenManager(stage, assetManager);
     
     levelManager = new LevelManager(stage);
@@ -180,7 +173,6 @@ function onGameEvent(e:createjs.Event):void {
     console.log("called onGameEvent");
     switch (e.type) {
         case "playerKilled":
-            //createjs.Sound.play("PlayerDeath", null, null, null, null, settings.volume);
             userInterface.removeAll();
             player.removeFromStage();
             hideLevel();
@@ -193,14 +185,12 @@ function onGameEvent(e:createjs.Event):void {
             if (iFramesActive == true) return;
                 iFramesActive = true;
                 player.takeDamage(ALIEN_CONTACT_DAMAGE);
-                invincibleTimer = window.setInterval(onInvincibleTimer, I_FRAMES_DEFAULT);
-                //createjs.Sound.play("PlayerDamage", null, null, null, 0, settings.volume);  
+                invincibleTimer = window.setInterval(onInvincibleTimer, I_FRAMES_DEFAULT);   
             break;
 
 
         case "enemyKilled":
             console.log("received dispatch: enemyKilled");
-            //createjs.Sound.play("EnemyDeath", null, null, null, 0, settings.volume);
             levelManager.defeatedEnemies++;
             console.log(levelManager.defeatedEnemies);
             levelManager.readyToSpawn = true;
@@ -220,8 +210,6 @@ function onGameEvent(e:createjs.Event):void {
 
         case "gameStarted":
             console.log("received dispatch: gameStarted ");
-            //createjs.Sound.stop();
-            //createjs.Sound.play("Combat", loopingProps);
             screenManager.showGame();
             showLevel();
             loadLevel(levelManager.activeLevel);
@@ -236,7 +224,6 @@ function onGameEvent(e:createjs.Event):void {
 
 
         case "gameReset":
-            //createjs.Sound.stop();
             player.reset();
             userInterface.reset();
             hideLevel();
@@ -249,9 +236,8 @@ function onGameEvent(e:createjs.Event):void {
 
         case "titleActive":
             resetPools();
-            console.log("received dispatch: titleActive");
+            console.log("received dispatch: titleActive ");
             hideLevel();
-            //createjs.Sound.play("MainMenu", loopingProps);
             userInterface.showStartMenu();
             userInterface.onStartClick();
             userInterface.onSettingsClick();
@@ -259,8 +245,6 @@ function onGameEvent(e:createjs.Event):void {
         
 
         case "gameWin":
-            //createjs.Sound.stop();
-            //createjs.Sound.play("MainMenuAlt", loopingProps);
             screenManager.showWinScreen();
             userInterface.removeAll();
             hideLevel();
@@ -274,7 +258,6 @@ function onGameEvent(e:createjs.Event):void {
 
 
         case "openSettings":
-            //createjs.Sound.play("Pause", null, null, null, null, settings.volume);
             console.log("recieved dispatch: openSettings");
             screenManager.pauseGame();
             userInterface.showSettingsMenu();
@@ -282,7 +265,6 @@ function onGameEvent(e:createjs.Event):void {
 
 
         case "closeSettings":
-            //createjs.Sound.play("Unpause", null, null, null, null, settings.volume);
             console.log("recieved dispatch: closeSettings");
             userInterface.hideSettingsMenu();
             screenManager.unpauseGame();
@@ -334,13 +316,11 @@ function onGameEvent(e:createjs.Event):void {
         
         case "pickupMedkit":
             console.log("received dispatch: pickupHealth");
-            //createjs.Sound.play("Heal", null, null, null, null, settings.volume);
             player.heal();
             break;
         
         case "pickupAmmo":
             console.log("received dispatch: pickupAmmo");
-            //createjs.Sound.play("Ammo", null, null, null, null, settings.volume);
             playerInventory.refillAmmo();
             break;
         
@@ -372,6 +352,7 @@ function onGameEvent(e:createjs.Event):void {
             player.addToStage();
             player.startMovement();
             gameStarted = true;
+
             console.log(player.state);
             userInterface.showPlayerHUD();
             break;
@@ -387,7 +368,6 @@ function addProjectile():void{
             newProjectile.passIn(player, playerInventory);
             newProjectile.activate();
             playerInventory.decrementAmmo();
-            //createjs.Sound.play(playerInventory.currentWeaponSound, null, null, null, null, settings.volume);
             break;
         }
     }
@@ -519,7 +499,6 @@ function projectileEnemyCollision(){
             if (radiusHit( enemy.sprite, 16, projectile.sprite, 2)){
                 if (enemy.state == GameCharacter.STATE_DEAD || enemy.state == GameCharacter.STATE_DYING || enemy.state == GameCharacter.STATE_IDLE) continue;
                 console.log("hit!");
-                createjs.Sound.play("EnemyHit", null, null, null, null, settings.volume);
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
             }
@@ -825,7 +804,7 @@ function onTick(e:createjs.Event) {
 
     userInterface.updateHUD();
     startCollsionTimer();
-    //projectilePlayerCollision();
+    projectilePlayerCollision();
     tileCollisionDetection();
     enemyEnemyCollision();
     playerEnemyCollision();
