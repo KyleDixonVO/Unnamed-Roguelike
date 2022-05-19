@@ -265,6 +265,8 @@ function onGameEvent(e:createjs.Event):void {
 
             resetPools();
             levelManager.reset();
+            createjs.Sound.stop();
+            createjs.Sound.play("MainMenuAlt", loopingProps);
             break;
 
 

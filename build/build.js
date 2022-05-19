@@ -1711,6 +1711,8 @@ function onGameEvent(e) {
             player.reset();
             resetPools();
             levelManager.reset();
+            createjs.Sound.stop();
+            createjs.Sound.play("MainMenuAlt", loopingProps);
             break;
         case "openSettings":
             console.log("recieved dispatch: openSettings");
@@ -5855,7 +5857,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("e16ba1cd075756b87f39")
+/******/ 		__webpack_require__.h = () => ("dca0175bfc57976c698a")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
