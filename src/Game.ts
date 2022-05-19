@@ -228,6 +228,8 @@ function onGameEvent(e:createjs.Event):void {
             userInterface.showPlayerHUD();
             addPickUp();
             gameStarted = true;
+            createjs.Sound.stop();
+            createjs.Sound.play("Combat", loopingProps);
             break;
 
 

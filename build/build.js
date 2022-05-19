@@ -1682,6 +1682,8 @@ function onGameEvent(e) {
             userInterface.showPlayerHUD();
             addPickUp();
             gameStarted = true;
+            createjs.Sound.stop();
+            createjs.Sound.play("Combat", loopingProps);
             break;
         case "gameReset":
             player.reset();
@@ -5852,7 +5854,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("b0b7c64c8265d45744b8")
+/******/ 		__webpack_require__.h = () => ("ae4bc4e0d5df06c40907")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
