@@ -355,6 +355,7 @@ function onGameEvent(e:createjs.Event):void {
         case "completeLevel":
             console.log("received dispatch: completeLevel");
             screenManager.showLevelComplete();
+            player.pause();
             levelManager.resetForNextLevel();
             resetPools();
             gameStarted = false;
@@ -364,6 +365,7 @@ function onGameEvent(e:createjs.Event):void {
             console.log("received dispatch: loadNextLevel");
             resetPools();
             screenManager.showGame();
+            player.unpause();
             showLevel();
             loadLevel(levelManager.activeLevel);
             player.addToStage();
@@ -377,7 +379,7 @@ function onGameEvent(e:createjs.Event):void {
 }
 
 function addProjectile():void{
-    if (escapePress == true || player.state == GameCharacter.STATE_DEAD || player.state == GameCharacter.STATE_IDLE) return;
+    if (escapePress == true || player.state == GameCharacter.STATE_DEAD || gameStarted == false) return;
     if (playerInventory.currentWeaponAmmo == 0) return;
     for (newProjectile of playerProjectilePool){
         if (newProjectile.used == false){
@@ -657,39 +659,39 @@ function monitorKeys():void {
         }
     }
 
-    if (LKey == true){
-        console.log("attempting stage swap");
-        if (LUp == false || paused == true) return;
-        console.log("changing stage");
-        LUp = false;
-        stageNum++;
-        if (stageNum > 7){
-            stageNum = 1;
-        }
-        switch (stageNum){
-            case 1:
-                loadLevel(1);
-                break;
-            case 2:
-                loadLevel(2);
-                break;
-            case 3:
-                loadLevel(3);
-                break;
-            case 4:
-                loadLevel(4);
-                break;
-            case 5:
-                loadLevel(5);
-                break;
-            case 6:
-                loadLevel(6);
-                break;
-            case 7:
-                loadLevel(7);
-                break;
-        }
-    }
+    // if (LKey == true){
+    //     console.log("attempting stage swap");
+    //     if (LUp == false || paused == true) return;
+    //     console.log("changing stage");
+    //     LUp = false;
+    //     stageNum++;
+    //     if (stageNum > 7){
+    //         stageNum = 1;
+    //     }
+    //     switch (stageNum){
+    //         case 1:
+    //             loadLevel(1);
+    //             break;
+    //         case 2:
+    //             loadLevel(2);
+    //             break;
+    //         case 3:
+    //             loadLevel(3);
+    //             break;
+    //         case 4:
+    //             loadLevel(4);
+    //             break;
+    //         case 5:
+    //             loadLevel(5);
+    //             break;
+    //         case 6:
+    //             loadLevel(6);
+    //             break;
+    //         case 7:
+    //             loadLevel(7);
+    //             break;
+    //     }
+    // }
 
     if (escapePress == true){
         if (escapeUp == true) return;

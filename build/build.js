@@ -1788,6 +1788,7 @@ function onGameEvent(e) {
         case "completeLevel":
             console.log("received dispatch: completeLevel");
             screenManager.showLevelComplete();
+            player.pause();
             levelManager.resetForNextLevel();
             resetPools();
             gameStarted = false;
@@ -1796,6 +1797,7 @@ function onGameEvent(e) {
             console.log("received dispatch: loadNextLevel");
             resetPools();
             screenManager.showGame();
+            player.unpause();
             showLevel();
             loadLevel(levelManager.activeLevel);
             player.addToStage();
@@ -1807,7 +1809,7 @@ function onGameEvent(e) {
     }
 }
 function addProjectile() {
-    if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
+    if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || gameStarted == false)
         return;
     if (playerInventory.currentWeaponAmmo == 0)
         return;
@@ -2046,40 +2048,6 @@ function monitorKeys() {
                 break;
             case 2:
                 playerInventory.currentWeapon = Constants_1.RAILGUN;
-                break;
-        }
-    }
-    if (LKey == true) {
-        console.log("attempting stage swap");
-        if (LUp == false || paused == true)
-            return;
-        console.log("changing stage");
-        LUp = false;
-        stageNum++;
-        if (stageNum > 7) {
-            stageNum = 1;
-        }
-        switch (stageNum) {
-            case 1:
-                loadLevel(1);
-                break;
-            case 2:
-                loadLevel(2);
-                break;
-            case 3:
-                loadLevel(3);
-                break;
-            case 4:
-                loadLevel(4);
-                break;
-            case 5:
-                loadLevel(5);
-                break;
-            case 6:
-                loadLevel(6);
-                break;
-            case 7:
-                loadLevel(7);
                 break;
         }
     }
@@ -5857,7 +5825,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("160a4aa719fd77ec5f2f")
+/******/ 		__webpack_require__.h = () => ("9088f6b4985d931c1227")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
