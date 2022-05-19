@@ -1,42 +1,18 @@
-import { AssetManager } from "./AssetManager";
-import { Inventory } from "./Inventory";
-import { LevelManager } from "./LevelManager";
-import { Player } from "./Player";
-import { ScreenManager } from "./ScreenManager";
-import { Settings } from "./Settings";
+"use strict";
+self["webpackHotUpdategame_programming_createjs_webpack"]("main",{
 
-export class UserInterface {
-
-    //private property vars
-    private _score:number;
-    private _paused:boolean;
-    private _ammo:number;
-    private _enemiesRemaining:number;
+/***/ "./src/UserInterface.ts":
+/*!******************************!*\
+  !*** ./src/UserInterface.ts ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports) => {
 
 
-    //private vars
-    private healthSprite:createjs.Sprite;
-    private stage:createjs.StageGL;
-    private player:Player;
-    private txtScore:createjs.BitmapText;
-    private startButton:createjs.Sprite;
-    private settingsButton:createjs.Sprite;
-    private settingsMenu:createjs.Sprite;
-    private pauseOverlay:createjs.Sprite;
-    private settingsHeader:createjs.Sprite;
-    private playerInventory:Inventory;
-    private screenManager:ScreenManager;
-    private levelManager:LevelManager;
-    private healthBar:createjs.Sprite;
-    private healthOutline:createjs.Sprite;
-    private txtAmmo:createjs.BitmapText;
-    private settings:Settings;
-    private txtObjective:createjs.BitmapText;
-
-    constructor(stage:createjs.StageGL, assetManager:AssetManager, player:Player, screenManager:ScreenManager, inventory:Inventory, settings:Settings, levelManager:LevelManager) {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UserInterface = void 0;
+class UserInterface {
+    constructor(stage, assetManager, player, screenManager, inventory, settings, levelManager) {
         this.stage = stage;
-
-        //need to create glyphs for score text
         this.txtScore = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
         this.txtScore.x = 250;
         this.txtScore.y = 20;
@@ -68,55 +44,34 @@ export class UserInterface {
         this._ammo = this.playerInventory.currentWeaponAmmo;
         this.settings = settings;
         this.levelManager = levelManager;
-        this._enemiesRemaining = this.levelManager.threshold - this.levelManager.defeatedEnemies;
-
-
-        //intstantialise properties
+        this._enemiesRemaining = levelManager.threshold - levelManager.defeatedEnemies;
         this.reset();
-
-
     }
-
-    // ----------------------------------------------------------------------------------------- getters/setters
-    set score(value:number) {
+    set score(value) {
         this._score = value;
         this.txtScore.text = String(this._score);
     }
-
-    get score():number {
+    get score() {
         return this._score;
     }
-
-    set paused(value:boolean){
+    set paused(value) {
         this._paused = value;
     }
-
-    get paused(){
+    get paused() {
         return this._paused;
     }
-
-    set ammo(value:number) {
+    set ammo(value) {
         this._ammo = value;
         this.txtAmmo.text = String(this._ammo);
     }
-    
-    get ammo():number{
+    get ammo() {
         return this._ammo;
     }
-
-    set enemiesRemaining(value:number){
-        this._enemiesRemaining = value;
-        this.txtObjective.text = String(this._enemiesRemaining);
-    }
-
-
-    // ---------------------------------------------------------------------------------------- public methods
-    public reset():void{
+    reset() {
         this.score = 0;
         this.ammo = 0;
     }
-
-    public showStartMenu(){
+    showStartMenu() {
         this.startButton.x = 200;
         this.startButton.y = 450;
         this.stage.addChild(this.startButton);
@@ -125,36 +80,35 @@ export class UserInterface {
         this.settingsButton.scaleY = 0.9;
         this.stage.addChild(this.settingsButton);
     }
-
-    public onStartClick():void{
-        this.startButton.on("mouseover", ()=> {
+    onStartClick() {
+        this.startButton.on("mouseover", () => {
             this.startButton.gotoAndStop("sprites/button/over");
         });
-        this.startButton.on("mouseout", ()=> {
+        this.startButton.on("mouseout", () => {
             this.startButton.gotoAndStop("sprites/button/up");
         });
-        this.startButton.on("click", ()=> {
+        this.startButton.on("click", () => {
             createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
-            if (this._paused == true) return;
+            if (this._paused == true)
+                return;
             this.screenManager.startDispatch();
         });
     }
-
-    public onSettingsClick():void{
-        this.settingsButton.on("mouseover", ()=> {
+    onSettingsClick() {
+        this.settingsButton.on("mouseover", () => {
             this.settingsButton.gotoAndStop("sprites/button/settingsOver");
         });
-        this.settingsButton.on("mouseout", ()=> {
+        this.settingsButton.on("mouseout", () => {
             this.settingsButton.gotoAndStop("sprites/button/settingsUp");
         });
-        this.settingsButton.on("click", ()=> {
+        this.settingsButton.on("click", () => {
             createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
-            if (this._paused == true) return;
+            if (this._paused == true)
+                return;
             this.screenManager.openSettings();
         });
     }
-
-    public removeAll():void{
+    removeAll() {
         this.stage.removeChild(this.startButton);
         this.stage.removeChild(this.settingsButton);
         this.stage.removeChild(this.pauseOverlay);
@@ -163,10 +117,8 @@ export class UserInterface {
         this.stage.removeChild(this.txtScore);
         this.stage.removeChild(this.txtScore);
         this.stage.removeChild(this.txtAmmo);
-        this.stage.removeChild(this.txtObjective);
     }
-
-    public showSettingsMenu(){
+    showSettingsMenu() {
         this._paused = true;
         this.pauseOverlay.x = 300;
         this.pauseOverlay.y = 300;
@@ -175,14 +127,12 @@ export class UserInterface {
         this.settingsHeader.y = 100;
         this.stage.addChild(this.settingsHeader);
     }
-
-    public hideSettingsMenu(){
+    hideSettingsMenu() {
         this._paused = false;
         this.stage.removeChild(this.pauseOverlay);
         this.stage.removeChild(this.settingsHeader);
     }
-
-    public showPlayerHUD(){
+    showPlayerHUD() {
         this.healthBar.x = 15;
         this.healthBar.y = 30;
         this.healthBar.scaleY = 0.8;
@@ -195,21 +145,31 @@ export class UserInterface {
         this.stage.addChild(this.healthBar);
         this.stage.addChild(this.txtScore);
         this.stage.addChild(this.txtAmmo);
-        this.stage.addChild(this.txtObjective);
     }
-
-    public updateHUD(){
+    updateHUD() {
         this._ammo = this.playerInventory.currentWeaponAmmo;
-        this._enemiesRemaining = this.levelManager.threshold - this.levelManager.defeatedEnemies;
-        let scaleFactor:number;
-        scaleFactor = this.player.health/this.player.healthMax;
+        let scaleFactor;
+        scaleFactor = this.player.health / this.player.healthMax;
         this.healthBar.scaleX = scaleFactor;
         this.txtScore.text = this._score.toString();
         this.txtAmmo.text = this._ammo.toString();
-        this.txtObjective.text = this._enemiesRemaining.toString();
     }
-
-    public incrementScore(){
+    incrementScore() {
         this._score++;
     }
 }
+exports.UserInterface = UserInterface;
+
+
+/***/ })
+
+},
+/******/ function(__webpack_require__) { // webpackRuntimeModules
+/******/ /* webpack/runtime/getFullHash */
+/******/ (() => {
+/******/ 	__webpack_require__.h = () => ("f3ab5e4fc3541b22e816")
+/******/ })();
+/******/ 
+/******/ }
+);
+//# sourceMappingURL=main.c99b54d655439365996a.hot-update.js.map

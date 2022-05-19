@@ -1584,7 +1584,7 @@ function onReady(e) {
     levelManager = new LevelManager_1.LevelManager(stage);
     player = new Player_1.Player(stage, assetManager);
     playerInventory = new Inventory_1.Inventory(player);
-    userInterface = new UserInterface_1.UserInterface(stage, assetManager, player, screenManager, playerInventory, settings);
+    userInterface = new UserInterface_1.UserInterface(stage, assetManager, player, screenManager, playerInventory, settings, levelManager);
     newTile = new Tile_1.Tile(stage, assetManager, "");
     for (let i = 0; i < Constants_1.ENEMY_MAX; i++) {
         enemyPool.push(new Enemy_1.Enemy(stage, assetManager, player, i));
@@ -3387,7 +3387,7 @@ exports.radiusHit = radiusHit;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserInterface = void 0;
 class UserInterface {
-    constructor(stage, assetManager, player, screenManager, inventory, settings) {
+    constructor(stage, assetManager, player, screenManager, inventory, settings, levelManager) {
         this.stage = stage;
         this.txtScore = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
         this.txtScore.x = 250;
@@ -3396,6 +3396,10 @@ class UserInterface {
         this.txtAmmo = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
         this.txtAmmo.x = 525;
         this.txtAmmo.y = 20;
+        this.txtAmmo.letterSpacing = 1;
+        this.txtObjective = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
+        this.txtObjective.x = 250;
+        this.txtObjective.y = 50;
         this.txtAmmo.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.startButton.gotoAndStop("sprites/button/up");
@@ -3415,6 +3419,8 @@ class UserInterface {
         this.playerInventory = inventory;
         this._ammo = this.playerInventory.currentWeaponAmmo;
         this.settings = settings;
+        this.levelManager = levelManager;
+        this._enemiesRemaining = this.levelManager.threshold - this.levelManager.defeatedEnemies;
         this.reset();
     }
     set score(value) {
@@ -3436,6 +3442,10 @@ class UserInterface {
     }
     get ammo() {
         return this._ammo;
+    }
+    set enemiesRemaining(value) {
+        this._enemiesRemaining = value;
+        this.txtObjective.text = String(this._enemiesRemaining);
     }
     reset() {
         this.score = 0;
@@ -3487,6 +3497,7 @@ class UserInterface {
         this.stage.removeChild(this.txtScore);
         this.stage.removeChild(this.txtScore);
         this.stage.removeChild(this.txtAmmo);
+        this.stage.removeChild(this.txtObjective);
     }
     showSettingsMenu() {
         this._paused = true;
@@ -3515,14 +3526,17 @@ class UserInterface {
         this.stage.addChild(this.healthBar);
         this.stage.addChild(this.txtScore);
         this.stage.addChild(this.txtAmmo);
+        this.stage.addChild(this.txtObjective);
     }
     updateHUD() {
         this._ammo = this.playerInventory.currentWeaponAmmo;
+        this._enemiesRemaining = this.levelManager.threshold - this.levelManager.defeatedEnemies;
         let scaleFactor;
         scaleFactor = this.player.health / this.player.healthMax;
         this.healthBar.scaleX = scaleFactor;
         this.txtScore.text = this._score.toString();
         this.txtAmmo.text = this._ammo.toString();
+        this.txtObjective.text = this._enemiesRemaining.toString();
     }
     incrementScore() {
         this._score++;
@@ -5864,7 +5878,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("f101c9de259a9b3b2024")
+/******/ 		__webpack_require__.h = () => ("7ad5770e91a16cb4eb3f")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

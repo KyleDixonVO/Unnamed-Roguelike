@@ -97,7 +97,7 @@ function onReady(e:createjs.Event):void {
 
     playerInventory = new Inventory(player);
 
-    userInterface = new UserInterface(stage, assetManager, player, screenManager, playerInventory, settings);
+    userInterface = new UserInterface(stage, assetManager, player, screenManager, playerInventory, settings, levelManager);
 
     newTile = new Tile(stage, assetManager, "");
     
