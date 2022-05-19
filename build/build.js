@@ -2156,7 +2156,6 @@ function onTick(e) {
     }
     userInterface.updateHUD();
     startCollsionTimer();
-    projectilePlayerCollision();
     tileCollisionDetection();
     enemyEnemyCollision();
     playerEnemyCollision();
@@ -5825,7 +5824,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("9088f6b4985d931c1227")
+/******/ 		__webpack_require__.h = () => ("76b4eaa9acba526eadd5")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

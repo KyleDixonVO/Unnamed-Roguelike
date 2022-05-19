@@ -825,7 +825,7 @@ function onTick(e:createjs.Event) {
 
     userInterface.updateHUD();
     startCollsionTimer();
-    projectilePlayerCollision();
+    //projectilePlayerCollision();
     tileCollisionDetection();
     enemyEnemyCollision();
     playerEnemyCollision();
