@@ -1724,6 +1724,7 @@ function onGameEvent(e) {
             console.log("recieved dispatch: closeSettings");
             userInterface.hideSettingsMenu();
             screenManager.unpauseGame();
+            createjs.Sound.play("Unpause", { volume: settings.volume });
             break;
         case "gamePaused":
             if (paused == true)
@@ -5858,7 +5859,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("e777309c34e16d26acff")
+/******/ 		__webpack_require__.h = () => ("432f87c73d529cb22631")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

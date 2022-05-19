@@ -282,6 +282,7 @@ function onGameEvent(e:createjs.Event):void {
             console.log("recieved dispatch: closeSettings");
             userInterface.hideSettingsMenu();
             screenManager.unpauseGame();
+            createjs.Sound.play("Unpause", {volume: settings.volume});
             break;
         
 
