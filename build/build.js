@@ -2034,7 +2034,7 @@ function monitorKeys() {
         console.log("changing weapons");
         shiftUp = false;
         weaponNum++;
-        if (weaponNum > 4) {
+        if (weaponNum > 2) {
             weaponNum = 0;
         }
         switch (weaponNum) {
@@ -2045,12 +2045,6 @@ function monitorKeys() {
                 playerInventory.currentWeapon = Constants_1.LASER;
                 break;
             case 2:
-                playerInventory.currentWeapon = Constants_1.TESLA;
-                break;
-            case 3:
-                playerInventory.currentWeapon = Constants_1.ROCKET;
-                break;
-            case 4:
                 playerInventory.currentWeapon = Constants_1.RAILGUN;
                 break;
         }
@@ -5863,7 +5857,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("8baab247e957d7205578")
+/******/ 		__webpack_require__.h = () => ("160a4aa719fd77ec5f2f")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

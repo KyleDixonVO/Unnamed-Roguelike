@@ -634,7 +634,7 @@ function monitorKeys():void {
         console.log("changing weapons");
         shiftUp = false;
         weaponNum ++;
-        if (weaponNum > 4){
+        if (weaponNum > 2){
             weaponNum = 0;
         }
         switch (weaponNum){
@@ -645,14 +645,14 @@ function monitorKeys():void {
                 playerInventory.currentWeapon = LASER;
                 break;
             case 2:
-                playerInventory.currentWeapon = TESLA;
-                break;
-            case 3:
-                playerInventory.currentWeapon = ROCKET;
-                break;
-            case 4:
                 playerInventory.currentWeapon = RAILGUN;
                 break;
+            // case 3:
+            //     playerInventory.currentWeapon = ROCKET;
+            //     break;
+            // case 4:
+            //     playerInventory.currentWeapon = RAILGUN;
+            //     break;
 
         }
     }
