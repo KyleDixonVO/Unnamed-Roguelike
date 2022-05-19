@@ -2,6 +2,7 @@ import { AssetManager } from "./AssetManager";
 import { Inventory } from "./Inventory";
 import { Player } from "./Player";
 import { ScreenManager } from "./ScreenManager";
+import { Settings } from "./Settings";
 
 export class UserInterface {
 
@@ -26,6 +27,7 @@ export class UserInterface {
     private healthBar:createjs.Sprite;
     private healthOutline:createjs.Sprite;
     private txtAmmo:createjs.BitmapText;
+    //private settings:Settings;
 
     constructor(stage:createjs.StageGL, assetManager:AssetManager, player:Player, screenManager:ScreenManager, inventory:Inventory) {
         this.stage = stage;
@@ -56,6 +58,7 @@ export class UserInterface {
         this.screenManager = screenManager;
         this.playerInventory = inventory;
         this._ammo = this.playerInventory.currentWeaponAmmo;
+        //this.settings = settings;
 
 
         //intstantialise properties
@@ -116,6 +119,7 @@ export class UserInterface {
             this.startButton.gotoAndStop("sprites/button/up");
         });
         this.startButton.on("click", ()=> {
+            //createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
             if (this._paused == true) return;
             this.screenManager.startDispatch();
         });
@@ -129,6 +133,7 @@ export class UserInterface {
             this.settingsButton.gotoAndStop("sprites/button/settingsUp");
         });
         this.settingsButton.on("click", ()=> {
+            //createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
             if (this._paused == true) return;
             this.screenManager.openSettings();
         });

@@ -1054,13 +1054,14 @@ exports.AssetManager = AssetManager;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TESLA_CHAIN_DAMAGE = exports.TESLA_IMPACT_DAMAGE = exports.TESLA_ROUND = exports.TESLA = exports.RAILGUN_SPEED = exports.RAILGUN_FIRE_DELAY = exports.RAILGUN_RELOAD_DELAY = exports.RAILGUN_MAG_SIZE = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN_ROUND = exports.RAILGUN = exports.LASER_SPEED = exports.LASER_FIRE_DELAY = exports.LASER_RELOAD_DELAY = exports.LASER_MAG_SIZE = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER_ROUND = exports.LASER = exports.PISTOL_SPEED = exports.PISTOL_FIRE_DELAY = exports.PISTOL_RELOAD_DELAY = exports.PISTOL_MAG_SIZE = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL_ROUND = exports.PISTOL = exports.DEF_FIRE_DELAY = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.PLAYER_PROJECTILE_MAX = exports.PROJECTILE_MAX = exports.LEVEL_SEVEN_THRESHOLD = exports.LEVEL_SIX_THRESHOLD = exports.LEVEL_FIVE_THRESHOLD = exports.LEVEL_FOUR_THRESHOLD = exports.LEVEL_THREE_THRESHOLD = exports.LEVEL_TWO_THRESHOLD = exports.LEVEL_ONE_THRESHOLD = exports.PICKUP_MAX = exports.ENEMY_MAX = exports.I_FRAMES_DEFAULT = exports.DEFAULT_HEALTH = exports.DEFAULT_SPEED = exports.FRAME_RATE = exports.HEIGHT_IN_TILES = exports.WIDTH_IN_TILES = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
-exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = exports.ROCKET_AMMO_MAX = exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = void 0;
+exports.TESLA_IMPACT_DAMAGE = exports.TESLA_ROUND = exports.TESLA = exports.RAILGUN_SPEED = exports.RAILGUN_FIRE_DELAY = exports.RAILGUN_RELOAD_DELAY = exports.RAILGUN_MAG_SIZE = exports.RAILGUN_AMMO_MAX = exports.RAILGUN_DAMAGE = exports.RAILGUN_ROUND = exports.RAILGUN = exports.LASER_SPEED = exports.LASER_FIRE_DELAY = exports.LASER_RELOAD_DELAY = exports.LASER_MAG_SIZE = exports.LASER_AMMO_MAX = exports.LASER_DAMAGE = exports.LASER_ROUND = exports.LASER = exports.PISTOL_SPEED = exports.PISTOL_FIRE_DELAY = exports.PISTOL_RELOAD_DELAY = exports.PISTOL_MAG_SIZE = exports.PISTOL_AMMO_MAX = exports.PISTOL_DAMAGE = exports.PISTOL_ROUND = exports.PISTOL = exports.DEF_FIRE_DELAY = exports.DEF_PROJECTILE_DAMAGE = exports.DEF_PROJECTILE_SPEED = exports.PLAYER_PROJECTILE_MAX = exports.PROJECTILE_MAX = exports.LEVEL_SEVEN_THRESHOLD = exports.LEVEL_SIX_THRESHOLD = exports.LEVEL_FIVE_THRESHOLD = exports.LEVEL_FOUR_THRESHOLD = exports.LEVEL_THREE_THRESHOLD = exports.LEVEL_TWO_THRESHOLD = exports.LEVEL_ONE_THRESHOLD = exports.PICKUP_MAX = exports.ENEMY_MAX = exports.I_FRAMES_DEFAULT = exports.DEFAULT_HEALTH = exports.DEFAULT_SPEED = exports.DEFAULT_VOLUME = exports.FRAME_RATE = exports.HEIGHT_IN_TILES = exports.WIDTH_IN_TILES = exports.STAGE_HEIGHT = exports.STAGE_WIDTH = void 0;
+exports.ASSET_MANIFEST = exports.LEVEL_DATA = exports.FLOOR = exports.LEFT_CORNER = exports.RIGHT_CORNER = exports.FRONT_WALL = exports.BACK_WALL = exports.LEFT_WALL = exports.RIGHT_WALL = exports.NUMBER_OF_LEVELS = exports.ALIEN_CONTACT_DAMAGE = exports.ALIEN_BEAM_SPEED = exports.ALIEN_BEAM_DELAY = exports.ALIEN_BEAM_DAMAGE = exports.ALIEN_ROUND = exports.ALIEN_BEAM = exports.ROCKET_SPEED = exports.ROCKET_FIRE_DELAY = exports.ROCKET_RELOAD_DELAY = exports.ROCKET_SPLASH_DAMAGE = exports.ROCKET_IMPACT_DAMAGE = exports.ROCKET_MAG_SIZE = exports.ROCKET_AMMO_MAX = exports.ROCKET_ROUND = exports.ROCKET = exports.TESLA_SPEED = exports.TESLA_FIRE_DELAY = exports.TESLA_RELOAD_DELAY = exports.TESLA_MAG_SIZE = exports.TESLA_AMMO_MAX = exports.TESLA_CHAIN_DAMAGE = void 0;
 exports.STAGE_WIDTH = 600;
 exports.STAGE_HEIGHT = 600;
 exports.WIDTH_IN_TILES = exports.STAGE_WIDTH / 40;
 exports.HEIGHT_IN_TILES = exports.STAGE_HEIGHT / 40;
 exports.FRAME_RATE = 30;
+exports.DEFAULT_VOLUME = 1;
 exports.DEFAULT_SPEED = 5;
 exports.DEFAULT_HEALTH = 10;
 exports.I_FRAMES_DEFAULT = 1000;
@@ -1127,6 +1128,13 @@ exports.ALIEN_BEAM_DELAY = 2000;
 exports.ALIEN_BEAM_SPEED = 7;
 exports.ALIEN_CONTACT_DAMAGE = 1;
 exports.NUMBER_OF_LEVELS = 5;
+exports.RIGHT_WALL = "sprites/firstplayable/wall right 1";
+exports.LEFT_WALL = "sprites/firstplayable/wall left 1";
+exports.BACK_WALL = "sprites/firstplayable/wall back1";
+exports.FRONT_WALL = "sprites/firstplayable/wall forward 1";
+exports.RIGHT_CORNER = "sprites/firstplayable/wall small right 1";
+exports.LEFT_CORNER = "sprites/firstplayable/wall small left 1";
+exports.FLOOR = "sprites/firstplayable/floor1";
 exports.LEVEL_DATA = [
     [
         ["sprites/firstplayable/wall right 1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall back1", "sprites/firstplayable/wall left 1"],
@@ -1275,9 +1283,93 @@ exports.ASSET_MANIFEST = [
     },
     {
         type: "sound",
-        src: "./lib/sounds/beep.ogg",
-        id: "beep",
+        src: "./lib/sounds/Ammo.wav",
+        id: "Ammo",
+        data: 2
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Combat.wav",
+        id: "Combat",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/EnemyDeath.wav",
+        id: "EnemyDeath",
+        data: 6
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/EnemyHurt.wav",
+        id: "EnemyHurt",
+        data: 6
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Heal.wav",
+        id: "Heal",
+        data: 2
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Laser.wav",
+        id: "Laser",
         data: 4
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/MainMenu.wav",
+        id: "MainMenu",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/MainMenuAlt.wav",
+        id: "MainMenuAlt",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Pause.wav",
+        id: "Pause",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Pistol.wav",
+        id: "Pistol",
+        data: 4
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/PlayerDamage.wav",
+        id: "PlayerDamage",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/PlayerDeath.wav",
+        id: "PlayerDeath",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Railgun.wav",
+        id: "Railgun",
+        data: 1
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Select.wav",
+        id: "Select",
+        data: 2
+    },
+    {
+        type: "sound",
+        src: "./lib/sounds/Unpause.wav",
+        id: "Unpause",
+        data: 1
     }
 ];
 
@@ -1432,6 +1524,7 @@ const Toolkit_1 = __webpack_require__(/*! ./Toolkit */ "./src/Toolkit.ts");
 const Tile_1 = __webpack_require__(/*! ./Tile */ "./src/Tile.ts");
 const Pickup_1 = __webpack_require__(/*! ./Pickup */ "./src/Pickup.ts");
 const LevelManager_1 = __webpack_require__(/*! ./LevelManager */ "./src/LevelManager.ts");
+const Settings_1 = __webpack_require__(/*! ./Settings */ "./src/Settings.ts");
 let stage;
 let canvas;
 let assetManager;
@@ -1470,11 +1563,13 @@ let newTile;
 let playerInventory;
 let levelManager;
 let poolManager;
+let settings;
 let invincibleTimer;
 let collisionTimer;
 let fireDelayTimer;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
+    settings = new Settings_1.Settings();
     screenManager = new ScreenManager_1.ScreenManager(stage, assetManager);
     levelManager = new LevelManager_1.LevelManager(stage);
     player = new Player_1.Player(stage, assetManager);
@@ -1594,7 +1689,7 @@ function onGameEvent(e) {
             break;
         case "titleActive":
             resetPools();
-            console.log("received dispatch: titleActive ");
+            console.log("received dispatch: titleActive");
             hideLevel();
             userInterface.showStartMenu();
             userInterface.onStartClick();
@@ -1829,6 +1924,7 @@ function projectileEnemyCollision() {
                 if (enemy.state == GameCharacter_1.GameCharacter.STATE_DEAD || enemy.state == GameCharacter_1.GameCharacter.STATE_DYING || enemy.state == GameCharacter_1.GameCharacter.STATE_IDLE)
                     continue;
                 console.log("hit!");
+                createjs.Sound.play("EnemyHit", null, null, null, null, settings.volume);
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
             }
@@ -2083,7 +2179,6 @@ function onTick(e) {
     }
     userInterface.updateHUD();
     startCollsionTimer();
-    projectilePlayerCollision();
     tileCollisionDetection();
     enemyEnemyCollision();
     playerEnemyCollision();
@@ -2224,7 +2319,6 @@ class GameCharacter {
                 this._deltaX = 0;
                 this._deltaY = -1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player back");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol back");
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height / 2;
                 this._facing = GameCharacter.DIR_UP;
@@ -2233,7 +2327,6 @@ class GameCharacter {
                 this._deltaX = 0;
                 this._deltaY = 1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol front");
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_DOWN;
@@ -2242,7 +2335,6 @@ class GameCharacter {
                 this._deltaX = -1;
                 this._deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player left");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol left");
                 this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_LEFT;
@@ -2251,7 +2343,6 @@ class GameCharacter {
                 this._deltaX = 1;
                 this._deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player right");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol right");
                 this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_RIGHT;
@@ -2342,6 +2433,7 @@ GameCharacter.DIR_NEUTRAL = 99;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Inventory = void 0;
 const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
+const GameCharacter_1 = __webpack_require__(/*! ./GameCharacter */ "./src/GameCharacter.ts");
 class Inventory {
     constructor(gameCharacter) {
         this.gameCharacter = gameCharacter;
@@ -2353,6 +2445,7 @@ class Inventory {
         this._teslagunAmmo = Constants_1.TESLA_AMMO_MAX;
         this._laserAmmo = Constants_1.LASER_AMMO_MAX;
         this._currentWeaponAmmo = this._pistolAmmo;
+        this._currentWeaponSound = "Pistol";
     }
     set currentWeapon(value) {
         this._currentWeapon = value;
@@ -2399,6 +2492,9 @@ class Inventory {
     set currentWeaponAmmo(value) {
         this._currentWeaponAmmo = value;
     }
+    get currentWeaponSound() {
+        return this._currentWeaponSound;
+    }
     checkEquippedWeapon() {
         switch (this._currentWeapon) {
             case Constants_1.PISTOL:
@@ -2409,6 +2505,7 @@ class Inventory {
                 this._currentProjectileSprite = Constants_1.PISTOL_ROUND;
                 this._currentProjectileSpeed = Constants_1.PISTOL_SPEED;
                 this._currentWeaponAmmo = this._pistolAmmo;
+                this._currentWeaponSound = "Pistol";
                 break;
             case Constants_1.TESLA:
                 this._currentFireDelay = Constants_1.TESLA_FIRE_DELAY;
@@ -2425,6 +2522,7 @@ class Inventory {
                 this._currentProjectileSprite = Constants_1.LASER_ROUND;
                 this._currentProjectileSpeed = Constants_1.LASER_SPEED;
                 this._currentWeaponAmmo = this._laserAmmo;
+                this._currentWeaponSound = "Laser";
                 break;
             case Constants_1.ROCKET:
                 this._currentFireDelay = Constants_1.ROCKET_FIRE_DELAY;
@@ -2441,6 +2539,7 @@ class Inventory {
                 this._currentProjectileSprite = Constants_1.RAILGUN_ROUND;
                 this._currentProjectileSpeed = Constants_1.RAILGUN_SPEED;
                 this._currentWeaponAmmo = this._railgunAmmo;
+                this._currentWeaponSound = "Railgun";
                 break;
             case Constants_1.ALIEN_BEAM:
                 this._currentFireDelay = Constants_1.ALIEN_BEAM_DELAY;
@@ -2483,6 +2582,54 @@ class Inventory {
                 break;
             case Constants_1.TESLA:
                 this._teslagunAmmo--;
+                break;
+        }
+    }
+    WeaponSpriteDirection(gameCharacter) {
+        switch (gameCharacter.facing) {
+            case GameCharacter_1.GameCharacter.DIR_DOWN:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol front");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun front");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun front");
+                }
+                break;
+            case GameCharacter_1.GameCharacter.DIR_UP:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol back");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun back");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun back");
+                }
+                break;
+            case GameCharacter_1.GameCharacter.DIR_LEFT:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol left");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun left");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun left");
+                }
+                break;
+            case GameCharacter_1.GameCharacter.DIR_RIGHT:
+                if (this._currentWeapon == Constants_1.PISTOL) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol right");
+                }
+                else if (this._currentWeapon == Constants_1.LASER) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun right");
+                }
+                else if (this._currentWeapon == Constants_1.RAILGUN) {
+                    this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun right");
+                }
                 break;
         }
     }
@@ -3083,6 +3230,27 @@ class ScreenManager {
     }
 }
 exports.ScreenManager = ScreenManager;
+
+
+/***/ }),
+
+/***/ "./src/Settings.ts":
+/*!*************************!*\
+  !*** ./src/Settings.ts ***!
+  \*************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Settings = void 0;
+const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
+class Settings {
+    constructor() {
+        this.volume = Constants_1.DEFAULT_VOLUME;
+    }
+}
+exports.Settings = Settings;
 
 
 /***/ }),
@@ -5676,7 +5844,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a92c23d92804a34975e3")
+/******/ 		__webpack_require__.h = () => ("fc2dcdb69110e09d5a18")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
