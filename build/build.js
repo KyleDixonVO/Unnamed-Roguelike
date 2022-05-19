@@ -2316,7 +2316,6 @@ class GameCharacter {
                 this._deltaX = 0;
                 this._deltaY = -1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player back");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol back");
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height / 2;
                 this._facing = GameCharacter.DIR_UP;
@@ -2325,7 +2324,6 @@ class GameCharacter {
                 this._deltaX = 0;
                 this._deltaY = 1;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol front");
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_DOWN;
@@ -2334,7 +2332,6 @@ class GameCharacter {
                 this._deltaX = -1;
                 this._deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player left");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol left");
                 this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_LEFT;
@@ -2343,7 +2340,6 @@ class GameCharacter {
                 this._deltaX = 1;
                 this._deltaY = 0;
                 this._sprite.gotoAndPlay("sprites/firstplayable/player right");
-                this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol right");
                 this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_RIGHT;
@@ -5824,7 +5820,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("20c3320f60801c3d8f9c")
+/******/ 		__webpack_require__.h = () => ("dd18392660b5af2d4a88")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
