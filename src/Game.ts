@@ -837,6 +837,7 @@ function onTick(e:createjs.Event) {
         levelManager.checkWaveStatus();
     }
     playerInventory.update();
+    playerInventory.WeaponSpriteDirection(player);
 
     // update the stage
     stage.update();

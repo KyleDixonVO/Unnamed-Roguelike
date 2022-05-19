@@ -2164,6 +2164,7 @@ function onTick(e) {
         levelManager.checkWaveStatus();
     }
     playerInventory.update();
+    playerInventory.WeaponSpriteDirection(player);
     stage.update();
 }
 function main() {
@@ -5824,7 +5825,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("76b4eaa9acba526eadd5")
+/******/ 		__webpack_require__.h = () => ("9a58778d26989256d711")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
