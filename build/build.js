@@ -3441,6 +3441,7 @@ class UserInterface {
             this.startButton.gotoAndStop("sprites/button/up");
         });
         this.startButton.on("click", () => {
+            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
             if (this._paused == true)
                 return;
             this.screenManager.startDispatch();
@@ -3454,6 +3455,7 @@ class UserInterface {
             this.settingsButton.gotoAndStop("sprites/button/settingsUp");
         });
         this.settingsButton.on("click", () => {
+            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
             if (this._paused == true)
                 return;
             this.screenManager.openSettings();
@@ -5845,7 +5847,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("5a09b2bc3834723f3008")
+/******/ 		__webpack_require__.h = () => ("404d8053450cf562b986")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
