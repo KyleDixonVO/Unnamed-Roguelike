@@ -1698,6 +1698,7 @@ function onGameEvent(e) {
             resetPools();
             console.log("received dispatch: titleActive ");
             hideLevel();
+            createjs.Sound.play("MainMenu", loopingProps);
             userInterface.showStartMenu();
             userInterface.onStartClick();
             userInterface.onSettingsClick();
@@ -5854,7 +5855,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("ae4bc4e0d5df06c40907")
+/******/ 		__webpack_require__.h = () => ("e16ba1cd075756b87f39")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

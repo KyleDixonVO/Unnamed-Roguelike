@@ -248,6 +248,7 @@ function onGameEvent(e:createjs.Event):void {
             resetPools();
             console.log("received dispatch: titleActive ");
             hideLevel();
+            createjs.Sound.play("MainMenu", loopingProps);
             userInterface.showStartMenu();
             userInterface.onStartClick();
             userInterface.onSettingsClick();
