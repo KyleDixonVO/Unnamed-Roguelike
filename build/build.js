@@ -1718,6 +1718,7 @@ function onGameEvent(e) {
             console.log("recieved dispatch: openSettings");
             screenManager.pauseGame();
             userInterface.showSettingsMenu();
+            createjs.Sound.play("Pause", { volume: settings.volume });
             break;
         case "closeSettings":
             console.log("recieved dispatch: closeSettings");
@@ -5857,7 +5858,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("dca0175bfc57976c698a")
+/******/ 		__webpack_require__.h = () => ("e777309c34e16d26acff")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

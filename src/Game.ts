@@ -274,6 +274,7 @@ function onGameEvent(e:createjs.Event):void {
             console.log("recieved dispatch: openSettings");
             screenManager.pauseGame();
             userInterface.showSettingsMenu();
+            createjs.Sound.play("Pause", {volume: settings.volume});
             break;
 
 
