@@ -203,6 +203,7 @@ function onGameEvent(e:createjs.Event):void {
             levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
+            createjs.Sound.play("EnemyDeath", {volume: settings.volume});
             let rng = randomMe(1, 20);
             console.log("rng:" + rng);
             if (rng == 20){

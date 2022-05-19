@@ -1660,6 +1660,7 @@ function onGameEvent(e) {
             levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
+            createjs.Sound.play("EnemyDeath", { volume: settings.volume });
             let rng = (0, Toolkit_1.randomMe)(1, 20);
             console.log("rng:" + rng);
             if (rng == 20) {
@@ -5851,7 +5852,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("6070ce561e07397adf3c")
+/******/ 		__webpack_require__.h = () => ("b0b7c64c8265d45744b8")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
