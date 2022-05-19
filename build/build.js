@@ -1817,6 +1817,7 @@ function addProjectile() {
             newProjectile.passIn(player, playerInventory);
             newProjectile.activate();
             playerInventory.decrementAmmo();
+            createjs.Sound.play(playerInventory.currentWeaponSound, { volume: settings.volume });
             break;
         }
     }
@@ -5861,7 +5862,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("6bed5c202c216e606fed")
+/******/ 		__webpack_require__.h = () => ("72185d7f93abfe7821c7")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

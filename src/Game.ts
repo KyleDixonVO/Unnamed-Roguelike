@@ -385,6 +385,7 @@ function addProjectile():void{
             newProjectile.passIn(player, playerInventory);
             newProjectile.activate();
             playerInventory.decrementAmmo();
+            createjs.Sound.play(playerInventory.currentWeaponSound, {volume: settings.volume});
             break;
         }
     }
