@@ -19,7 +19,6 @@ export class Inventory {
     private _currentWeaponSprite:string;
     private _currentWeaponAmmo:number;
     private _currentReloadDelay:number;
-    private _currentWeaponSound:string;
 
     constructor(gameCharacter:GameCharacter){
         this.gameCharacter = gameCharacter;
@@ -32,7 +31,6 @@ export class Inventory {
         this._teslagunAmmo = TESLA_AMMO_MAX;
         this._laserAmmo = LASER_AMMO_MAX;
         this._currentWeaponAmmo = this._pistolAmmo;
-        this._currentWeaponSound = "Pistol";
     }
 
     // ------------------------------------------------------------------------------------------------- gets/sets
@@ -96,10 +94,6 @@ export class Inventory {
         this._currentWeaponAmmo = value;
     }
 
-    get currentWeaponSound():string{
-        return this._currentWeaponSound;
-    }
-
     //-------------------------------------------------------------------------------------------------------------- private methods
 
     private checkEquippedWeapon():void{
@@ -112,7 +106,6 @@ export class Inventory {
                 this._currentProjectileSprite = PISTOL_ROUND;
                 this._currentProjectileSpeed = PISTOL_SPEED;
                 this._currentWeaponAmmo = this._pistolAmmo;
-                this._currentWeaponSound = "Pistol";
                 break;
 
             case TESLA:
@@ -131,7 +124,6 @@ export class Inventory {
                 this._currentProjectileSprite = LASER_ROUND;
                 this._currentProjectileSpeed = LASER_SPEED;
                 this._currentWeaponAmmo = this._laserAmmo;
-                this._currentWeaponSound = "Laser";
                 break;
             
             case ROCKET:
@@ -150,7 +142,6 @@ export class Inventory {
                 this._currentProjectileSprite = RAILGUN_ROUND;
                 this._currentProjectileSpeed = RAILGUN_SPEED;
                 this._currentWeaponAmmo = this._railgunAmmo;
-                this._currentWeaponSound = "Railgun";
                 break;
 
             case ALIEN_BEAM:
@@ -208,34 +199,6 @@ export class Inventory {
             case TESLA:
                 this._teslagunAmmo--;
                 break;
-        }
-    }
-
-    public WeaponSpriteDirection(gameCharacter:GameCharacter){
-        switch (gameCharacter.facing){
-            case GameCharacter.DIR_DOWN:
-                if (this._currentWeapon == PISTOL){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol front")}
-                else if (this._currentWeapon == LASER){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun front")}
-                else if (this._currentWeapon == RAILGUN){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun front")}
-            break;
-
-            case GameCharacter.DIR_UP:
-                if (this._currentWeapon == PISTOL){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol back")}
-                else if (this._currentWeapon == LASER){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun back")}
-                else if (this._currentWeapon == RAILGUN){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun back")}
-            break;
-
-            case GameCharacter.DIR_LEFT:
-                if (this._currentWeapon == PISTOL){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol left")}
-                else if (this._currentWeapon == LASER){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun left")}
-                else if (this._currentWeapon == RAILGUN){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun left")}
-            break;
-
-            case GameCharacter.DIR_RIGHT:
-                if (this._currentWeapon == PISTOL){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/pistol right")}
-                else if (this._currentWeapon == LASER){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/lazer gun right")}
-                else if (this._currentWeapon == RAILGUN){ this.gameCharacter.weaponSprite.gotoAndStop("sprites/firstplayable/railgun right")}
-            break;
         }
     }
 
