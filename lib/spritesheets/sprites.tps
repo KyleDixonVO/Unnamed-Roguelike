@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>5</int>
         <key>texturePackerVersion</key>
-        <string>6.0.0</string>
+        <string>6.0.1</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -188,6 +188,8 @@
             <key type="filename">sprites/button/down.png</key>
             <key type="filename">sprites/button/over.png</key>
             <key type="filename">sprites/button/up.png</key>
+            <key type="filename">sprites/button/volDown.png</key>
+            <key type="filename">sprites/button/volUp.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -204,6 +206,7 @@
             </struct>
             <key type="filename">sprites/button/settingsOver.png</key>
             <key type="filename">sprites/button/settingsUp.png</key>
+            <key type="filename">sprites/other/ammoUI.png</key>
             <key type="filename">sprites/other/settingsText.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -235,13 +238,20 @@
                 <false/>
             </struct>
             <key type="filename">sprites/firstplayable/blanktile.png</key>
-            <key type="filename">sprites/firstplayable/garden open top bottom left right.png</key>
-            <key type="filename">sprites/firstplayable/garden open top right bottom.png</key>
+            <key type="filename">sprites/firstplayable/floor1.png</key>
+            <key type="filename">sprites/firstplayable/wall back1.png</key>
+            <key type="filename">sprites/firstplayable/wall forward 1.png</key>
+            <key type="filename">sprites/firstplayable/wall forward left 1.png</key>
+            <key type="filename">sprites/firstplayable/wall forward right 1.png</key>
+            <key type="filename">sprites/firstplayable/wall left 1.png</key>
             <key type="filename">sprites/firstplayable/wall left to back.png</key>
+            <key type="filename">sprites/firstplayable/wall right 1.png</key>
             <key type="filename">sprites/firstplayable/wall right to back.png</key>
+            <key type="filename">sprites/firstplayable/wall small left 1.png</key>
+            <key type="filename">sprites/firstplayable/wall small right 1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
+                <point_f>0,0</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
@@ -327,29 +337,6 @@
                 <rect>37,4,73,7</rect>
                 <key>scale9Paddings</key>
                 <rect>37,4,73,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">sprites/firstplayable/floor1.png</key>
-            <key type="filename">sprites/firstplayable/wall back1.png</key>
-            <key type="filename">sprites/firstplayable/wall forward 1.png</key>
-            <key type="filename">sprites/firstplayable/wall forward left 1.png</key>
-            <key type="filename">sprites/firstplayable/wall forward right 1.png</key>
-            <key type="filename">sprites/firstplayable/wall left 1.png</key>
-            <key type="filename">sprites/firstplayable/wall right 1.png</key>
-            <key type="filename">sprites/firstplayable/wall small left 1.png</key>
-            <key type="filename">sprites/firstplayable/wall small right 1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,10,20,20</rect>
-                <key>scale9Paddings</key>
-                <rect>10,10,20,20</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -518,6 +505,22 @@
                 <rect>10,10,19,20</rect>
                 <key>scale9Paddings</key>
                 <rect>10,10,19,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/garden open top bottom left right.png</key>
+            <key type="filename">sprites/firstplayable/garden open top right bottom.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,20,20</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,20,20</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -984,7 +987,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sprites/other/background.png</key>
             <key type="filename">sprites/other/cloud.png</key>
             <key type="filename">sprites/other/gameOverScreen.png</key>
             <key type="filename">sprites/other/levelComplete.png</key>
@@ -1005,6 +1007,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">sprites/other/controls.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>100,75,200,150</rect>
+                <key>scale9Paddings</key>
+                <rect>100,75,200,150</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/other/enemiesLeft.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>75,15,150,30</rect>
+                <key>scale9Paddings</key>
+                <rect>75,15,150,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">sprites/other/healthBar.png</key>
             <key type="filename">sprites/other/healthOutline.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1018,6 +1050,36 @@
                 <rect>50,8,100,16</rect>
                 <key>scale9Paddings</key>
                 <rect>50,8,100,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/other/item_box.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,9,20,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,9,20,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/other/score.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>38,15,75,30</rect>
+                <key>scale9Paddings</key>
+                <rect>38,15,75,30</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

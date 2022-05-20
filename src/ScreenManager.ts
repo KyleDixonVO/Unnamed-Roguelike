@@ -148,8 +148,12 @@ export class ScreenManager {
         this.levelCompleteScreen.y = 0;
         this.stage.addChild(this.levelCompleteScreen);
         this.levelCompleteScreen.on("click", ()=> {
-            this.stage.dispatchEvent(this.eventLoadNextLevel);
+            this.dispatchNextLevel();
         })
+    }
+
+    public dispatchNextLevel():void{
+        this.stage.dispatchEvent(this.eventLoadNextLevel);
     }
 
 }

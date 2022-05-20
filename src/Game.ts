@@ -174,8 +174,8 @@ function onReady(e:createjs.Event):void {
 }
 
 function onGameEvent(e:createjs.Event):void {
-    console.log("target:" + e.target);
-    console.log("current target:" + e.currentTarget);
+    //console.log("target:" + e.target);
+    //console.log("current target:" + e.currentTarget);
     console.log("called onGameEvent");
     switch (e.type) {
         case "playerKilled":
@@ -220,13 +220,13 @@ function onGameEvent(e:createjs.Event):void {
             console.log("received dispatch: gameStarted ");
             screenManager.showGame();
             showLevel();
-            loadLevel(levelManager.activeLevel);
+            screenManager.dispatchNextLevel();
             player.addToStage();
             player.startMovement();
 
             console.log(player.state);
             userInterface.showPlayerHUD();
-            addPickUp();
+            //addPickUp();
             gameStarted = true;
             createjs.Sound.stop();
             createjs.Sound.play("Combat", loopingProps);
@@ -354,21 +354,31 @@ function onGameEvent(e:createjs.Event):void {
         
         case "completeLevel":
             console.log("received dispatch: completeLevel");
-            screenManager.showLevelComplete();
-            player.pause();
-            levelManager.resetForNextLevel();
-            resetPools();
-            gameStarted = false;
+            if (levelManager.activeLevel >= 4){
+                console.log("game.ts dispatching winScreen");
+                screenManager.dispatchWinScreen();
+                resetPools();
+                return;
+            }
+            else{
+                screenManager.showLevelComplete();
+                player.pause();
+                levelManager.resetForNextLevel();
+                resetPools();
+                gameStarted = false;
+            }
             break;
         
         case "loadNextLevel":
             console.log("received dispatch: loadNextLevel");
+            console.log("active level: " + levelManager.activeLevel);
             resetPools();
             screenManager.showGame();
             player.unpause();
             showLevel();
             loadLevel(levelManager.activeLevel);
             player.addToStage();
+            setPlayerSpawn();
             player.startMovement();
             gameStarted = true;
 
@@ -431,6 +441,57 @@ function addEnemyProjectile():void{
     }
 }
 
+function setPlayerSpawn():void{
+    let maxX:number;
+    let minX:number;
+    let maxY:number;
+    let minY:number;
+
+    switch (levelManager.activeLevel){
+        case 1:
+          minX = 300;
+          maxX = 300;
+          minY = 300;
+          maxY = 300;  
+        break;
+
+        case 2:
+            minX = 400;
+            maxX = 400;
+            minY = 300;
+            maxY = 300;
+        break;
+
+        case 3:
+            minX = 300;
+            maxX = 300;
+            minY = 200;
+            maxY = 200;
+        break;
+
+        case 4:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+        break;
+
+        case 5:
+        
+        break;
+
+        case 6:
+
+        break;
+
+        case 7:
+
+        break;
+    }
+    player.sprite.x = randomMe(minX, maxX);
+    player.sprite.y = randomMe(minY, maxY);
+}
+
 
 function onAddEnemy():void{
     if (escapePress == true) return;
@@ -438,8 +499,54 @@ function onAddEnemy():void{
         if (newEnemy.used == false){
             newEnemy.used = true;
             newEnemy.addToStage();
-            newEnemy.sprite.x = randomMe(50, 550);
-            newEnemy.sprite.y = randomMe(50, 550);
+            let maxX:number;
+            let minX:number;
+            let maxY:number;
+            let minY:number;
+
+            switch (levelManager.activeLevel){
+                case 1:
+                  minX = 100;
+                  maxX = 300;
+                  minY = 150;
+                  maxY = 300;  
+                break;
+
+                case 2:
+                    minX = 200;
+                    maxX = 350;
+                    minY = 100;
+                    maxY = 250;
+                break;
+
+                case 3:
+                    minX = 200;
+                    maxX = 350;
+                    minY = 400;
+                    maxY = 500;
+                break;
+
+                case 4:
+                    minX = 150;
+                    maxX = 450;
+                    minY = 150;
+                    maxY = 450;
+                break;
+
+                case 5:
+                
+                break;
+
+                case 6:
+
+                break;
+
+                case 7:
+
+                break;
+            }
+            newEnemy.sprite.x = randomMe(minX, maxX);
+            newEnemy.sprite.y = randomMe(minY, maxY);
             console.log(newEnemy);
             break;
         }
@@ -466,7 +573,7 @@ function loadLevel(value:number):void{
     let i = value - 1;
     for (let j:number =  0; j < HEIGHT_IN_TILES; j++ ){
         for (let k:number = 0; k < WIDTH_IN_TILES; k++){
-            console.log(LEVEL_DATA[i][j][k]);
+            //console.log(LEVEL_DATA[i][j][k]);
             tilePool[k][j].sprite.gotoAndStop(LEVEL_DATA[i][j][k]);
         }
     }
@@ -659,39 +766,39 @@ function monitorKeys():void {
         }
     }
 
-    // if (LKey == true){
-    //     console.log("attempting stage swap");
-    //     if (LUp == false || paused == true) return;
-    //     console.log("changing stage");
-    //     LUp = false;
-    //     stageNum++;
-    //     if (stageNum > 7){
-    //         stageNum = 1;
-    //     }
-    //     switch (stageNum){
-    //         case 1:
-    //             loadLevel(1);
-    //             break;
-    //         case 2:
-    //             loadLevel(2);
-    //             break;
-    //         case 3:
-    //             loadLevel(3);
-    //             break;
-    //         case 4:
-    //             loadLevel(4);
-    //             break;
-    //         case 5:
-    //             loadLevel(5);
-    //             break;
-    //         case 6:
-    //             loadLevel(6);
-    //             break;
-    //         case 7:
-    //             loadLevel(7);
-    //             break;
-    //     }
-    // }
+    if (LKey == true){
+        console.log("attempting stage swap");
+        if (LUp == false || paused == true) return;
+        console.log("changing stage");
+        LUp = false;
+        stageNum++;
+        if (stageNum > 7){
+            stageNum = 1;
+        }
+        switch (stageNum){
+            case 1:
+                loadLevel(1);
+                break;
+            case 2:
+                loadLevel(2);
+                break;
+            case 3:
+                loadLevel(3);
+                break;
+            case 4:
+                loadLevel(4);
+                break;
+            case 5:
+                loadLevel(5);
+                break;
+            case 6:
+                loadLevel(6);
+                break;
+            case 7:
+                loadLevel(7);
+                break;
+        }
+    }
 
     if (escapePress == true){
         if (escapeUp == true) return;
@@ -829,6 +936,7 @@ function onTick(e:createjs.Event) {
     tileCollisionDetection();
     enemyEnemyCollision();
     playerEnemyCollision();
+    settings.update(userInterface.volume);
     
     levelManager.checkWinCondition();
     //console.log(paused, gameStarted);

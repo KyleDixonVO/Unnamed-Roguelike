@@ -1144,72 +1144,72 @@ exports.LEFT_TO_BACK = "sprites/firstplayable/wall left to back";
 exports.RIGHT_TO_BACK = "sprites/firstplayable/wall right to back";
 exports.LEVEL_DATA = [
     [
-        [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.FORWARD_LEFT],
+        [exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.FRONT_WALL, exports.FRONT_WALL, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACK_WALL, exports.BACK_WALL, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER],
+        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
     ],
     [
-        [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.FRONT_WALL, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACK_WALL, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
     ],
     [
-        [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACK_WALL, exports.BACK_WALL, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.RIGHT_TO_BACK, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.RIGHT_WALL, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.RIGHT_WALL, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
     ],
     [
-        [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
+        [exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK, exports.BLANK, exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK],
+        [exports.FORWARD_RIGHT, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.FORWARD_LEFT, exports.BLANK, exports.FORWARD_RIGHT, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.FORWARD_LEFT],
+        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
+        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACK_WALL, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
         [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
         [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER],
+        [exports.RIGHT_CORNER, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.LEFT_CORNER],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_CORNER, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.LEFT_CORNER, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.LEFT_CORNER, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
     ],
     [
         [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
@@ -1641,8 +1641,6 @@ function onReady(e) {
     screenManager.showTitleScreen();
 }
 function onGameEvent(e) {
-    console.log("target:" + e.target);
-    console.log("current target:" + e.currentTarget);
     console.log("called onGameEvent");
     switch (e.type) {
         case "playerKilled":
@@ -1682,12 +1680,11 @@ function onGameEvent(e) {
             console.log("received dispatch: gameStarted ");
             screenManager.showGame();
             showLevel();
-            loadLevel(levelManager.activeLevel);
+            screenManager.dispatchNextLevel();
             player.addToStage();
             player.startMovement();
             console.log(player.state);
             userInterface.showPlayerHUD();
-            addPickUp();
             gameStarted = true;
             createjs.Sound.stop();
             createjs.Sound.play("Combat", loopingProps);
@@ -1794,20 +1791,30 @@ function onGameEvent(e) {
             break;
         case "completeLevel":
             console.log("received dispatch: completeLevel");
-            screenManager.showLevelComplete();
-            player.pause();
-            levelManager.resetForNextLevel();
-            resetPools();
-            gameStarted = false;
+            if (levelManager.activeLevel >= 4) {
+                console.log("game.ts dispatching winScreen");
+                screenManager.dispatchWinScreen();
+                resetPools();
+                return;
+            }
+            else {
+                screenManager.showLevelComplete();
+                player.pause();
+                levelManager.resetForNextLevel();
+                resetPools();
+                gameStarted = false;
+            }
             break;
         case "loadNextLevel":
             console.log("received dispatch: loadNextLevel");
+            console.log("active level: " + levelManager.activeLevel);
             resetPools();
             screenManager.showGame();
             player.unpause();
             showLevel();
             loadLevel(levelManager.activeLevel);
             player.addToStage();
+            setPlayerSpawn();
             player.startMovement();
             gameStarted = true;
             console.log(player.state);
@@ -1867,6 +1874,46 @@ function addEnemyProjectile() {
         }
     }
 }
+function setPlayerSpawn() {
+    let maxX;
+    let minX;
+    let maxY;
+    let minY;
+    switch (levelManager.activeLevel) {
+        case 1:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+            break;
+        case 2:
+            minX = 400;
+            maxX = 400;
+            minY = 300;
+            maxY = 300;
+            break;
+        case 3:
+            minX = 300;
+            maxX = 300;
+            minY = 200;
+            maxY = 200;
+            break;
+        case 4:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+    }
+    player.sprite.x = (0, Toolkit_1.randomMe)(minX, maxX);
+    player.sprite.y = (0, Toolkit_1.randomMe)(minY, maxY);
+}
 function onAddEnemy() {
     if (escapePress == true)
         return;
@@ -1874,8 +1921,44 @@ function onAddEnemy() {
         if (newEnemy.used == false) {
             newEnemy.used = true;
             newEnemy.addToStage();
-            newEnemy.sprite.x = (0, Toolkit_1.randomMe)(50, 550);
-            newEnemy.sprite.y = (0, Toolkit_1.randomMe)(50, 550);
+            let maxX;
+            let minX;
+            let maxY;
+            let minY;
+            switch (levelManager.activeLevel) {
+                case 1:
+                    minX = 100;
+                    maxX = 300;
+                    minY = 150;
+                    maxY = 300;
+                    break;
+                case 2:
+                    minX = 200;
+                    maxX = 350;
+                    minY = 100;
+                    maxY = 250;
+                    break;
+                case 3:
+                    minX = 200;
+                    maxX = 350;
+                    minY = 400;
+                    maxY = 500;
+                    break;
+                case 4:
+                    minX = 150;
+                    maxX = 450;
+                    minY = 150;
+                    maxY = 450;
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
+            newEnemy.sprite.x = (0, Toolkit_1.randomMe)(minX, maxX);
+            newEnemy.sprite.y = (0, Toolkit_1.randomMe)(minY, maxY);
             console.log(newEnemy);
             break;
         }
@@ -1899,7 +1982,6 @@ function loadLevel(value) {
     let i = value - 1;
     for (let j = 0; j < Constants_1.HEIGHT_IN_TILES; j++) {
         for (let k = 0; k < Constants_1.WIDTH_IN_TILES; k++) {
-            console.log(Constants_1.LEVEL_DATA[i][j][k]);
             tilePool[k][j].sprite.gotoAndStop(Constants_1.LEVEL_DATA[i][j][k]);
         }
     }
@@ -2058,6 +2140,40 @@ function monitorKeys() {
                 break;
         }
     }
+    if (LKey == true) {
+        console.log("attempting stage swap");
+        if (LUp == false || paused == true)
+            return;
+        console.log("changing stage");
+        LUp = false;
+        stageNum++;
+        if (stageNum > 7) {
+            stageNum = 1;
+        }
+        switch (stageNum) {
+            case 1:
+                loadLevel(1);
+                break;
+            case 2:
+                loadLevel(2);
+                break;
+            case 3:
+                loadLevel(3);
+                break;
+            case 4:
+                loadLevel(4);
+                break;
+            case 5:
+                loadLevel(5);
+                break;
+            case 6:
+                loadLevel(6);
+                break;
+            case 7:
+                loadLevel(7);
+                break;
+        }
+    }
     if (escapePress == true) {
         if (escapeUp == true)
             return;
@@ -2166,6 +2282,7 @@ function onTick(e) {
     tileCollisionDetection();
     enemyEnemyCollision();
     playerEnemyCollision();
+    settings.update(userInterface.volume);
     levelManager.checkWinCondition();
     if (gameStarted == true && paused == false) {
         levelManager.checkWaveStatus();
@@ -3242,8 +3359,11 @@ class ScreenManager {
         this.levelCompleteScreen.y = 0;
         this.stage.addChild(this.levelCompleteScreen);
         this.levelCompleteScreen.on("click", () => {
-            this.stage.dispatchEvent(this.eventLoadNextLevel);
+            this.dispatchNextLevel();
         });
+    }
+    dispatchNextLevel() {
+        this.stage.dispatchEvent(this.eventLoadNextLevel);
     }
 }
 exports.ScreenManager = ScreenManager;
@@ -3265,6 +3385,9 @@ const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts")
 class Settings {
     constructor() {
         this.volume = Constants_1.DEFAULT_VOLUME;
+    }
+    update(value) {
+        this.volume = value;
     }
 }
 exports.Settings = Settings;
@@ -3390,16 +3513,16 @@ class UserInterface {
     constructor(stage, assetManager, player, screenManager, inventory, settings, levelManager) {
         this.stage = stage;
         this.txtScore = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
-        this.txtScore.x = 250;
-        this.txtScore.y = 20;
+        this.txtScore.x = 290;
+        this.txtScore.y = 15;
         this.txtScore.letterSpacing = 1;
         this.txtAmmo = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
         this.txtAmmo.x = 525;
-        this.txtAmmo.y = 20;
+        this.txtAmmo.y = 15;
         this.txtAmmo.letterSpacing = 1;
         this.txtObjective = new createjs.BitmapText("0", assetManager.getSpriteSheet("glyphs"));
-        this.txtObjective.x = 250;
-        this.txtObjective.y = 50;
+        this.txtObjective.x = 125;
+        this.txtObjective.y = 55;
         this.txtAmmo.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.startButton.gotoAndStop("sprites/button/up");
@@ -3413,6 +3536,12 @@ class UserInterface {
         this.healthBar.gotoAndStop("sprites/other/healthBar");
         this.healthOutline = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.healthOutline.gotoAndStop("sprites/other/healthOutline");
+        this.soundDown = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.soundDown.gotoAndStop("sprites/button/volUp");
+        this.soundUp = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.soundUp.gotoAndStop("sprites/button/volUp");
+        this.controls = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.controls.gotoAndStop("sprites/other/controls");
         this._paused = false;
         this.player = player;
         this.screenManager = screenManager;
@@ -3421,6 +3550,13 @@ class UserInterface {
         this.settings = settings;
         this.levelManager = levelManager;
         this._enemiesRemaining = this.levelManager.threshold - this.levelManager.defeatedEnemies;
+        this.volume = 1;
+        this.ammoBacker = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.ammoBacker.gotoAndStop("sprites/other/ammoUI");
+        this.scoreBacker = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.scoreBacker.gotoAndStop("sprites/other/score");
+        this.enemiesLeft = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.enemiesLeft.gotoAndStop("sprites/other/enemiesLeft");
         this.reset();
     }
     set score(value) {
@@ -3455,9 +3591,9 @@ class UserInterface {
         this.startButton.x = 200;
         this.startButton.y = 450;
         this.stage.addChild(this.startButton);
-        this.settingsButton.x = 350;
+        this.settingsButton.x = 400;
         this.settingsButton.y = 450;
-        this.settingsButton.scaleY = 0.9;
+        this.settingsButton.scaleY = 1;
         this.stage.addChild(this.settingsButton);
     }
     onStartClick() {
@@ -3488,6 +3624,40 @@ class UserInterface {
             this.screenManager.openSettings();
         });
     }
+    onSoundDownClick() {
+        this.soundDown.on("mouseover", () => {
+            this.soundDown.gotoAndStop("sprites/button/volDown");
+        });
+        this.soundDown.on("mouseout", () => {
+            this.soundDown.gotoAndStop("sprites/button/volUp");
+        });
+        this.soundDown.on("click", () => {
+            if (this.volume <= 0) {
+                this.volume = 0;
+                return;
+            }
+            this.volume -= 0.1;
+            console.log(this.volume);
+            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+        });
+    }
+    onSoundUpClick() {
+        this.soundUp.on("mouseover", () => {
+            this.soundUp.gotoAndStop("sprites/button/volDown");
+        });
+        this.soundUp.on("mouseout", () => {
+            this.soundUp.gotoAndStop("sprites/button/volUp");
+        });
+        this.soundUp.on("click", () => {
+            if (this.volume >= 1) {
+                this.volume = 1;
+                return;
+            }
+            this.volume += 0.1;
+            console.log(this.volume);
+            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+        });
+    }
     removeAll() {
         this.stage.removeChild(this.startButton);
         this.stage.removeChild(this.settingsButton);
@@ -3498,6 +3668,12 @@ class UserInterface {
         this.stage.removeChild(this.txtScore);
         this.stage.removeChild(this.txtAmmo);
         this.stage.removeChild(this.txtObjective);
+        this.stage.removeChild(this.soundDown);
+        this.stage.removeChild(this.soundUp);
+        this.stage.removeChild(this.controls);
+        this.stage.removeChild(this.enemiesLeft);
+        this.stage.removeChild(this.ammoBacker);
+        this.stage.removeChild(this.scoreBacker);
     }
     showSettingsMenu() {
         this._paused = true;
@@ -3507,11 +3683,25 @@ class UserInterface {
         this.settingsHeader.x = 300;
         this.settingsHeader.y = 100;
         this.stage.addChild(this.settingsHeader);
+        this.soundDown.x = 200;
+        this.soundDown.y = 200;
+        this.stage.addChild(this.soundDown);
+        this.soundUp.x = 400;
+        this.soundUp.y = 200;
+        this.stage.addChild(this.soundUp);
+        this.controls.x = 300;
+        this.controls.y = 400;
+        this.stage.addChild(this.controls);
+        this.onSoundDownClick();
+        this.onSoundUpClick();
     }
     hideSettingsMenu() {
         this._paused = false;
         this.stage.removeChild(this.pauseOverlay);
         this.stage.removeChild(this.settingsHeader);
+        this.stage.removeChild(this.soundDown);
+        this.stage.removeChild(this.soundUp);
+        this.stage.removeChild(this.controls);
     }
     showPlayerHUD() {
         this.healthBar.x = 15;
@@ -3522,8 +3712,23 @@ class UserInterface {
         this.healthOutline.y = 30;
         this.healthOutline.alpha = 0.65;
         this.healthOutline.scaleX = 1.05;
+        this.scoreBacker.x = 275;
+        this.scoreBacker.y = 30;
+        this.scoreBacker.scaleX = 0.5;
+        this.scoreBacker.scaleY = 0.5;
+        this.ammoBacker.x = 500;
+        this.ammoBacker.y = 30;
+        this.ammoBacker.scaleX = 0.75;
+        this.ammoBacker.scaleY = 0.75;
+        this.enemiesLeft.x = 90;
+        this.enemiesLeft.y = 70;
+        this.enemiesLeft.scaleX = 0.5;
+        this.enemiesLeft.scaleY = 0.5;
         this.stage.addChild(this.healthOutline);
         this.stage.addChild(this.healthBar);
+        this.stage.addChild(this.scoreBacker);
+        this.stage.addChild(this.ammoBacker);
+        this.stage.addChild(this.enemiesLeft);
         this.stage.addChild(this.txtScore);
         this.stage.addChild(this.txtAmmo);
         this.stage.addChild(this.txtObjective);
@@ -5878,7 +6083,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a7431a55e0c5ef216e31")
+/******/ 		__webpack_require__.h = () => ("3993242b5a27ceffbd21")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

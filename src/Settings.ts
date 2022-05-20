@@ -6,4 +6,8 @@ export class Settings{
     constructor(){
         this.volume = DEFAULT_VOLUME;
     } 
+
+    update(value:number):void{
+        this.volume = value;
+    }
 }
