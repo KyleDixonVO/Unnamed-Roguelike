@@ -79,36 +79,36 @@ export class ScreenManager {
         this.hideAll();
         this.stage.addChildAt(this.titleScreen, 0);
         this.stage.dispatchEvent(this.eventTitleActive);
-        console.log("event dispatched: titleActive ");
+        //console.log("event dispatched: titleActive ");
 
     }
 
     public startDispatch():void {
         this.stage.dispatchEvent(this.eventStartGame);
-        console.log("event dispatched: startGame ");
+        //console.log("event dispatched: startGame ");
 
     }
 
     public openSettings():void {
         this.stage.dispatchEvent(this.eventOpenSettings);
-        console.log("event dispatched: openSettings");
+        //console.log("event dispatched: openSettings");
     }
 
     public closeSettings():void {
         this.stage.dispatchEvent(this.eventCloseSettings);
-        console.log("event dispatched: closeSettings");
+        //console.log("event dispatched: closeSettings");
     }
 
 
 
     public pauseGame():void{
         this.stage.dispatchEvent(this.eventPaused);
-        console.log("event dispatched: gamePaused");
+        //console.log("event dispatched: gamePaused");
     }
 
     public unpauseGame():void{
         this.stage.dispatchEvent(this.eventUnpaused);
-        console.log("event dispatched: gameUnpaused");
+        //console.log("event dispatched: gameUnpaused");
     }
 
     public dispatchWinScreen():void{
@@ -154,6 +154,10 @@ export class ScreenManager {
 
     public dispatchNextLevel():void{
         this.stage.dispatchEvent(this.eventLoadNextLevel);
+    }
+
+    public dispatchReset():void{
+        this.stage.dispatchEvent(this.eventResetGame);
     }
 
 }

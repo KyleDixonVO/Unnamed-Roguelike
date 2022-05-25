@@ -30,6 +30,7 @@ export class UserInterface {
     private healthBar:createjs.Sprite;
     private healthOutline:createjs.Sprite;
     private txtAmmo:createjs.BitmapText;
+    private txtSound:createjs.BitmapText;
     private settings:Settings;
     private txtObjective:createjs.BitmapText;
     private soundUp:createjs.Sprite;
@@ -39,6 +40,7 @@ export class UserInterface {
     private ammoBacker:createjs.Sprite;
     private enemiesLeft:createjs.Sprite;
     private scoreBacker:createjs.Sprite;
+    private quitButton:createjs.Sprite;
 
     constructor(stage:createjs.StageGL, assetManager:AssetManager, player:Player, screenManager:ScreenManager, inventory:Inventory, settings:Settings, levelManager:LevelManager) {
         this.stage = stage;
@@ -56,6 +58,10 @@ export class UserInterface {
         this.txtObjective.x = 125;
         this.txtObjective.y = 55;
         this.txtAmmo.letterSpacing = 1;
+        this.txtSound = new createjs.BitmapText("10", assetManager.getSpriteSheet("glyphs"));
+        this.txtSound.x = 290;
+        this.txtSound.y = 135;
+        this.txtSound.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.startButton.gotoAndStop("sprites/button/up");
         this.settingsButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -69,7 +75,7 @@ export class UserInterface {
         this.healthOutline = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.healthOutline.gotoAndStop("sprites/other/healthOutline");
         this.soundDown = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
-        this.soundDown.gotoAndStop("sprites/button/volUp");
+        this.soundDown.gotoAndStop("sprites/button/volDown");
         this.soundUp = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.soundUp.gotoAndStop("sprites/button/volUp");
         this.controls = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -82,13 +88,15 @@ export class UserInterface {
         this.settings = settings;
         this.levelManager = levelManager;
         this._enemiesRemaining = this.levelManager.threshold - this.levelManager.defeatedEnemies;
-        this.volume = 1;
+        this.volume = 10;
         this.ammoBacker = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.ammoBacker.gotoAndStop("sprites/other/ammoUI");
         this.scoreBacker = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.scoreBacker.gotoAndStop("sprites/other/score");
         this.enemiesLeft = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.enemiesLeft.gotoAndStop("sprites/other/enemiesLeft");
+        this.quitButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.quitButton.gotoAndStop("sprites/button/quitToMenu");
 
 
         //intstantialise properties
@@ -157,7 +165,7 @@ export class UserInterface {
             createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
             if (this._paused == true) return;
             this.screenManager.startDispatch();
-        });
+        }, null, false);
     }
 
     public onSettingsClick():void{
@@ -174,39 +182,56 @@ export class UserInterface {
         });
     }
 
+    public onQuitButtonClick():void{
+        this.quitButton.on("click", ()=> {
+            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            this.hideSettingsMenu();
+            this.removeAll();
+            this.screenManager.dispatchReset();
+        });
+    }
+
     public onSoundDownClick():void{
-        this.soundDown.on("mouseover", ()=> {
-            this.soundDown.gotoAndStop("sprites/button/volDown");
-        });
-        this.soundDown.on("mouseout", ()=> {
-            this.soundDown.gotoAndStop("sprites/button/volUp");
-        });
+        // this.soundDown.on("mouseover", ()=> {
+        //     this.soundDown.gotoAndStop("sprites/button/volDown");
+        // });
+        // this.soundDown.on("mouseout", ()=> {
+        //     this.soundDown.gotoAndStop("sprites/button/volUp");
+        // });
         this.soundDown.on("click", ()=> {
-            if (this.volume <= 0) {
-                this.volume =0; 
+            if (this.volume < 1) {
+                this.volume = 0; 
+                console.log("UI volume: " + this.volume);
                 return;
             }
-            this.volume -= 0.1;
-            console.log(this.volume);
-            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            else {
+                this.volume -= 1;
+                console.log("UI volume: " + this.volume);
+                createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            }
+
         });
     }
 
     public onSoundUpClick():void{
-        this.soundUp.on("mouseover", ()=> {
-            this.soundUp.gotoAndStop("sprites/button/volDown");
-        });
-        this.soundUp.on("mouseout", ()=> {
-            this.soundUp.gotoAndStop("sprites/button/volUp");
-        });
+        // this.soundUp.on("mouseover", ()=> {
+        //     this.soundUp.gotoAndStop("sprites/button/volDown");
+        // });
+        // this.soundUp.on("mouseout", ()=> {
+        //     this.soundUp.gotoAndStop("sprites/button/volUp");
+        // });
         this.soundUp.on("click", ()=> {
-            if (this.volume >= 1){
-                this.volume = 1
+            if (this.volume >= 10){
+                this.volume = 10;
+                console.log("UI volume: " + this.volume);
                 return;
-            } 
-            this.volume += 0.1;
-            console.log(this.volume);
-            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            }
+            else {
+                this.volume += 1;
+                console.log("UI volume: " + this.volume);
+                createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            }
+
         });
     }
 
@@ -217,7 +242,7 @@ export class UserInterface {
         this.stage.removeChild(this.healthBar);
         this.stage.removeChild(this.healthOutline);
         this.stage.removeChild(this.txtScore);
-        this.stage.removeChild(this.txtScore);
+        this.stage.removeChild(this.settingsHeader);
         this.stage.removeChild(this.txtAmmo);
         this.stage.removeChild(this.txtObjective);
         this.stage.removeChild(this.soundDown);
@@ -226,6 +251,8 @@ export class UserInterface {
         this.stage.removeChild(this.enemiesLeft);
         this.stage.removeChild(this.ammoBacker);
         this.stage.removeChild(this.scoreBacker);
+        this.stage.removeChild(this.txtSound);
+        this.stage.removeChild(this.quitButton);
     }
 
     public showSettingsMenu(){
@@ -236,17 +263,22 @@ export class UserInterface {
         this.settingsHeader.x = 300;
         this.settingsHeader.y = 100;
         this.stage.addChild(this.settingsHeader);
-        this.soundDown.x = 200;
-        this.soundDown.y = 200;
-        this.stage.addChild(this.soundDown);
-        this.soundUp.x = 400;
-        this.soundUp.y = 200;
-        this.stage.addChild(this.soundUp);
         this.controls.x = 300;
-        this.controls.y = 400;
+        this.controls.y = 300;
         this.stage.addChild(this.controls);
+        this.soundDown.x = 225;
+        this.soundDown.y = 150;
+        this.stage.addChild(this.soundDown);
+        this.soundUp.x = 375;
+        this.soundUp.y = 150;
+        this.stage.addChild(this.soundUp);
+        this.stage.addChild(this.txtSound);
+        this.quitButton.x = 300;
+        this.quitButton.y = 580;
+        this.stage.addChild(this.quitButton);
         this.onSoundDownClick();
         this.onSoundUpClick();
+        this.onQuitButtonClick();
     }
 
     public hideSettingsMenu(){
@@ -256,6 +288,7 @@ export class UserInterface {
         this.stage.removeChild(this.soundDown);
         this.stage.removeChild(this.soundUp);
         this.stage.removeChild(this.controls);
+        this.stage.removeChild(this.txtSound);
     }
 
     public showPlayerHUD(){
@@ -269,8 +302,8 @@ export class UserInterface {
         this.healthOutline.scaleX = 1.05;
         this.scoreBacker.x = 275;
         this.scoreBacker.y = 30;
-        this.scoreBacker.scaleX = 0.5;
-        this.scoreBacker.scaleY = 0.5;
+        this.scoreBacker.scaleX = 0.7;
+        this.scoreBacker.scaleY = 0.7;
         this.ammoBacker.x = 500;
         this.ammoBacker.y = 30;
         this.ammoBacker.scaleX = 0.75;
@@ -298,6 +331,7 @@ export class UserInterface {
         this.txtScore.text = this._score.toString();
         this.txtAmmo.text = this._ammo.toString();
         this.txtObjective.text = this._enemiesRemaining.toString();
+        this.txtSound.text = this.volume.toString();
     }
 
     public incrementScore(){

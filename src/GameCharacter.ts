@@ -277,7 +277,7 @@ public stopMovement():void {
 
 public startMovement():void{
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED) { return };
-    console.log("started movement");
+    //console.log("started movement");
     this.sprite.play();
     this.weaponSprite.play();
     this._state = GameCharacter.STATE_MOVING;
@@ -300,13 +300,13 @@ public update():void {
 
 public pause():void{
     this._stateBeforePause = this._state;
-    console.log("state before pausing: " + this._stateBeforePause);
+    //console.log("state before pausing: " + this._stateBeforePause);
     this._state = GameCharacter.STATE_PAUSED;
 }
 
 public unpause():void{
     this._state = this._stateBeforePause;
-    console.log("state after pausing: " + this._state);
+    //console.log("state after pausing: " + this._state);
 }
 
 public setLastPosition(){

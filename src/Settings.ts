@@ -8,6 +8,6 @@ export class Settings{
     } 
 
     update(value:number):void{
-        this.volume = value;
+        this.volume = value/10;
     }
 }

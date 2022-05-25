@@ -135,10 +135,10 @@ export class Projectile {
         this.used = true;
         this._sprite.x = this.gamecharacter.sprite.x;
         this._sprite.y = this.gamecharacter.sprite.y;
-        console.log("about to add projectile of type to stage: " + this.controllerInventory.currentProjectileSprite);
+        //console.log("about to add projectile of type to stage: " + this.controllerInventory.currentProjectileSprite);
         this.stage.addChild(this._sprite);
         this.applyWeaponCharacteristics();
-        console.log("added projectile of type: " + this.controllerInventory.currentProjectileSprite);
+        //console.log("added projectile of type: " + this.controllerInventory.currentProjectileSprite);
     }
 
     public applyWeaponCharacteristics():void{
@@ -177,7 +177,7 @@ export class Projectile {
                 this._bounces++;
                 if (this._sprite.rotation == 90 || this._sprite.rotation == 270){ this.deltaY = -this.deltaY};
                 if (this._sprite.rotation == 0 || this._sprite.rotation == 180){ this.deltaX = -this.deltaX};
-                if (this._bounces >= 5){
+                if (this._bounces >= 2){
                     this.reset();
                 }
                 break;

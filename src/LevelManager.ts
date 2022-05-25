@@ -128,12 +128,16 @@ export class LevelManager{
         this._activeLevel = 1;
         this._defeatedEnemies = 0;
         this._enemiesSpawned = 0;
+        this._readyToSpawn = true;
     }
 
     public checkWaveStatus(){
         if (this._readyToSpawn == false) {
-            //console.log("not ready to spawn"); 
+            console.log("not ready to spawn"); 
             return;
+        }
+        else{
+            console.log("ready to spawn");
         }
 
         if (this._defeatedEnemies % this._activeLevel == 0 || this._enemiesSpawned == 0){

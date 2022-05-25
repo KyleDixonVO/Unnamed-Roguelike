@@ -1081,24 +1081,24 @@ exports.DEF_PROJECTILE_DAMAGE = 2;
 exports.DEF_FIRE_DELAY = 500;
 exports.PISTOL = "pistol";
 exports.PISTOL_ROUND = "sprites/firstplayable/bullet";
-exports.PISTOL_DAMAGE = 2;
-exports.PISTOL_AMMO_MAX = 200;
+exports.PISTOL_DAMAGE = 3;
+exports.PISTOL_AMMO_MAX = 100;
 exports.PISTOL_MAG_SIZE = 6;
 exports.PISTOL_RELOAD_DELAY = 2000;
-exports.PISTOL_FIRE_DELAY = 500;
+exports.PISTOL_FIRE_DELAY = 250;
 exports.PISTOL_SPEED = 10;
 exports.LASER = "laser";
 exports.LASER_ROUND = "sprites/firstplayable/laser";
 exports.LASER_DAMAGE = 3;
-exports.LASER_AMMO_MAX = 100;
+exports.LASER_AMMO_MAX = 30;
 exports.LASER_MAG_SIZE = 10;
 exports.LASER_RELOAD_DELAY = 2500;
-exports.LASER_FIRE_DELAY = 250;
+exports.LASER_FIRE_DELAY = 400;
 exports.LASER_SPEED = 8;
 exports.RAILGUN = "railgun";
 exports.RAILGUN_ROUND = "sprites/firstplayable/railgun bullet";
 exports.RAILGUN_DAMAGE = 8;
-exports.RAILGUN_AMMO_MAX = 80;
+exports.RAILGUN_AMMO_MAX = 40;
 exports.RAILGUN_MAG_SIZE = 4;
 exports.RAILGUN_RELOAD_DELAY = 3000;
 exports.RAILGUN_FIRE_DELAY = 1666;
@@ -1212,21 +1212,21 @@ exports.LEVEL_DATA = [
         [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
     ],
     [
-        [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACK_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL],
-        [exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.FORWARD_RIGHT, exports.BACK_WALL, exports.BACKCURVE_RIGHT, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.BACKCURVE_LEFT, exports.BACK_WALL, exports.FORWARD_LEFT, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_WALL, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_WALL, exports.BLANK],
+        [exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.RIGHT_TO_BACK, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.FLOOR, exports.LEFT_TO_BACK, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.RIGHT_CORNER, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.FRONT_WALL, exports.LEFT_CORNER, exports.BLANK, exports.BLANK, exports.BLANK],
+        [exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK, exports.BLANK]
     ],
     [
         [exports.RIGHT_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.BACK_WALL, exports.LEFT_WALL],
@@ -1572,6 +1572,7 @@ let playerInventory;
 let levelManager;
 let poolManager;
 let settings;
+let decorations;
 let invincibleTimer;
 let collisionTimer;
 let fireDelayTimer;
@@ -1641,7 +1642,6 @@ function onReady(e) {
     screenManager.showTitleScreen();
 }
 function onGameEvent(e) {
-    console.log("called onGameEvent");
     switch (e.type) {
         case "playerKilled":
             userInterface.removeAll();
@@ -1649,6 +1649,7 @@ function onGameEvent(e) {
             hideLevel();
             resetPools();
             screenManager.showGameOverScreen();
+            createjs.Sound.stop();
             break;
         case "playerHit":
             if (iFramesActive == true)
@@ -1661,7 +1662,7 @@ function onGameEvent(e) {
         case "enemyKilled":
             console.log("received dispatch: enemyKilled");
             levelManager.defeatedEnemies++;
-            console.log(levelManager.defeatedEnemies);
+            console.log("defeated enemies: " + levelManager.defeatedEnemies);
             levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
@@ -1669,11 +1670,7 @@ function onGameEvent(e) {
             let rng = (0, Toolkit_1.randomMe)(1, 20);
             console.log("rng:" + rng);
             if (rng == 20) {
-                for (let pickup of pickupPool) {
-                    if (!pickup.used) {
-                        pickup.onDrop(100, 100);
-                    }
-                }
+                spawnPickup();
             }
             break;
         case "gameStarted":
@@ -1683,22 +1680,28 @@ function onGameEvent(e) {
             screenManager.dispatchNextLevel();
             player.addToStage();
             player.startMovement();
-            console.log(player.state);
+            console.log("player state on game start: " + player.state);
             userInterface.showPlayerHUD();
             gameStarted = true;
+            paused = false;
             createjs.Sound.stop();
             createjs.Sound.play("Combat", loopingProps);
             break;
         case "gameReset":
+            console.log("recieved dispatch: gameReset");
             player.reset();
+            player.removeFromStage();
+            stage.removeChild(player.weaponSprite);
             userInterface.reset();
             hideLevel();
-            screenManager.showTitleScreen();
             levelManager.reset();
             gameStarted == false;
             resetPools();
+            screenManager.showTitleScreen();
+            playerInventory.refillAmmo();
             break;
         case "titleActive":
+            createjs.Sound.stop();
             resetPools();
             console.log("received dispatch: titleActive ");
             hideLevel();
@@ -1706,8 +1709,13 @@ function onGameEvent(e) {
             userInterface.showStartMenu();
             userInterface.onStartClick();
             userInterface.onSettingsClick();
+            paused = false;
+            gameStarted = false;
             break;
         case "gameWin":
+            resetPools();
+            gameStarted = false;
+            paused = true;
             screenManager.showWinScreen();
             userInterface.removeAll();
             hideLevel();
@@ -1723,12 +1731,14 @@ function onGameEvent(e) {
             screenManager.pauseGame();
             userInterface.showSettingsMenu();
             createjs.Sound.play("Pause", { volume: settings.volume });
+            paused = true;
             break;
         case "closeSettings":
             console.log("recieved dispatch: closeSettings");
             userInterface.hideSettingsMenu();
             screenManager.unpauseGame();
             createjs.Sound.play("Unpause", { volume: settings.volume });
+            paused = false;
             break;
         case "gamePaused":
             if (paused == true)
@@ -1780,7 +1790,7 @@ function onGameEvent(e) {
             break;
         case "spawnWave":
             console.log("received dispatch: spawnWave");
-            console.log(levelManager.enemiesSpawned, levelManager.threshold);
+            console.log("enemies spawned: " + levelManager.enemiesSpawned, "levelmanager threshold: " + levelManager.threshold);
             if (levelManager.enemiesSpawned > levelManager.threshold)
                 return;
             for (let i = 0; i < levelManager.activeLevel; i++) {
@@ -1817,13 +1827,12 @@ function onGameEvent(e) {
             setPlayerSpawn();
             player.startMovement();
             gameStarted = true;
-            console.log(player.state);
             userInterface.showPlayerHUD();
             break;
     }
 }
 function addProjectile() {
-    if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || gameStarted == false)
+    if (paused == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || gameStarted == false)
         return;
     if (playerInventory.currentWeaponAmmo == 0)
         return;
@@ -1839,7 +1848,7 @@ function addProjectile() {
     }
 }
 function addPickUp() {
-    if (escapePress == true)
+    if (paused == true)
         return;
     for (newPickup of pickupPool) {
         console.log("adding pickup");
@@ -1863,7 +1872,7 @@ function onFireDelayTimer() {
     window.clearInterval(fireDelayTimer);
 }
 function addEnemyProjectile() {
-    if (escapePress == true || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
+    if (paused == true || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
         return;
     for (newProjectile of projectilePool) {
         if (newProjectile.used == false) {
@@ -1912,10 +1921,55 @@ function setPlayerSpawn() {
             break;
     }
     player.sprite.x = (0, Toolkit_1.randomMe)(minX, maxX);
+    player.weaponSprite.x = player.sprite.x;
     player.sprite.y = (0, Toolkit_1.randomMe)(minY, maxY);
+    player.weaponSprite.y = player.sprite.y;
+}
+function spawnPickup() {
+    let maxX;
+    let minX;
+    let maxY;
+    let minY;
+    switch (levelManager.activeLevel) {
+        case 1:
+            minX = 100;
+            maxX = 300;
+            minY = 150;
+            maxY = 300;
+            break;
+        case 2:
+            minX = 200;
+            maxX = 350;
+            minY = 125;
+            maxY = 250;
+            break;
+        case 3:
+            minX = 200;
+            maxX = 350;
+            minY = 400;
+            maxY = 500;
+            break;
+        case 4:
+            minX = 150;
+            maxX = 450;
+            minY = 200;
+            maxY = 450;
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+    }
+    for (let pickup of pickupPool) {
+        if (!pickup.used) {
+            pickup.onDrop((0, Toolkit_1.randomMe)(minX, maxX), (0, Toolkit_1.randomMe)(minY, maxY));
+        }
+    }
 }
 function onAddEnemy() {
-    if (escapePress == true)
+    if (paused == true)
         return;
     for (newEnemy of enemyPool) {
         if (newEnemy.used == false) {
@@ -1935,7 +1989,7 @@ function onAddEnemy() {
                 case 2:
                     minX = 200;
                     maxX = 350;
-                    minY = 100;
+                    minY = 125;
                     maxY = 250;
                     break;
                 case 3:
@@ -1947,7 +2001,7 @@ function onAddEnemy() {
                 case 4:
                     minX = 150;
                     maxX = 450;
-                    minY = 150;
+                    minY = 200;
                     maxY = 450;
                     break;
                 case 5:
@@ -2283,12 +2337,14 @@ function onTick(e) {
     enemyEnemyCollision();
     playerEnemyCollision();
     settings.update(userInterface.volume);
+    loopingProps.set({ volume: settings.volume });
     levelManager.checkWinCondition();
     if (gameStarted == true && paused == false) {
         levelManager.checkWaveStatus();
     }
     playerInventory.update();
     playerInventory.WeaponSpriteDirection(player);
+    console.log("escape press: " + escapePress, "\ngame started: " + gameStarted, "\npaused: " + paused, "\nplayer state: " + player.state);
     stage.update();
 }
 function main() {
@@ -2500,7 +2556,6 @@ class GameCharacter {
             return;
         }
         ;
-        console.log("started movement");
         this.sprite.play();
         this.weaponSprite.play();
         this._state = GameCharacter.STATE_MOVING;
@@ -2520,12 +2575,10 @@ class GameCharacter {
     }
     pause() {
         this._stateBeforePause = this._state;
-        console.log("state before pausing: " + this._stateBeforePause);
         this._state = GameCharacter.STATE_PAUSED;
     }
     unpause() {
         this._state = this._stateBeforePause;
-        console.log("state after pausing: " + this._state);
     }
     setLastPosition() {
         this.lastX = this._sprite.x;
@@ -2879,10 +2932,15 @@ class LevelManager {
         this._activeLevel = 1;
         this._defeatedEnemies = 0;
         this._enemiesSpawned = 0;
+        this._readyToSpawn = true;
     }
     checkWaveStatus() {
         if (this._readyToSpawn == false) {
+            console.log("not ready to spawn");
             return;
+        }
+        else {
+            console.log("ready to spawn");
         }
         if (this._defeatedEnemies % this._activeLevel == 0 || this._enemiesSpawned == 0) {
             this.stage.dispatchEvent(this.eventSpawnWave);
@@ -3185,10 +3243,8 @@ class Projectile {
         this.used = true;
         this._sprite.x = this.gamecharacter.sprite.x;
         this._sprite.y = this.gamecharacter.sprite.y;
-        console.log("about to add projectile of type to stage: " + this.controllerInventory.currentProjectileSprite);
         this.stage.addChild(this._sprite);
         this.applyWeaponCharacteristics();
-        console.log("added projectile of type: " + this.controllerInventory.currentProjectileSprite);
     }
     applyWeaponCharacteristics() {
         this._damage = this.controllerInventory.weaponDamage;
@@ -3228,7 +3284,7 @@ class Projectile {
                     this.deltaX = -this.deltaX;
                 }
                 ;
-                if (this._bounces >= 5) {
+                if (this._bounces >= 2) {
                     this.reset();
                 }
                 break;
@@ -3304,27 +3360,21 @@ class ScreenManager {
         this.hideAll();
         this.stage.addChildAt(this.titleScreen, 0);
         this.stage.dispatchEvent(this.eventTitleActive);
-        console.log("event dispatched: titleActive ");
     }
     startDispatch() {
         this.stage.dispatchEvent(this.eventStartGame);
-        console.log("event dispatched: startGame ");
     }
     openSettings() {
         this.stage.dispatchEvent(this.eventOpenSettings);
-        console.log("event dispatched: openSettings");
     }
     closeSettings() {
         this.stage.dispatchEvent(this.eventCloseSettings);
-        console.log("event dispatched: closeSettings");
     }
     pauseGame() {
         this.stage.dispatchEvent(this.eventPaused);
-        console.log("event dispatched: gamePaused");
     }
     unpauseGame() {
         this.stage.dispatchEvent(this.eventUnpaused);
-        console.log("event dispatched: gameUnpaused");
     }
     dispatchWinScreen() {
         this.stage.dispatchEvent(this.eventWin);
@@ -3365,6 +3415,9 @@ class ScreenManager {
     dispatchNextLevel() {
         this.stage.dispatchEvent(this.eventLoadNextLevel);
     }
+    dispatchReset() {
+        this.stage.dispatchEvent(this.eventResetGame);
+    }
 }
 exports.ScreenManager = ScreenManager;
 
@@ -3387,7 +3440,7 @@ class Settings {
         this.volume = Constants_1.DEFAULT_VOLUME;
     }
     update(value) {
-        this.volume = value;
+        this.volume = value / 10;
     }
 }
 exports.Settings = Settings;
@@ -3524,6 +3577,10 @@ class UserInterface {
         this.txtObjective.x = 125;
         this.txtObjective.y = 55;
         this.txtAmmo.letterSpacing = 1;
+        this.txtSound = new createjs.BitmapText("10", assetManager.getSpriteSheet("glyphs"));
+        this.txtSound.x = 290;
+        this.txtSound.y = 135;
+        this.txtSound.letterSpacing = 1;
         this.startButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.startButton.gotoAndStop("sprites/button/up");
         this.settingsButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -3537,7 +3594,7 @@ class UserInterface {
         this.healthOutline = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.healthOutline.gotoAndStop("sprites/other/healthOutline");
         this.soundDown = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
-        this.soundDown.gotoAndStop("sprites/button/volUp");
+        this.soundDown.gotoAndStop("sprites/button/volDown");
         this.soundUp = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.soundUp.gotoAndStop("sprites/button/volUp");
         this.controls = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
@@ -3550,13 +3607,15 @@ class UserInterface {
         this.settings = settings;
         this.levelManager = levelManager;
         this._enemiesRemaining = this.levelManager.threshold - this.levelManager.defeatedEnemies;
-        this.volume = 1;
+        this.volume = 10;
         this.ammoBacker = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.ammoBacker.gotoAndStop("sprites/other/ammoUI");
         this.scoreBacker = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.scoreBacker.gotoAndStop("sprites/other/score");
         this.enemiesLeft = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
         this.enemiesLeft.gotoAndStop("sprites/other/enemiesLeft");
+        this.quitButton = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+        this.quitButton.gotoAndStop("sprites/button/quitToMenu");
         this.reset();
     }
     set score(value) {
@@ -3608,7 +3667,7 @@ class UserInterface {
             if (this._paused == true)
                 return;
             this.screenManager.startDispatch();
-        });
+        }, null, false);
     }
     onSettingsClick() {
         this.settingsButton.on("mouseover", () => {
@@ -3624,38 +3683,40 @@ class UserInterface {
             this.screenManager.openSettings();
         });
     }
+    onQuitButtonClick() {
+        this.quitButton.on("click", () => {
+            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            this.hideSettingsMenu();
+            this.removeAll();
+            this.screenManager.dispatchReset();
+        });
+    }
     onSoundDownClick() {
-        this.soundDown.on("mouseover", () => {
-            this.soundDown.gotoAndStop("sprites/button/volDown");
-        });
-        this.soundDown.on("mouseout", () => {
-            this.soundDown.gotoAndStop("sprites/button/volUp");
-        });
         this.soundDown.on("click", () => {
-            if (this.volume <= 0) {
+            if (this.volume < 1) {
                 this.volume = 0;
+                console.log("UI volume: " + this.volume);
                 return;
             }
-            this.volume -= 0.1;
-            console.log(this.volume);
-            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            else {
+                this.volume -= 1;
+                console.log("UI volume: " + this.volume);
+                createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            }
         });
     }
     onSoundUpClick() {
-        this.soundUp.on("mouseover", () => {
-            this.soundUp.gotoAndStop("sprites/button/volDown");
-        });
-        this.soundUp.on("mouseout", () => {
-            this.soundUp.gotoAndStop("sprites/button/volUp");
-        });
         this.soundUp.on("click", () => {
-            if (this.volume >= 1) {
-                this.volume = 1;
+            if (this.volume >= 10) {
+                this.volume = 10;
+                console.log("UI volume: " + this.volume);
                 return;
             }
-            this.volume += 0.1;
-            console.log(this.volume);
-            createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            else {
+                this.volume += 1;
+                console.log("UI volume: " + this.volume);
+                createjs.Sound.play("Select", null, null, null, null, this.settings.volume);
+            }
         });
     }
     removeAll() {
@@ -3665,7 +3726,7 @@ class UserInterface {
         this.stage.removeChild(this.healthBar);
         this.stage.removeChild(this.healthOutline);
         this.stage.removeChild(this.txtScore);
-        this.stage.removeChild(this.txtScore);
+        this.stage.removeChild(this.settingsHeader);
         this.stage.removeChild(this.txtAmmo);
         this.stage.removeChild(this.txtObjective);
         this.stage.removeChild(this.soundDown);
@@ -3674,6 +3735,8 @@ class UserInterface {
         this.stage.removeChild(this.enemiesLeft);
         this.stage.removeChild(this.ammoBacker);
         this.stage.removeChild(this.scoreBacker);
+        this.stage.removeChild(this.txtSound);
+        this.stage.removeChild(this.quitButton);
     }
     showSettingsMenu() {
         this._paused = true;
@@ -3683,17 +3746,22 @@ class UserInterface {
         this.settingsHeader.x = 300;
         this.settingsHeader.y = 100;
         this.stage.addChild(this.settingsHeader);
-        this.soundDown.x = 200;
-        this.soundDown.y = 200;
-        this.stage.addChild(this.soundDown);
-        this.soundUp.x = 400;
-        this.soundUp.y = 200;
-        this.stage.addChild(this.soundUp);
         this.controls.x = 300;
-        this.controls.y = 400;
+        this.controls.y = 300;
         this.stage.addChild(this.controls);
+        this.soundDown.x = 225;
+        this.soundDown.y = 150;
+        this.stage.addChild(this.soundDown);
+        this.soundUp.x = 375;
+        this.soundUp.y = 150;
+        this.stage.addChild(this.soundUp);
+        this.stage.addChild(this.txtSound);
+        this.quitButton.x = 300;
+        this.quitButton.y = 580;
+        this.stage.addChild(this.quitButton);
         this.onSoundDownClick();
         this.onSoundUpClick();
+        this.onQuitButtonClick();
     }
     hideSettingsMenu() {
         this._paused = false;
@@ -3702,6 +3770,7 @@ class UserInterface {
         this.stage.removeChild(this.soundDown);
         this.stage.removeChild(this.soundUp);
         this.stage.removeChild(this.controls);
+        this.stage.removeChild(this.txtSound);
     }
     showPlayerHUD() {
         this.healthBar.x = 15;
@@ -3714,8 +3783,8 @@ class UserInterface {
         this.healthOutline.scaleX = 1.05;
         this.scoreBacker.x = 275;
         this.scoreBacker.y = 30;
-        this.scoreBacker.scaleX = 0.5;
-        this.scoreBacker.scaleY = 0.5;
+        this.scoreBacker.scaleX = 0.7;
+        this.scoreBacker.scaleY = 0.7;
         this.ammoBacker.x = 500;
         this.ammoBacker.y = 30;
         this.ammoBacker.scaleX = 0.75;
@@ -3742,6 +3811,7 @@ class UserInterface {
         this.txtScore.text = this._score.toString();
         this.txtAmmo.text = this._ammo.toString();
         this.txtObjective.text = this._enemiesRemaining.toString();
+        this.txtSound.text = this.volume.toString();
     }
     incrementScore() {
         this._score++;
@@ -6083,7 +6153,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("3993242b5a27ceffbd21")
+/******/ 		__webpack_require__.h = () => ("917a280f54524f1204fe")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

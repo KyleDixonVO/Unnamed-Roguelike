@@ -66,6 +66,7 @@ let playerInventory:Inventory;
 let levelManager:LevelManager;
 let poolManager:PoolManager;
 let settings:Settings;
+let decorations:createjs.Container;
 
 
 
@@ -176,7 +177,7 @@ function onReady(e:createjs.Event):void {
 function onGameEvent(e:createjs.Event):void {
     //console.log("target:" + e.target);
     //console.log("current target:" + e.currentTarget);
-    console.log("called onGameEvent");
+    //console.log("called onGameEvent");
     switch (e.type) {
         case "playerKilled":
             userInterface.removeAll();
@@ -184,6 +185,7 @@ function onGameEvent(e:createjs.Event):void {
             hideLevel();
             resetPools();
             screenManager.showGameOverScreen();
+            createjs.Sound.stop();
             break;
     
 
@@ -199,7 +201,7 @@ function onGameEvent(e:createjs.Event):void {
         case "enemyKilled":
             console.log("received dispatch: enemyKilled");
             levelManager.defeatedEnemies++;
-            console.log(levelManager.defeatedEnemies);
+            console.log("defeated enemies: " + levelManager.defeatedEnemies);
             levelManager.readyToSpawn = true;
             userInterface.incrementScore();
             userInterface.updateHUD();
@@ -207,11 +209,7 @@ function onGameEvent(e:createjs.Event):void {
             let rng = randomMe(1, 20);
             console.log("rng:" + rng);
             if (rng == 20){
-                for (let pickup of pickupPool){
-                    if (!pickup.used){
-                        pickup.onDrop(100,100);
-                    }
-                }
+                spawnPickup();
             }
             break;
         
@@ -224,27 +222,33 @@ function onGameEvent(e:createjs.Event):void {
             player.addToStage();
             player.startMovement();
 
-            console.log(player.state);
+            console.log("player state on game start: " + player.state);
             userInterface.showPlayerHUD();
             //addPickUp();
             gameStarted = true;
+            paused = false;
             createjs.Sound.stop();
             createjs.Sound.play("Combat", loopingProps);
             break;
 
 
         case "gameReset":
+            console.log("recieved dispatch: gameReset");
             player.reset();
+            player.removeFromStage();
+            stage.removeChild(player.weaponSprite);
             userInterface.reset();
             hideLevel();
-            screenManager.showTitleScreen();
             levelManager.reset();
             gameStarted == false;
             resetPools();
+            screenManager.showTitleScreen();
+            playerInventory.refillAmmo();
             break;
         
 
         case "titleActive":
+            createjs.Sound.stop();
             resetPools();
             console.log("received dispatch: titleActive ");
             hideLevel();
@@ -252,10 +256,15 @@ function onGameEvent(e:createjs.Event):void {
             userInterface.showStartMenu();
             userInterface.onStartClick();
             userInterface.onSettingsClick();
+            paused = false;
+            gameStarted = false;
             break;
         
 
         case "gameWin":
+            resetPools();
+            gameStarted = false;
+            paused = true;
             screenManager.showWinScreen();
             userInterface.removeAll();
             hideLevel();
@@ -275,6 +284,7 @@ function onGameEvent(e:createjs.Event):void {
             screenManager.pauseGame();
             userInterface.showSettingsMenu();
             createjs.Sound.play("Pause", {volume: settings.volume});
+            paused = true;
             break;
 
 
@@ -283,6 +293,7 @@ function onGameEvent(e:createjs.Event):void {
             userInterface.hideSettingsMenu();
             screenManager.unpauseGame();
             createjs.Sound.play("Unpause", {volume: settings.volume});
+            paused = false;
             break;
         
 
@@ -343,7 +354,7 @@ function onGameEvent(e:createjs.Event):void {
         
         case "spawnWave":
             console.log("received dispatch: spawnWave");
-            console.log(levelManager.enemiesSpawned, levelManager.threshold);
+            console.log("enemies spawned: " + levelManager.enemiesSpawned, "levelmanager threshold: " + levelManager.threshold);
             if (levelManager.enemiesSpawned > levelManager.threshold) return;
             for (let i = 0; i < levelManager.activeLevel; i++){
                 console.log("spawning enemy");
@@ -382,14 +393,14 @@ function onGameEvent(e:createjs.Event):void {
             player.startMovement();
             gameStarted = true;
 
-            console.log(player.state);
+            //console.log(player.state);
             userInterface.showPlayerHUD();
             break;
     }
 }
 
 function addProjectile():void{
-    if (escapePress == true || player.state == GameCharacter.STATE_DEAD || gameStarted == false) return;
+    if (paused == true || player.state == GameCharacter.STATE_DEAD || gameStarted == false) return;
     if (playerInventory.currentWeaponAmmo == 0) return;
     for (newProjectile of playerProjectilePool){
         if (newProjectile.used == false){
@@ -404,7 +415,7 @@ function addProjectile():void{
 }
 
 function addPickUp():void{
-    if (escapePress == true) return;
+    if (paused == true) return;
     
     for (newPickup of pickupPool){
         console.log("adding pickup");
@@ -430,7 +441,7 @@ function onFireDelayTimer():void{
 }
 
 function addEnemyProjectile():void{
-    if (escapePress == true || player.state == GameCharacter.STATE_IDLE) return;
+    if (paused == true || player.state == GameCharacter.STATE_IDLE) return;
     for (newProjectile of projectilePool){
         if (newProjectile.used == false){
             newProjectile.used = true;
@@ -489,12 +500,70 @@ function setPlayerSpawn():void{
         break;
     }
     player.sprite.x = randomMe(minX, maxX);
+    player.weaponSprite.x = player.sprite.x;
     player.sprite.y = randomMe(minY, maxY);
+    player.weaponSprite.y = player.sprite.y;
+}
+
+function spawnPickup():void{
+
+    let maxX:number;
+    let minX:number;
+    let maxY:number;
+    let minY:number;
+
+    switch (levelManager.activeLevel){
+        case 1:
+          minX = 100;
+          maxX = 300;
+          minY = 150;
+          maxY = 300;  
+        break;
+
+        case 2:
+            minX = 200;
+            maxX = 350;
+            minY = 125;
+            maxY = 250;
+        break;
+
+        case 3:
+            minX = 200;
+            maxX = 350;
+            minY = 400;
+            maxY = 500;
+        break;
+
+        case 4:
+            minX = 150;
+            maxX = 450;
+            minY = 200;
+            maxY = 450;
+        break;
+
+        case 5:
+        
+        break;
+
+        case 6:
+
+        break;
+
+        case 7:
+
+        break;
+    }
+
+    for (let pickup of pickupPool){
+        if (!pickup.used){
+            pickup.onDrop(randomMe(minX, maxX), randomMe(minY, maxY));
+        }
+    }
 }
 
 
 function onAddEnemy():void{
-    if (escapePress == true) return;
+    if (paused == true) return;
     for (newEnemy of enemyPool){
         if (newEnemy.used == false){
             newEnemy.used = true;
@@ -515,7 +584,7 @@ function onAddEnemy():void{
                 case 2:
                     minX = 200;
                     maxX = 350;
-                    minY = 100;
+                    minY = 125;
                     maxY = 250;
                 break;
 
@@ -529,7 +598,7 @@ function onAddEnemy():void{
                 case 4:
                     minX = 150;
                     maxX = 450;
-                    minY = 150;
+                    minY = 200;
                     maxY = 450;
                 break;
 
@@ -628,7 +697,7 @@ function projectileEnemyCollision(){
                 console.log("hit!");
                 enemy.takeDamage(projectile.damage);
                 projectile.secondaryEffect(enemy);
-                createjs.Sound.play("EnemyHurt", {volume:settings.volume});
+                createjs.Sound.play("EnemyHurt", {volume: settings.volume});
             }
         }
 
@@ -937,6 +1006,7 @@ function onTick(e:createjs.Event) {
     enemyEnemyCollision();
     playerEnemyCollision();
     settings.update(userInterface.volume);
+    loopingProps.set({volume: settings.volume});
     
     levelManager.checkWinCondition();
     //console.log(paused, gameStarted);
@@ -948,6 +1018,7 @@ function onTick(e:createjs.Event) {
     playerInventory.WeaponSpriteDirection(player);
 
     // update the stage
+    console.log("escape press: " + escapePress, "\ngame started: " + gameStarted, "\npaused: " + paused, "\nplayer state: " + player.state);
     stage.update();
 }
 
