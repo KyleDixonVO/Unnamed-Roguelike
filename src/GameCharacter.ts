@@ -1,5 +1,6 @@
 import { AssetManager } from "./AssetManager";
 import { DEFAULT_HEALTH, DEFAULT_SPEED, STAGE_HEIGHT, STAGE_WIDTH } from "./Constants";
+import { Player } from "./Player";
 
 export class GameCharacter {
 
@@ -41,6 +42,7 @@ protected _lastY:number;
 protected _colliding:boolean;
 protected _moving:boolean;
 protected _idleAnimating:boolean;
+protected _walkAnimating:boolean;
 
 protected _weaponSprite:createjs.Sprite;
 
@@ -58,6 +60,7 @@ constructor (stage:createjs.StageGL, assetManager:AssetManager, animation:string
     this._healthMax = DEFAULT_HEALTH;
     this._moving = false;
     this._idleAnimating = false;
+    this._walkAnimating = false;
 
     //construct and place sprite
     this._sprite = assetManager.getSprite("sprites", animation, STAGE_WIDTH/2, STAGE_HEIGHT/2);
@@ -187,8 +190,10 @@ public movingDirection():void {
         case GameCharacter.DIR_UP:
             this._deltaX = 0;
             this._deltaY = -1;
-            this._sprite.gotoAndPlay("sprites/firstplayable/player back");
-            //this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol back");
+            if (this._walkAnimating == false){
+                this._walkAnimating = true;
+                this._sprite.gotoAndPlay("sprites/firstplayable/playerBackWalk");
+            }
             this._weaponSprite.x = this._sprite.x;
             this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height/2;
             this._facing = GameCharacter.DIR_UP;
@@ -199,8 +204,11 @@ public movingDirection():void {
         case GameCharacter.DIR_DOWN:
             this._deltaX = 0;
             this._deltaY = 1;
-            this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
-            //this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol front");
+            if (this._walkAnimating == false){
+                this._walkAnimating = true;
+                this._sprite.gotoAndPlay("sprites/firstplayable/playerForwardWalk");
+            }
+
             this._weaponSprite.x = this._sprite.x;
             this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_DOWN;
@@ -211,8 +219,11 @@ public movingDirection():void {
         case GameCharacter.DIR_LEFT:
             this._deltaX = -1;
             this._deltaY = 0;
-            this._sprite.gotoAndPlay("sprites/firstplayable/player left");
-            //this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol left");
+            if (this._walkAnimating == false){
+                this._walkAnimating = true;
+                this._sprite.gotoAndPlay("sprites/firstplayable/playerLeftWalk");
+            }
+
             this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width/2;
             this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_LEFT;
@@ -223,21 +234,26 @@ public movingDirection():void {
         case GameCharacter.DIR_RIGHT:
             this._deltaX = 1;
             this._deltaY = 0;
-            this._sprite.gotoAndPlay("sprites/firstplayable/player right");
-            //this._weaponSprite.gotoAndPlay("sprites/firstplayable/pistol right");
+            if (this._walkAnimating == false){
+                this._walkAnimating = true;
+                this._sprite.gotoAndPlay("sprites/firstplayable/playerRightWalk");
+            }
+
             this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width/2;
             this._weaponSprite.y = this._sprite.y;
             this._facing = GameCharacter.DIR_RIGHT;
-            this._moving;
+            this._moving = true;
             //console.log("right");
             break;
 
         case GameCharacter.DIR_NEUTRAL:
+            this._walkAnimating = false;
             this._deltaX = 0;
             this._deltaY = 0
             this._moving = false;
             break;
     }
+    //console.log(this._direction);
 }
 
 public idleDirection():void{
@@ -289,6 +305,7 @@ public update():void {
     this.movingDirection();
 
     if (this._state == GameCharacter.STATE_DEAD || this._state == GameCharacter.STATE_PAUSED || this._state == GameCharacter.STATE_IDLE) { return };
+    this.sprite.on("animationend", ()=> {this._walkAnimating = false});
     this.idleDirection();
     //move based on displacements
     this._sprite.x += this._deltaX * this.speed;

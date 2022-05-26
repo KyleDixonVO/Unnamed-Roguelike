@@ -13,7 +13,7 @@ import { Enemy } from "./Enemy";
 import { GameCharacter } from "./GameCharacter";
 import { Projectile } from "./Projectile";
 import { Inventory } from "./Inventory";
-import { boxHit, radiusHit, randomMe } from "./Toolkit";
+import { boxHit, pointHit, radiusHit, randomMe } from "./Toolkit";
 import { Tile } from "./Tile"; 
 import { Pickup } from "./Pickup";
 import { LevelManager } from "./LevelManager";
@@ -66,7 +66,9 @@ let playerInventory:Inventory;
 let levelManager:LevelManager;
 let poolManager:PoolManager;
 let settings:Settings;
-let decorations:createjs.Container;
+let decorations:Array<createjs.Sprite> = [];
+let stageMask:createjs.Sprite;
+let hitIndicator:createjs.Sprite;
 
 
 
@@ -87,6 +89,13 @@ function onReady(e:createjs.Event):void {
     console.log(">> spritesheet loaded – ready to add sprites to game");
 
     // construct game objects here
+
+    // stageMask = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+    // stageMask.gotoAndPlay("sprites/other/pauseOverlay");
+
+    hitIndicator = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+    hitIndicator.gotoAndStop("sprites/other/damage");
+
     settings = new Settings();
     loopingProps = new createjs.PlayPropsConfig();
     loopingProps.set({loop: -1, volume: settings.volume});
@@ -143,6 +152,11 @@ function onReady(e:createjs.Event):void {
         }
     }
 
+    //decorations
+    for (let i:number = 0; i < 100; i++){
+        decorations.push(new createjs.Sprite(assetManager.getSpriteSheet("sprites")));
+    }
+
     //pickup pool
     for (let i:number = 0; i < PICKUP_MAX; i++){
         pickupPool.push(new Pickup(stage, assetManager, player));
@@ -174,6 +188,8 @@ function onReady(e:createjs.Event):void {
     screenManager.showTitleScreen();
 }
 
+
+// -------------------------------------------------------------------------------------------------------------------- Wiring
 function onGameEvent(e:createjs.Event):void {
     //console.log("target:" + e.target);
     //console.log("current target:" + e.currentTarget);
@@ -193,6 +209,11 @@ function onGameEvent(e:createjs.Event):void {
             if (iFramesActive == true) return;
                 iFramesActive = true;
                 player.takeDamage(ALIEN_CONTACT_DAMAGE);
+                stage.addChildAt(hitIndicator, 230);
+                hitIndicator.x = 300;
+                hitIndicator.y = 300;
+                hitIndicator.alpha = 1;
+                createjs.Tween.get(hitIndicator, {useTicks:true}).to({alpha:0}, 30).wait(10).call(()=>{stage.removeChild(hitIndicator); createjs.Tween.removeTweens(hitIndicator);});
                 invincibleTimer = window.setInterval(onInvincibleTimer, I_FRAMES_DEFAULT);
                 createjs.Sound.play("PlayerDamage", {volume: settings.volume});  
             break;
@@ -388,6 +409,7 @@ function onGameEvent(e:createjs.Event):void {
             player.unpause();
             showLevel();
             loadLevel(levelManager.activeLevel);
+            console.log("Active level: " + levelManager.activeLevel);
             player.addToStage();
             setPlayerSpawn();
             player.startMovement();
@@ -396,229 +418,6 @@ function onGameEvent(e:createjs.Event):void {
             //console.log(player.state);
             userInterface.showPlayerHUD();
             break;
-    }
-}
-
-function addProjectile():void{
-    if (paused == true || player.state == GameCharacter.STATE_DEAD || gameStarted == false) return;
-    if (playerInventory.currentWeaponAmmo == 0) return;
-    for (newProjectile of playerProjectilePool){
-        if (newProjectile.used == false){
-            newProjectile.used = true;
-            newProjectile.passIn(player, playerInventory);
-            newProjectile.activate();
-            playerInventory.decrementAmmo();
-            createjs.Sound.play(playerInventory.currentWeaponSound, {volume: settings.volume});
-            break;
-        }
-    }
-}
-
-function addPickUp():void{
-    if (paused == true) return;
-    
-    for (newPickup of pickupPool){
-        console.log("adding pickup");
-        if (newPickup.used == false){
-            newPickup.used = true;
-            newPickup.randomizeType();
-            newPickup.addToStage();
-            break;
-        }
-    }
-}
-
-function startFireDelayTimer():void{
-    if (fireDelayActive == true) return;
-    fireDelayActive = true;
-    addProjectile();
-    fireDelayTimer = window.setInterval(onFireDelayTimer, playerInventory.fireDelay);
-}
-
-function onFireDelayTimer():void{
-    fireDelayActive = false;
-    window.clearInterval(fireDelayTimer);
-}
-
-function addEnemyProjectile():void{
-    if (paused == true || player.state == GameCharacter.STATE_IDLE) return;
-    for (newProjectile of projectilePool){
-        if (newProjectile.used == false){
-            newProjectile.used = true;
-            newProjectile.passIn(player, playerInventory);
-            newProjectile.activate();
-            break;
-        }
-    }
-}
-
-function setPlayerSpawn():void{
-    let maxX:number;
-    let minX:number;
-    let maxY:number;
-    let minY:number;
-
-    switch (levelManager.activeLevel){
-        case 1:
-          minX = 300;
-          maxX = 300;
-          minY = 300;
-          maxY = 300;  
-        break;
-
-        case 2:
-            minX = 400;
-            maxX = 400;
-            minY = 300;
-            maxY = 300;
-        break;
-
-        case 3:
-            minX = 300;
-            maxX = 300;
-            minY = 200;
-            maxY = 200;
-        break;
-
-        case 4:
-            minX = 300;
-            maxX = 300;
-            minY = 300;
-            maxY = 300;
-        break;
-
-        case 5:
-        
-        break;
-
-        case 6:
-
-        break;
-
-        case 7:
-
-        break;
-    }
-    player.sprite.x = randomMe(minX, maxX);
-    player.weaponSprite.x = player.sprite.x;
-    player.sprite.y = randomMe(minY, maxY);
-    player.weaponSprite.y = player.sprite.y;
-}
-
-function spawnPickup():void{
-
-    let maxX:number;
-    let minX:number;
-    let maxY:number;
-    let minY:number;
-
-    switch (levelManager.activeLevel){
-        case 1:
-          minX = 100;
-          maxX = 300;
-          minY = 150;
-          maxY = 300;  
-        break;
-
-        case 2:
-            minX = 200;
-            maxX = 350;
-            minY = 125;
-            maxY = 250;
-        break;
-
-        case 3:
-            minX = 200;
-            maxX = 350;
-            minY = 400;
-            maxY = 500;
-        break;
-
-        case 4:
-            minX = 150;
-            maxX = 450;
-            minY = 200;
-            maxY = 450;
-        break;
-
-        case 5:
-        
-        break;
-
-        case 6:
-
-        break;
-
-        case 7:
-
-        break;
-    }
-
-    for (let pickup of pickupPool){
-        if (!pickup.used){
-            pickup.onDrop(randomMe(minX, maxX), randomMe(minY, maxY));
-        }
-    }
-}
-
-
-function onAddEnemy():void{
-    if (paused == true) return;
-    for (newEnemy of enemyPool){
-        if (newEnemy.used == false){
-            newEnemy.used = true;
-            newEnemy.addToStage();
-            let maxX:number;
-            let minX:number;
-            let maxY:number;
-            let minY:number;
-
-            switch (levelManager.activeLevel){
-                case 1:
-                  minX = 100;
-                  maxX = 300;
-                  minY = 150;
-                  maxY = 300;  
-                break;
-
-                case 2:
-                    minX = 200;
-                    maxX = 350;
-                    minY = 125;
-                    maxY = 250;
-                break;
-
-                case 3:
-                    minX = 200;
-                    maxX = 350;
-                    minY = 400;
-                    maxY = 500;
-                break;
-
-                case 4:
-                    minX = 150;
-                    maxX = 450;
-                    minY = 200;
-                    maxY = 450;
-                break;
-
-                case 5:
-                
-                break;
-
-                case 6:
-
-                break;
-
-                case 7:
-
-                break;
-            }
-            newEnemy.sprite.x = randomMe(minX, maxX);
-            newEnemy.sprite.y = randomMe(minY, maxY);
-            console.log(newEnemy);
-            break;
-        }
     }
 }
 
@@ -667,6 +466,435 @@ function resetPools():void{
 
 }
 
+function stagePointDebugging():void {
+    switch(levelManager.activeLevel){
+        case 1:
+            pointHit(stageMask, player.sprite, 85, 125, stage);
+            pointHit(stageMask, player.sprite, 300, 300, stage);
+            pointHit(stageMask, player.sprite, 50, 410, stage);
+            pointHit(stageMask, player.sprite, 300, 500, stage);
+            pointHit(stageMask, player.sprite, 450, 85, stage);
+            pointHit(stageMask, player.sprite, 550, 135, stage);
+        break;
+
+        case 2:
+            pointHit(stageMask, player.sprite, 180, 130, stage);
+            pointHit(stageMask, player.sprite, 350, 260, stage);
+            pointHit(stageMask, player.sprite, 370, 215, stage);
+            pointHit(stageMask, player.sprite, 510, 385, stage);
+            pointHit(stageMask, player.sprite, 180, 380, stage);
+            pointHit(stageMask, player.sprite, 375, 460, stage);
+        break;
+
+        case 3:
+            pointHit(stageMask, player.sprite, 180, 350, stage);
+            pointHit(stageMask, player.sprite, 375, 500, stage);
+            pointHit(stageMask, player.sprite, 250, 135, stage);
+            pointHit(stageMask, player.sprite, 425, 220, stage);
+        break;
+
+        case 4:
+            pointHit(stageMask, player.sprite, 60, 100, stage);
+            pointHit(stageMask, player.sprite, 210, 210, stage);
+            pointHit(stageMask, player.sprite, 540, 100, stage);
+            pointHit(stageMask, player.sprite, 390, 210, stage);
+            pointHit(stageMask, player.sprite, 225, 500, stage);
+            pointHit(stageMask, player.sprite, 375, 400, stage);
+        break;
+    }
+
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------- Projectiles and Related Timers
+function startFireDelayTimer():void{
+    if (fireDelayActive == true) return;
+    fireDelayActive = true;
+    addProjectile();
+    fireDelayTimer = window.setInterval(onFireDelayTimer, playerInventory.fireDelay);
+}
+
+function onFireDelayTimer():void{
+    fireDelayActive = false;
+    window.clearInterval(fireDelayTimer);
+}
+
+function addEnemyProjectile():void{
+    if (paused == true || player.state == GameCharacter.STATE_IDLE) return;
+    for (newProjectile of projectilePool){
+        if (newProjectile.used == false){
+            newProjectile.used = true;
+            newProjectile.passIn(player, playerInventory);
+            newProjectile.activate();
+            break;
+        }
+    }
+}
+
+function addProjectile():void{
+    if (paused == true || player.state == GameCharacter.STATE_DEAD || gameStarted == false) return;
+    if (playerInventory.currentWeaponAmmo == 0) return;
+    for (newProjectile of playerProjectilePool){
+        if (newProjectile.used == false){
+            newProjectile.used = true;
+            newProjectile.passIn(player, playerInventory);
+            newProjectile.activate();
+            playerInventory.decrementAmmo();
+            createjs.Sound.play(playerInventory.currentWeaponSound, {volume: settings.volume});
+            break;
+        }
+    }
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------- Spawn Points / Add based on spawn point
+function setPlayerSpawn():void{
+    let maxX:number;
+    let minX:number;
+    let maxY:number;
+    let minY:number;
+
+    switch (levelManager.activeLevel){
+        case 1:
+          minX = 300;
+          maxX = 300;
+          minY = 300;
+          maxY = 300;  
+        break;
+
+        case 2:
+            minX = 400;
+            maxX = 400;
+            minY = 300;
+            maxY = 300;
+        break;
+
+        case 3:
+            minX = 300;
+            maxX = 300;
+            minY = 200;
+            maxY = 200;
+        break;
+
+        case 4:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+        break;
+
+        case 5:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+        break;
+
+        case 6:
+
+        break;
+
+        case 7:
+
+        break;
+    }
+    player.sprite.x = randomMe(minX, maxX);
+    player.weaponSprite.x = player.sprite.x;
+    player.sprite.y = randomMe(minY, maxY);
+    player.weaponSprite.y = player.sprite.y;
+}
+
+function spawnPickup():void{
+
+    let maxX:number;
+    let minX:number;
+    let maxY:number;
+    let minY:number;
+    let spawnPoint:number;
+
+    switch (levelManager.activeLevel){
+        case 1:
+            spawnPoint = randomMe(1,3);
+            if (spawnPoint == 1){
+                minX = 85;
+                maxX = 300;
+                minY = 125;
+                maxY = 300; 
+                console.log("1:1");
+            }
+            else if (spawnPoint == 2){
+                minX = 50;
+                maxX = 300;
+                minY = 410;
+                maxY = 500;
+                console.log("1:2");
+            }
+            else if (spawnPoint == 3){
+                minX = 450;
+                maxX = 550;
+                minY = 85;
+                maxY = 135;
+                console.log("1:3");
+            }
+        break;
+
+        case 2:
+            spawnPoint = randomMe(1,3);
+            if (spawnPoint == 1){
+                minX = 180;
+                maxX = 350;
+                minY = 130;
+                maxY = 260;
+                console.log("2:1");
+            }
+            else if (spawnPoint == 2){
+                minX = 370;
+                maxX = 510;
+                minY = 215;
+                maxY = 385;
+                console.log("2:2");
+            }
+            else if (spawnPoint == 3){
+                minX = 180;
+                maxX = 375;
+                minY = 380;
+                maxY = 470;
+                console.log("2:3");
+            }
+        break;
+
+        case 3:
+            spawnPoint = randomMe(1,2);
+            if (spawnPoint == 1){
+                minX = 180;
+                maxX = 350;
+                minY = 375;
+                maxY = 500;
+                console.log("3:1");
+            }
+            else if (spawnPoint == 2){
+                minX = 250;
+                maxX = 425;
+                minY = 135;
+                maxY = 220;
+                console.log("3:2");
+            }
+        break;
+
+        case 4:
+            spawnPoint = randomMe(1,3);
+            if (spawnPoint == 1){
+                minX = 60;
+                maxX = 210;
+                minY = 100;
+                maxY = 210;
+                console.log("4:1");
+            }
+            else if (spawnPoint == 2){
+                minX = 390;
+                maxX = 540;
+                minY = 100;
+                maxY = 210;
+                console.log("4:2");
+            }
+            else if (spawnPoint == 3){
+                minX = 225;
+                maxX = 375;
+                minY = 400;
+                maxY = 500;
+                console.log("4:3");
+            }
+        break;
+
+        case 5:
+            spawnPoint = randomMe(1,3);
+            if (spawnPoint == 1){
+                minX = 100;
+                maxX = 200;
+                minY = 100;
+                maxY = 200;
+                console.log("5:1");
+            }
+            else if (spawnPoint == 2){
+                minX = 300;
+                maxX = 400;
+                minY = 100;
+                maxY = 200;
+                console.log("5:2");
+            }
+            else if (spawnPoint == 3){
+                minX = 250;
+                maxX = 450;
+                minY = 200;
+                maxY = 400;
+                console.log("5:3");
+            }
+        break;
+
+        case 6:
+
+        break;
+
+        case 7:
+
+        break;
+    }
+
+    for (let pickup of pickupPool){
+        if (!pickup.used){
+            pickup.onDrop(randomMe(minX, maxX), randomMe(minY, maxY));
+        }
+    }
+}
+
+function onAddEnemy():void{
+    if (paused == true) return;
+    for (newEnemy of enemyPool){
+        if (newEnemy.used == false){
+            newEnemy.used = true;
+            newEnemy.addToStage();
+            let maxX:number;
+            let minX:number;
+            let maxY:number;
+            let minY:number;
+            let spawnPoint:number;
+            console.log("Level in spawn: " + levelManager.activeLevel);
+            switch (levelManager.activeLevel){
+                case 1:
+                    spawnPoint = randomMe(1,3);
+                    if (spawnPoint == 1){
+                        minX = 95;
+                        maxX = 290;
+                        minY = 135;
+                        maxY = 290; 
+                        console.log("1:1");
+                    }
+                    else if (spawnPoint == 2){
+                        minX = 60;
+                        maxX = 290;
+                        minY = 420;
+                        maxY = 490;
+                        console.log("1:2");
+                    }
+                    else if (spawnPoint == 3){
+                        minX = 460;
+                        maxX = 540;
+                        minY = 95;
+                        maxY = 125;
+                        console.log("1:3");
+                    }
+                break;
+        
+                case 2:
+                    spawnPoint = randomMe(1,3);
+                    if (spawnPoint == 1){
+                        minX = 190;
+                        maxX = 340;
+                        minY = 120;
+                        maxY = 250;
+                        console.log("2:1");
+                    }
+                    else if (spawnPoint == 2){
+                        minX = 360;
+                        maxX = 500;
+                        minY = 225;
+                        maxY = 375;
+                        console.log("2:2");
+                    }
+                    else if (spawnPoint == 3){
+                        minX = 190;
+                        maxX = 365;
+                        minY = 390;
+                        maxY = 460;
+                        console.log("2:3");
+                    }
+                break;
+        
+                case 3:
+                    spawnPoint = randomMe(1,2);
+                    if (spawnPoint == 1){
+                        minX = 190;
+                        maxX = 340;
+                        minY = 385;
+                        maxY = 490;
+                        console.log("3:1");
+                    }
+                    else if (spawnPoint == 2){
+                        minX = 260;
+                        maxX = 415;
+                        minY = 145;
+                        maxY = 210;
+                        console.log("3:2");
+                    }
+                break;
+        
+                case 4:
+                    spawnPoint = randomMe(1,3);
+                    if (spawnPoint == 1){
+                        minX = 70;
+                        maxX = 200;
+                        minY = 110;
+                        maxY = 220;
+                        console.log("4:1");
+                    }
+                    else if (spawnPoint == 2){
+                        minX = 400;
+                        maxX = 530;
+                        minY = 110;
+                        maxY = 220;
+                        console.log("4:2");
+                    }
+                    else if (spawnPoint == 3){
+                        minX = 235;
+                        maxX = 365;
+                        minY = 410;
+                        maxY = 490;
+                        console.log("4:3");
+                    }
+                break;
+        
+                case 5:
+                    spawnPoint = randomMe(1,3);
+                    if (spawnPoint == 1){
+                        minX = 100;
+                        maxX = 200;
+                        minY = 100;
+                        maxY = 200;
+                        console.log("5:1");
+                    }
+                    else if (spawnPoint == 2){
+                        minX = 300;
+                        maxX = 400;
+                        minY = 100;
+                        maxY = 200;
+                        console.log("5:2");
+                    }
+                    else if (spawnPoint == 3){
+                        minX = 250;
+                        maxX = 450;
+                        minY = 200;
+                        maxY = 400;
+                        console.log("5:3");
+                    }
+                break;
+
+                case 6:
+
+                break;
+
+                case 7:
+
+                break;
+            }
+            newEnemy.sprite.x = randomMe(minX, maxX);
+            newEnemy.sprite.y = randomMe(minY, maxY);
+            console.log(newEnemy);
+            break;
+        }
+    }
+}
+
+// -------------------------------------------------------------------------------------------------------------------- Collision Detection
 function onInvincibleTimer():void{
     window.clearInterval(invincibleTimer);
     iFramesActive = false;
@@ -725,6 +953,7 @@ function tileCollisionDetection(){
                 if (boxHit(enemy.sprite, tile[i].sprite)){
                     enemy.colliding = true;
                     enemy.returnToLastPosition();
+                    enemy.courseCorrect(tile[i]);
                 }
             }
 
@@ -760,7 +989,11 @@ function enemyEnemyCollision(){
             if (!enemy2.used) continue;
             if (enemy.arrayNumber == enemy2.arrayNumber) continue;
             if (boxHit(enemy.sprite, enemy2.sprite)){
+                enemy.courseCorrect(enemy2);
                 enemy.returnToLastPosition();
+                enemy.sprite.x -= enemy.speed*enemy.deltaX;
+                enemy.sprite.y -= enemy.speed*enemy.deltaY;
+                
             }
         }
     }
@@ -775,116 +1008,56 @@ function playerEnemyCollision(){
     }
 }
 
-function monitorKeys():void {
-    if (upKey == true){
-        player.direction = GameCharacter.DIR_UP;
-        //console.log("W");
-    }
-
-    if (downKey == true){
-        player.direction = GameCharacter.DIR_DOWN;
-        //console.log("S");
-    }
-
-    if (leftKey == true){
-        player.direction = GameCharacter.DIR_LEFT;
-        //console.log("A");
-    }
-
-    if (rightKey == true){
-        player.direction = GameCharacter.DIR_RIGHT;
-        //console.log("D");
-    }
-
-    if (rightKey == false && leftKey == false && upKey == false && downKey == false){
-        player.direction = GameCharacter.DIR_NEUTRAL;
-        //console.log("No Input");
-    }
-
-    if (spacePress == true){      
-        //console.log("Fired a projectile!");
-        startFireDelayTimer();
-    }
-
-    if (shiftPress == true){
-        console.log("attempting weapon swap");
-        if (shiftUp == false || paused == true) return;
-        console.log("changing weapons");
-        shiftUp = false;
-        weaponNum ++;
-        if (weaponNum > 2){
-            weaponNum = 0;
+// -------------------------------------------------------------------------------------------------------------------- Add Game Objects
+function addPickUp():void{
+    if (paused == true) return;
+    
+    for (newPickup of pickupPool){
+        console.log("adding pickup");
+        if (newPickup.used == false){
+            newPickup.used = true;
+            newPickup.randomizeType();
+            newPickup.addToStage();
+            break;
         }
-        switch (weaponNum){
-            case 0:
-                playerInventory.currentWeapon = PISTOL;
-                break;
-            case 1:
-                playerInventory.currentWeapon = LASER;
-                break;
-            case 2:
-                playerInventory.currentWeapon = RAILGUN;
-                break;
-            // case 3:
-            //     playerInventory.currentWeapon = ROCKET;
-            //     break;
-            // case 4:
-            //     playerInventory.currentWeapon = RAILGUN;
-            //     break;
-
-        }
-    }
-
-    if (LKey == true){
-        console.log("attempting stage swap");
-        if (LUp == false || paused == true) return;
-        console.log("changing stage");
-        LUp = false;
-        stageNum++;
-        if (stageNum > 7){
-            stageNum = 1;
-        }
-        switch (stageNum){
-            case 1:
-                loadLevel(1);
-                break;
-            case 2:
-                loadLevel(2);
-                break;
-            case 3:
-                loadLevel(3);
-                break;
-            case 4:
-                loadLevel(4);
-                break;
-            case 5:
-                loadLevel(5);
-                break;
-            case 6:
-                loadLevel(6);
-                break;
-            case 7:
-                loadLevel(7);
-                break;
-        }
-    }
-
-    if (escapePress == true){
-        if (escapeUp == true) return;
-        if (paused == true) return;
-        console.log("escape toggle active");
-        screenManager.openSettings();
-    }
-
-    if (escapePress == false){
-        if (escapeUp == true) return;
-        if (paused == false) return;
-        console.log("escape toggle inactive");
-        screenManager.closeSettings();
     }
 }
 
-//keystroke listeners
+function addLevelDecorations():void{
+    switch(levelManager.activeLevel){
+        case 1: 
+        break;
+        
+        case 2:
+        break;
+
+        case 3:
+        break;
+
+        case 4:
+        break;
+
+        case 5:
+        for (let i:number = 0; i < 70; i++){
+            for (let decoration of decorations){
+                if (!decoration.isVisible()){
+                    decoration.visible = true;
+                    
+                }
+            }
+        }
+        break;
+    }
+}
+
+function hideDecorations():void{
+    for (let i:number = 0; i < decorations.length; i++){
+        decorations[i].visible = false;
+    }
+}
+
+
+//-------------------------------------------------------------------------------------------------------------------------- keystroke listeners
 document.onkeydown = onKeyDown;
 document.onkeyup = onKeyUp;
 
@@ -962,6 +1135,115 @@ function onKeyUp(e:KeyboardEvent):void {
     
 }
 
+function monitorKeys():void {
+    if (upKey == true){
+        player.direction = GameCharacter.DIR_UP;
+        //console.log("W");
+    }
+
+    if (downKey == true){
+        player.direction = GameCharacter.DIR_DOWN;
+        //console.log("S");
+    }
+
+    if (leftKey == true){
+        player.direction = GameCharacter.DIR_LEFT;
+        //console.log("A");
+    }
+
+    if (rightKey == true){
+        player.direction = GameCharacter.DIR_RIGHT;
+        //console.log("D");
+    }
+
+    if (rightKey == false && leftKey == false && upKey == false && downKey == false){
+        player.direction = GameCharacter.DIR_NEUTRAL;
+        //console.log("No Input");
+    }
+
+    if (spacePress == true){      
+        //console.log("Fired a projectile!");
+        startFireDelayTimer();
+    }
+
+    if (shiftPress == true){
+        console.log("attempting weapon swap");
+        if (shiftUp == false || paused == true) return;
+        console.log("changing weapons");
+        shiftUp = false;
+        weaponNum ++;
+        if (weaponNum > 2){
+            weaponNum = 0;
+        }
+        switch (weaponNum){
+            case 0:
+                playerInventory.currentWeapon = PISTOL;
+                break;
+            case 1:
+                playerInventory.currentWeapon = LASER;
+                break;
+            case 2:
+                playerInventory.currentWeapon = RAILGUN;
+                break;
+            // case 3:
+            //     playerInventory.currentWeapon = ROCKET;
+            //     break;
+            // case 4:
+            //     playerInventory.currentWeapon = RAILGUN;
+            //     break;
+
+        }
+    }
+
+    // if (LKey == true){
+    //     console.log("attempting stage swap");
+    //     if (LUp == false || paused == true) return;
+    //     console.log("changing stage");
+    //     LUp = false;
+    //     stageNum++;
+    //     if (stageNum > 7){
+    //         stageNum = 1;
+    //     }
+    //     switch (stageNum){
+    //         case 1:
+    //             loadLevel(1);
+    //             break;
+    //         case 2:
+    //             loadLevel(2);
+    //             break;
+    //         case 3:
+    //             loadLevel(3);
+    //             break;
+    //         case 4:
+    //             loadLevel(4);
+    //             break;
+    //         case 5:
+    //             loadLevel(5);
+    //             break;
+    //         case 6:
+    //             loadLevel(6);
+    //             break;
+    //         case 7:
+    //             loadLevel(7);
+    //             break;
+    //     }
+    // }
+
+    if (escapePress == true){
+        if (escapeUp == true) return;
+        if (paused == true) return;
+        console.log("escape toggle active");
+        screenManager.openSettings();
+    }
+
+    if (escapePress == false){
+        if (escapeUp == true) return;
+        if (paused == false) return;
+        console.log("escape toggle inactive");
+        screenManager.closeSettings();
+    }
+}
+
 function onTick(e:createjs.Event) {
     // console.log("TICK!");
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
@@ -973,6 +1255,7 @@ function onTick(e:createjs.Event) {
     }
     monitorKeys();
     player.update();
+    //stagePointDebugging();
 
     for (let enemy of enemyPool){
         if (enemy.used && enemy.colliding == false){
@@ -1018,9 +1301,10 @@ function onTick(e:createjs.Event) {
     playerInventory.WeaponSpriteDirection(player);
 
     // update the stage
-    console.log("escape press: " + escapePress, "\ngame started: " + gameStarted, "\npaused: " + paused, "\nplayer state: " + player.state);
+    //console.log("escape press: " + escapePress, "\ngame started: " + gameStarted, "\npaused: " + paused, "\nplayer state: " + player.state);
     stage.update();
 }
+
 
 // --------------------------------------------------- main method
 function main():void {

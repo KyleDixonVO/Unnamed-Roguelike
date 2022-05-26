@@ -666,6 +666,8 @@
             </struct>
             <key type="filename">sprites/firstplayable/player back idle_2.png</key>
             <key type="filename">sprites/firstplayable/player forward idle_2.png</key>
+            <key type="filename">sprites/firstplayable/playerForwardWalk_1.png</key>
+            <key type="filename">sprites/firstplayable/playerForwardWalk_3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -682,6 +684,8 @@
             </struct>
             <key type="filename">sprites/firstplayable/player back.png</key>
             <key type="filename">sprites/firstplayable/player forward.png</key>
+            <key type="filename">sprites/firstplayable/playerBackWalk_1.png</key>
+            <key type="filename">sprites/firstplayable/playerBackWalk_3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -698,6 +702,10 @@
             </struct>
             <key type="filename">sprites/firstplayable/player left idle_1.png</key>
             <key type="filename">sprites/firstplayable/player right idle_1.png</key>
+            <key type="filename">sprites/firstplayable/playerLeftWalk_1.png</key>
+            <key type="filename">sprites/firstplayable/playerLeftWalk_3.png</key>
+            <key type="filename">sprites/firstplayable/playerRightWalk_1.png</key>
+            <key type="filename">sprites/firstplayable/playerRightWalk_3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -741,6 +749,38 @@
                 <rect>4,7,9,15</rect>
                 <key>scale9Paddings</key>
                 <rect>4,7,9,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/playerBackWalk_2.png</key>
+            <key type="filename">sprites/firstplayable/playerForwardWalk_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,8,9,15</rect>
+                <key>scale9Paddings</key>
+                <rect>5,8,9,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/firstplayable/playerLeftWalk_2.png</key>
+            <key type="filename">sprites/firstplayable/playerRightWalk_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,8,9,15</rect>
+                <key>scale9Paddings</key>
+                <rect>4,8,9,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1019,6 +1059,7 @@
                 <false/>
             </struct>
             <key type="filename">sprites/other/cloud.png</key>
+            <key type="filename">sprites/other/damage.png</key>
             <key type="filename">sprites/other/gameOverScreen.png</key>
             <key type="filename">sprites/other/levelComplete.png</key>
             <key type="filename">sprites/other/pauseOverlay.png</key>

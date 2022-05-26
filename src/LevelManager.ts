@@ -95,6 +95,7 @@ export class LevelManager{
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
             
             case 5:
                 this._threshold = LEVEL_FIVE_THRESHOLD;
@@ -102,6 +103,7 @@ export class LevelManager{
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
             
             case 6:
                 this._threshold = LEVEL_SIX_THRESHOLD;
@@ -109,6 +111,7 @@ export class LevelManager{
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
             
             case 7:
                 this._threshold = LEVEL_SEVEN_THRESHOLD;
@@ -116,6 +119,7 @@ export class LevelManager{
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
         }
     }
 
@@ -133,11 +137,11 @@ export class LevelManager{
 
     public checkWaveStatus(){
         if (this._readyToSpawn == false) {
-            console.log("not ready to spawn"); 
+            //console.log("not ready to spawn"); 
             return;
         }
         else{
-            console.log("ready to spawn");
+            //console.log("ready to spawn");
         }
 
         if (this._defeatedEnemies % this._activeLevel == 0 || this._enemiesSpawned == 0){

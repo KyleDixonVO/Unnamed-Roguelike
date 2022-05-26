@@ -1413,6 +1413,7 @@ class Enemy extends GameCharacter_1.GameCharacter {
         this.eventPlayerHit = new createjs.Event("playerHit", true, false);
         this.eventEnemyKilled = new createjs.Event("enemyKilled", true, false);
         this._arrayNumber = placeInArray;
+        this._animating = false;
     }
     get used() {
         return this._used;
@@ -1461,25 +1462,43 @@ class Enemy extends GameCharacter_1.GameCharacter {
             return;
         }
         ;
-        this._colliding = false;
-        if (this._sprite.x > this.player.sprite.x) {
-            this.deltaX = -1;
+        if (this._colliding == false) {
+            if (this._sprite.x > this.player.sprite.x) {
+                this.deltaX = -1;
+            }
+            else if (this._sprite.x < this.player.sprite.x) {
+                this.deltaX = 1;
+            }
+            else
+                (this.deltaX = 0);
+            if (this._sprite.y > this.player.sprite.y) {
+                this.deltaY = -1;
+            }
+            else if (this._sprite.y < this.player.sprite.y) {
+                this.deltaY = 1;
+            }
+            else
+                (this.deltaY = 0);
         }
-        else if (this._sprite.x < this.player.sprite.x) {
-            this.deltaX = 1;
+        if (this._animating == false) {
+            this._animating = true;
+            if (this.deltaX == 1) {
+                this._sprite.gotoAndPlay("sprites/firstplayable/smol boi right walk");
+            }
+            else if (this.deltaX == -1) {
+                this._sprite.gotoAndPlay("sprites/firstplayable/smol boi left walk");
+            }
+            else if (this.deltaY == 1) {
+                this._sprite.gotoAndPlay("sprites/firstplayable/smol boi forward walk");
+            }
+            else if (this.deltaY == -1) {
+                this._sprite.gotoAndPlay("sprites/firstplayable/smol boi back walk");
+            }
         }
-        else
-            (this.deltaX = 0);
-        if (this._sprite.y > this.player.sprite.y) {
-            this.deltaY = -1;
-        }
-        else if (this._sprite.y < this.player.sprite.y) {
-            this.deltaY = 1;
-        }
-        else
-            (this.deltaY = 0);
+        this._sprite.on("animationend", () => { this._animating = false; });
         this._sprite.x += this.deltaX * this._speed;
         this._sprite.y += this.deltaY * this._speed;
+        this.colliding = false;
         if (this.player.state == GameCharacter_1.GameCharacter.STATE_DEAD)
             return;
         if ((0, Toolkit_1.boxHit)(this._sprite, this.player.sprite)) {
@@ -1500,6 +1519,31 @@ class Enemy extends GameCharacter_1.GameCharacter {
         if (this.health == 0) {
             this.killed();
             this.stage.dispatchEvent(this.eventEnemyKilled);
+        }
+    }
+    courseCorrect(object) {
+        if (object.sprite.x > this.sprite.x) {
+            this.deltaX = -this.deltaX;
+        }
+        else if (object.sprite.y > this.sprite.y) {
+            this.deltaY = -this.deltaY;
+        }
+        let random = (0, Toolkit_1.randomMe)(1, 4);
+        if (random == 1) {
+            this.deltaX = 1;
+            this.deltaY = 1;
+        }
+        else if (random == 2) {
+            this.deltaY = 1;
+            this.deltaX = -1;
+        }
+        else if (random == 3) {
+            this.deltaX = 1;
+            this.deltaY = -1;
+        }
+        else if (random == 4) {
+            this.deltaX = -1;
+            this.deltaY = -1;
         }
     }
 }
@@ -1572,12 +1616,16 @@ let playerInventory;
 let levelManager;
 let poolManager;
 let settings;
-let decorations;
+let decorations = [];
+let stageMask;
+let hitIndicator;
 let invincibleTimer;
 let collisionTimer;
 let fireDelayTimer;
 function onReady(e) {
     console.log(">> spritesheet loaded – ready to add sprites to game");
+    hitIndicator = new createjs.Sprite(assetManager.getSpriteSheet("sprites"));
+    hitIndicator.gotoAndStop("sprites/other/damage");
     settings = new Settings_1.Settings();
     loopingProps = new createjs.PlayPropsConfig();
     loopingProps.set({ loop: -1, volume: settings.volume });
@@ -1615,6 +1663,9 @@ function onReady(e) {
                 levelData[i][j].fill(Constants_1.LEVEL_DATA[i][j][k]);
             }
         }
+    }
+    for (let i = 0; i < 100; i++) {
+        decorations.push(new createjs.Sprite(assetManager.getSpriteSheet("sprites")));
     }
     for (let i = 0; i < Constants_1.PICKUP_MAX; i++) {
         pickupPool.push(new Pickup_1.Pickup(stage, assetManager, player));
@@ -1656,6 +1707,11 @@ function onGameEvent(e) {
                 return;
             iFramesActive = true;
             player.takeDamage(Constants_1.ALIEN_CONTACT_DAMAGE);
+            stage.addChildAt(hitIndicator, 230);
+            hitIndicator.x = 300;
+            hitIndicator.y = 300;
+            hitIndicator.alpha = 1;
+            createjs.Tween.get(hitIndicator, { useTicks: true }).to({ alpha: 0 }, 30).wait(10).call(() => { stage.removeChild(hitIndicator); createjs.Tween.removeTweens(hitIndicator); });
             invincibleTimer = window.setInterval(onInvincibleTimer, Constants_1.I_FRAMES_DEFAULT);
             createjs.Sound.play("PlayerDamage", { volume: settings.volume });
             break;
@@ -1823,199 +1879,13 @@ function onGameEvent(e) {
             player.unpause();
             showLevel();
             loadLevel(levelManager.activeLevel);
+            console.log("Active level: " + levelManager.activeLevel);
             player.addToStage();
             setPlayerSpawn();
             player.startMovement();
             gameStarted = true;
             userInterface.showPlayerHUD();
             break;
-    }
-}
-function addProjectile() {
-    if (paused == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || gameStarted == false)
-        return;
-    if (playerInventory.currentWeaponAmmo == 0)
-        return;
-    for (newProjectile of playerProjectilePool) {
-        if (newProjectile.used == false) {
-            newProjectile.used = true;
-            newProjectile.passIn(player, playerInventory);
-            newProjectile.activate();
-            playerInventory.decrementAmmo();
-            createjs.Sound.play(playerInventory.currentWeaponSound, { volume: settings.volume });
-            break;
-        }
-    }
-}
-function addPickUp() {
-    if (paused == true)
-        return;
-    for (newPickup of pickupPool) {
-        console.log("adding pickup");
-        if (newPickup.used == false) {
-            newPickup.used = true;
-            newPickup.randomizeType();
-            newPickup.addToStage();
-            break;
-        }
-    }
-}
-function startFireDelayTimer() {
-    if (fireDelayActive == true)
-        return;
-    fireDelayActive = true;
-    addProjectile();
-    fireDelayTimer = window.setInterval(onFireDelayTimer, playerInventory.fireDelay);
-}
-function onFireDelayTimer() {
-    fireDelayActive = false;
-    window.clearInterval(fireDelayTimer);
-}
-function addEnemyProjectile() {
-    if (paused == true || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
-        return;
-    for (newProjectile of projectilePool) {
-        if (newProjectile.used == false) {
-            newProjectile.used = true;
-            newProjectile.passIn(player, playerInventory);
-            newProjectile.activate();
-            break;
-        }
-    }
-}
-function setPlayerSpawn() {
-    let maxX;
-    let minX;
-    let maxY;
-    let minY;
-    switch (levelManager.activeLevel) {
-        case 1:
-            minX = 300;
-            maxX = 300;
-            minY = 300;
-            maxY = 300;
-            break;
-        case 2:
-            minX = 400;
-            maxX = 400;
-            minY = 300;
-            maxY = 300;
-            break;
-        case 3:
-            minX = 300;
-            maxX = 300;
-            minY = 200;
-            maxY = 200;
-            break;
-        case 4:
-            minX = 300;
-            maxX = 300;
-            minY = 300;
-            maxY = 300;
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-    }
-    player.sprite.x = (0, Toolkit_1.randomMe)(minX, maxX);
-    player.weaponSprite.x = player.sprite.x;
-    player.sprite.y = (0, Toolkit_1.randomMe)(minY, maxY);
-    player.weaponSprite.y = player.sprite.y;
-}
-function spawnPickup() {
-    let maxX;
-    let minX;
-    let maxY;
-    let minY;
-    switch (levelManager.activeLevel) {
-        case 1:
-            minX = 100;
-            maxX = 300;
-            minY = 150;
-            maxY = 300;
-            break;
-        case 2:
-            minX = 200;
-            maxX = 350;
-            minY = 125;
-            maxY = 250;
-            break;
-        case 3:
-            minX = 200;
-            maxX = 350;
-            minY = 400;
-            maxY = 500;
-            break;
-        case 4:
-            minX = 150;
-            maxX = 450;
-            minY = 200;
-            maxY = 450;
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-    }
-    for (let pickup of pickupPool) {
-        if (!pickup.used) {
-            pickup.onDrop((0, Toolkit_1.randomMe)(minX, maxX), (0, Toolkit_1.randomMe)(minY, maxY));
-        }
-    }
-}
-function onAddEnemy() {
-    if (paused == true)
-        return;
-    for (newEnemy of enemyPool) {
-        if (newEnemy.used == false) {
-            newEnemy.used = true;
-            newEnemy.addToStage();
-            let maxX;
-            let minX;
-            let maxY;
-            let minY;
-            switch (levelManager.activeLevel) {
-                case 1:
-                    minX = 100;
-                    maxX = 300;
-                    minY = 150;
-                    maxY = 300;
-                    break;
-                case 2:
-                    minX = 200;
-                    maxX = 350;
-                    minY = 125;
-                    maxY = 250;
-                    break;
-                case 3:
-                    minX = 200;
-                    maxX = 350;
-                    minY = 400;
-                    maxY = 500;
-                    break;
-                case 4:
-                    minX = 150;
-                    maxX = 450;
-                    minY = 200;
-                    maxY = 450;
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-            }
-            newEnemy.sprite.x = (0, Toolkit_1.randomMe)(minX, maxX);
-            newEnemy.sprite.y = (0, Toolkit_1.randomMe)(minY, maxY);
-            console.log(newEnemy);
-            break;
-        }
     }
 }
 function showLevel() {
@@ -2056,6 +1926,395 @@ function resetPools() {
     for (let pickup of pickupPool) {
         if (pickup.used)
             pickup.reset();
+    }
+}
+function stagePointDebugging() {
+    switch (levelManager.activeLevel) {
+        case 1:
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 85, 125, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 300, 300, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 50, 410, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 300, 500, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 450, 85, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 550, 135, stage);
+            break;
+        case 2:
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 180, 130, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 350, 260, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 370, 215, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 510, 385, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 180, 380, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 375, 460, stage);
+            break;
+        case 3:
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 180, 350, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 375, 500, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 250, 135, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 425, 220, stage);
+            break;
+        case 4:
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 60, 100, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 210, 210, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 540, 100, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 390, 210, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 225, 500, stage);
+            (0, Toolkit_1.pointHit)(stageMask, player.sprite, 375, 400, stage);
+            break;
+    }
+}
+function startFireDelayTimer() {
+    if (fireDelayActive == true)
+        return;
+    fireDelayActive = true;
+    addProjectile();
+    fireDelayTimer = window.setInterval(onFireDelayTimer, playerInventory.fireDelay);
+}
+function onFireDelayTimer() {
+    fireDelayActive = false;
+    window.clearInterval(fireDelayTimer);
+}
+function addEnemyProjectile() {
+    if (paused == true || player.state == GameCharacter_1.GameCharacter.STATE_IDLE)
+        return;
+    for (newProjectile of projectilePool) {
+        if (newProjectile.used == false) {
+            newProjectile.used = true;
+            newProjectile.passIn(player, playerInventory);
+            newProjectile.activate();
+            break;
+        }
+    }
+}
+function addProjectile() {
+    if (paused == true || player.state == GameCharacter_1.GameCharacter.STATE_DEAD || gameStarted == false)
+        return;
+    if (playerInventory.currentWeaponAmmo == 0)
+        return;
+    for (newProjectile of playerProjectilePool) {
+        if (newProjectile.used == false) {
+            newProjectile.used = true;
+            newProjectile.passIn(player, playerInventory);
+            newProjectile.activate();
+            playerInventory.decrementAmmo();
+            createjs.Sound.play(playerInventory.currentWeaponSound, { volume: settings.volume });
+            break;
+        }
+    }
+}
+function setPlayerSpawn() {
+    let maxX;
+    let minX;
+    let maxY;
+    let minY;
+    switch (levelManager.activeLevel) {
+        case 1:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+            break;
+        case 2:
+            minX = 400;
+            maxX = 400;
+            minY = 300;
+            maxY = 300;
+            break;
+        case 3:
+            minX = 300;
+            maxX = 300;
+            minY = 200;
+            maxY = 200;
+            break;
+        case 4:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+            break;
+        case 5:
+            minX = 300;
+            maxX = 300;
+            minY = 300;
+            maxY = 300;
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+    }
+    player.sprite.x = (0, Toolkit_1.randomMe)(minX, maxX);
+    player.weaponSprite.x = player.sprite.x;
+    player.sprite.y = (0, Toolkit_1.randomMe)(minY, maxY);
+    player.weaponSprite.y = player.sprite.y;
+}
+function spawnPickup() {
+    let maxX;
+    let minX;
+    let maxY;
+    let minY;
+    let spawnPoint;
+    switch (levelManager.activeLevel) {
+        case 1:
+            spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+            if (spawnPoint == 1) {
+                minX = 85;
+                maxX = 300;
+                minY = 125;
+                maxY = 300;
+                console.log("1:1");
+            }
+            else if (spawnPoint == 2) {
+                minX = 50;
+                maxX = 300;
+                minY = 410;
+                maxY = 500;
+                console.log("1:2");
+            }
+            else if (spawnPoint == 3) {
+                minX = 450;
+                maxX = 550;
+                minY = 85;
+                maxY = 135;
+                console.log("1:3");
+            }
+            break;
+        case 2:
+            spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+            if (spawnPoint == 1) {
+                minX = 180;
+                maxX = 350;
+                minY = 130;
+                maxY = 260;
+                console.log("2:1");
+            }
+            else if (spawnPoint == 2) {
+                minX = 370;
+                maxX = 510;
+                minY = 215;
+                maxY = 385;
+                console.log("2:2");
+            }
+            else if (spawnPoint == 3) {
+                minX = 180;
+                maxX = 375;
+                minY = 380;
+                maxY = 470;
+                console.log("2:3");
+            }
+            break;
+        case 3:
+            spawnPoint = (0, Toolkit_1.randomMe)(1, 2);
+            if (spawnPoint == 1) {
+                minX = 180;
+                maxX = 350;
+                minY = 375;
+                maxY = 500;
+                console.log("3:1");
+            }
+            else if (spawnPoint == 2) {
+                minX = 250;
+                maxX = 425;
+                minY = 135;
+                maxY = 220;
+                console.log("3:2");
+            }
+            break;
+        case 4:
+            spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+            if (spawnPoint == 1) {
+                minX = 60;
+                maxX = 210;
+                minY = 100;
+                maxY = 210;
+                console.log("4:1");
+            }
+            else if (spawnPoint == 2) {
+                minX = 390;
+                maxX = 540;
+                minY = 100;
+                maxY = 210;
+                console.log("4:2");
+            }
+            else if (spawnPoint == 3) {
+                minX = 225;
+                maxX = 375;
+                minY = 400;
+                maxY = 500;
+                console.log("4:3");
+            }
+            break;
+        case 5:
+            spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+            if (spawnPoint == 1) {
+                minX = 100;
+                maxX = 200;
+                minY = 100;
+                maxY = 200;
+                console.log("5:1");
+            }
+            else if (spawnPoint == 2) {
+                minX = 300;
+                maxX = 400;
+                minY = 100;
+                maxY = 200;
+                console.log("5:2");
+            }
+            else if (spawnPoint == 3) {
+                minX = 250;
+                maxX = 450;
+                minY = 200;
+                maxY = 400;
+                console.log("5:3");
+            }
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+    }
+    for (let pickup of pickupPool) {
+        if (!pickup.used) {
+            pickup.onDrop((0, Toolkit_1.randomMe)(minX, maxX), (0, Toolkit_1.randomMe)(minY, maxY));
+        }
+    }
+}
+function onAddEnemy() {
+    if (paused == true)
+        return;
+    for (newEnemy of enemyPool) {
+        if (newEnemy.used == false) {
+            newEnemy.used = true;
+            newEnemy.addToStage();
+            let maxX;
+            let minX;
+            let maxY;
+            let minY;
+            let spawnPoint;
+            console.log("Level in spawn: " + levelManager.activeLevel);
+            switch (levelManager.activeLevel) {
+                case 1:
+                    spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+                    if (spawnPoint == 1) {
+                        minX = 95;
+                        maxX = 290;
+                        minY = 135;
+                        maxY = 290;
+                        console.log("1:1");
+                    }
+                    else if (spawnPoint == 2) {
+                        minX = 60;
+                        maxX = 290;
+                        minY = 420;
+                        maxY = 490;
+                        console.log("1:2");
+                    }
+                    else if (spawnPoint == 3) {
+                        minX = 460;
+                        maxX = 540;
+                        minY = 95;
+                        maxY = 125;
+                        console.log("1:3");
+                    }
+                    break;
+                case 2:
+                    spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+                    if (spawnPoint == 1) {
+                        minX = 190;
+                        maxX = 340;
+                        minY = 120;
+                        maxY = 250;
+                        console.log("2:1");
+                    }
+                    else if (spawnPoint == 2) {
+                        minX = 360;
+                        maxX = 500;
+                        minY = 225;
+                        maxY = 375;
+                        console.log("2:2");
+                    }
+                    else if (spawnPoint == 3) {
+                        minX = 190;
+                        maxX = 365;
+                        minY = 390;
+                        maxY = 460;
+                        console.log("2:3");
+                    }
+                    break;
+                case 3:
+                    spawnPoint = (0, Toolkit_1.randomMe)(1, 2);
+                    if (spawnPoint == 1) {
+                        minX = 190;
+                        maxX = 340;
+                        minY = 385;
+                        maxY = 490;
+                        console.log("3:1");
+                    }
+                    else if (spawnPoint == 2) {
+                        minX = 260;
+                        maxX = 415;
+                        minY = 145;
+                        maxY = 210;
+                        console.log("3:2");
+                    }
+                    break;
+                case 4:
+                    spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+                    if (spawnPoint == 1) {
+                        minX = 70;
+                        maxX = 200;
+                        minY = 110;
+                        maxY = 220;
+                        console.log("4:1");
+                    }
+                    else if (spawnPoint == 2) {
+                        minX = 400;
+                        maxX = 530;
+                        minY = 110;
+                        maxY = 220;
+                        console.log("4:2");
+                    }
+                    else if (spawnPoint == 3) {
+                        minX = 235;
+                        maxX = 365;
+                        minY = 410;
+                        maxY = 490;
+                        console.log("4:3");
+                    }
+                    break;
+                case 5:
+                    spawnPoint = (0, Toolkit_1.randomMe)(1, 3);
+                    if (spawnPoint == 1) {
+                        minX = 100;
+                        maxX = 200;
+                        minY = 100;
+                        maxY = 200;
+                        console.log("5:1");
+                    }
+                    else if (spawnPoint == 2) {
+                        minX = 300;
+                        maxX = 400;
+                        minY = 100;
+                        maxY = 200;
+                        console.log("5:2");
+                    }
+                    else if (spawnPoint == 3) {
+                        minX = 250;
+                        maxX = 450;
+                        minY = 200;
+                        maxY = 400;
+                        console.log("5:3");
+                    }
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
+            newEnemy.sprite.x = (0, Toolkit_1.randomMe)(minX, maxX);
+            newEnemy.sprite.y = (0, Toolkit_1.randomMe)(minY, maxY);
+            console.log(newEnemy);
+            break;
+        }
     }
 }
 function onInvincibleTimer() {
@@ -2112,6 +2371,7 @@ function tileCollisionDetection() {
                 if ((0, Toolkit_1.boxHit)(enemy.sprite, tile[i].sprite)) {
                     enemy.colliding = true;
                     enemy.returnToLastPosition();
+                    enemy.courseCorrect(tile[i]);
                 }
             }
             for (let projectile of playerProjectilePool) {
@@ -2139,7 +2399,10 @@ function enemyEnemyCollision() {
             if (enemy.arrayNumber == enemy2.arrayNumber)
                 continue;
             if ((0, Toolkit_1.boxHit)(enemy.sprite, enemy2.sprite)) {
+                enemy.courseCorrect(enemy2);
                 enemy.returnToLastPosition();
+                enemy.sprite.x -= enemy.speed * enemy.deltaX;
+                enemy.sprite.y -= enemy.speed * enemy.deltaY;
             }
         }
     }
@@ -2153,96 +2416,43 @@ function playerEnemyCollision() {
         }
     }
 }
-function monitorKeys() {
-    if (upKey == true) {
-        player.direction = GameCharacter_1.GameCharacter.DIR_UP;
-    }
-    if (downKey == true) {
-        player.direction = GameCharacter_1.GameCharacter.DIR_DOWN;
-    }
-    if (leftKey == true) {
-        player.direction = GameCharacter_1.GameCharacter.DIR_LEFT;
-    }
-    if (rightKey == true) {
-        player.direction = GameCharacter_1.GameCharacter.DIR_RIGHT;
-    }
-    if (rightKey == false && leftKey == false && upKey == false && downKey == false) {
-        player.direction = GameCharacter_1.GameCharacter.DIR_NEUTRAL;
-    }
-    if (spacePress == true) {
-        startFireDelayTimer();
-    }
-    if (shiftPress == true) {
-        console.log("attempting weapon swap");
-        if (shiftUp == false || paused == true)
-            return;
-        console.log("changing weapons");
-        shiftUp = false;
-        weaponNum++;
-        if (weaponNum > 2) {
-            weaponNum = 0;
-        }
-        switch (weaponNum) {
-            case 0:
-                playerInventory.currentWeapon = Constants_1.PISTOL;
-                break;
-            case 1:
-                playerInventory.currentWeapon = Constants_1.LASER;
-                break;
-            case 2:
-                playerInventory.currentWeapon = Constants_1.RAILGUN;
-                break;
+function addPickUp() {
+    if (paused == true)
+        return;
+    for (newPickup of pickupPool) {
+        console.log("adding pickup");
+        if (newPickup.used == false) {
+            newPickup.used = true;
+            newPickup.randomizeType();
+            newPickup.addToStage();
+            break;
         }
     }
-    if (LKey == true) {
-        console.log("attempting stage swap");
-        if (LUp == false || paused == true)
-            return;
-        console.log("changing stage");
-        LUp = false;
-        stageNum++;
-        if (stageNum > 7) {
-            stageNum = 1;
-        }
-        switch (stageNum) {
-            case 1:
-                loadLevel(1);
-                break;
-            case 2:
-                loadLevel(2);
-                break;
-            case 3:
-                loadLevel(3);
-                break;
-            case 4:
-                loadLevel(4);
-                break;
-            case 5:
-                loadLevel(5);
-                break;
-            case 6:
-                loadLevel(6);
-                break;
-            case 7:
-                loadLevel(7);
-                break;
-        }
+}
+function addLevelDecorations() {
+    switch (levelManager.activeLevel) {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            for (let i = 0; i < 70; i++) {
+                for (let decoration of decorations) {
+                    if (!decoration.isVisible()) {
+                        decoration.visible = true;
+                    }
+                }
+            }
+            break;
     }
-    if (escapePress == true) {
-        if (escapeUp == true)
-            return;
-        if (paused == true)
-            return;
-        console.log("escape toggle active");
-        screenManager.openSettings();
-    }
-    if (escapePress == false) {
-        if (escapeUp == true)
-            return;
-        if (paused == false)
-            return;
-        console.log("escape toggle inactive");
-        screenManager.closeSettings();
+}
+function hideDecorations() {
+    for (let i = 0; i < decorations.length; i++) {
+        decorations[i].visible = false;
     }
 }
 document.onkeydown = onKeyDown;
@@ -2304,6 +2514,64 @@ function onKeyUp(e) {
         LUp = true;
     }
 }
+function monitorKeys() {
+    if (upKey == true) {
+        player.direction = GameCharacter_1.GameCharacter.DIR_UP;
+    }
+    if (downKey == true) {
+        player.direction = GameCharacter_1.GameCharacter.DIR_DOWN;
+    }
+    if (leftKey == true) {
+        player.direction = GameCharacter_1.GameCharacter.DIR_LEFT;
+    }
+    if (rightKey == true) {
+        player.direction = GameCharacter_1.GameCharacter.DIR_RIGHT;
+    }
+    if (rightKey == false && leftKey == false && upKey == false && downKey == false) {
+        player.direction = GameCharacter_1.GameCharacter.DIR_NEUTRAL;
+    }
+    if (spacePress == true) {
+        startFireDelayTimer();
+    }
+    if (shiftPress == true) {
+        console.log("attempting weapon swap");
+        if (shiftUp == false || paused == true)
+            return;
+        console.log("changing weapons");
+        shiftUp = false;
+        weaponNum++;
+        if (weaponNum > 2) {
+            weaponNum = 0;
+        }
+        switch (weaponNum) {
+            case 0:
+                playerInventory.currentWeapon = Constants_1.PISTOL;
+                break;
+            case 1:
+                playerInventory.currentWeapon = Constants_1.LASER;
+                break;
+            case 2:
+                playerInventory.currentWeapon = Constants_1.RAILGUN;
+                break;
+        }
+    }
+    if (escapePress == true) {
+        if (escapeUp == true)
+            return;
+        if (paused == true)
+            return;
+        console.log("escape toggle active");
+        screenManager.openSettings();
+    }
+    if (escapePress == false) {
+        if (escapeUp == true)
+            return;
+        if (paused == false)
+            return;
+        console.log("escape toggle inactive");
+        screenManager.closeSettings();
+    }
+}
 function onTick(e) {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
     if (player.colliding == false) {
@@ -2344,7 +2612,6 @@ function onTick(e) {
     }
     playerInventory.update();
     playerInventory.WeaponSpriteDirection(player);
-    console.log("escape press: " + escapePress, "\ngame started: " + gameStarted, "\npaused: " + paused, "\nplayer state: " + player.state);
     stage.update();
 }
 function main() {
@@ -2387,6 +2654,7 @@ class GameCharacter {
         this._healthMax = Constants_1.DEFAULT_HEALTH;
         this._moving = false;
         this._idleAnimating = false;
+        this._walkAnimating = false;
         this._sprite = assetManager.getSprite("sprites", animation, Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2);
         this._lastX = this._sprite.x;
         this._lastY = this._sprite.y;
@@ -2478,7 +2746,10 @@ class GameCharacter {
             case GameCharacter.DIR_UP:
                 this._deltaX = 0;
                 this._deltaY = -1;
-                this._sprite.gotoAndPlay("sprites/firstplayable/player back");
+                if (this._walkAnimating == false) {
+                    this._walkAnimating = true;
+                    this._sprite.gotoAndPlay("sprites/firstplayable/playerBackWalk");
+                }
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y - this._sprite.getBounds().height / 2;
                 this._facing = GameCharacter.DIR_UP;
@@ -2487,7 +2758,10 @@ class GameCharacter {
             case GameCharacter.DIR_DOWN:
                 this._deltaX = 0;
                 this._deltaY = 1;
-                this._sprite.gotoAndPlay("sprites/firstplayable/player forward");
+                if (this._walkAnimating == false) {
+                    this._walkAnimating = true;
+                    this._sprite.gotoAndPlay("sprites/firstplayable/playerForwardWalk");
+                }
                 this._weaponSprite.x = this._sprite.x;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_DOWN;
@@ -2496,7 +2770,10 @@ class GameCharacter {
             case GameCharacter.DIR_LEFT:
                 this._deltaX = -1;
                 this._deltaY = 0;
-                this._sprite.gotoAndPlay("sprites/firstplayable/player left");
+                if (this._walkAnimating == false) {
+                    this._walkAnimating = true;
+                    this._sprite.gotoAndPlay("sprites/firstplayable/playerLeftWalk");
+                }
                 this._weaponSprite.x = this._sprite.x - this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_LEFT;
@@ -2505,13 +2782,17 @@ class GameCharacter {
             case GameCharacter.DIR_RIGHT:
                 this._deltaX = 1;
                 this._deltaY = 0;
-                this._sprite.gotoAndPlay("sprites/firstplayable/player right");
+                if (this._walkAnimating == false) {
+                    this._walkAnimating = true;
+                    this._sprite.gotoAndPlay("sprites/firstplayable/playerRightWalk");
+                }
                 this._weaponSprite.x = this._sprite.x + this._sprite.getBounds().width / 2;
                 this._weaponSprite.y = this._sprite.y;
                 this._facing = GameCharacter.DIR_RIGHT;
-                this._moving;
+                this._moving = true;
                 break;
             case GameCharacter.DIR_NEUTRAL:
+                this._walkAnimating = false;
                 this._deltaX = 0;
                 this._deltaY = 0;
                 this._moving = false;
@@ -2566,6 +2847,7 @@ class GameCharacter {
             return;
         }
         ;
+        this.sprite.on("animationend", () => { this._walkAnimating = false; });
         this.idleDirection();
         this._sprite.x += this._deltaX * this.speed;
         this._sprite.y += this._deltaY * this.speed;
@@ -2904,24 +3186,28 @@ class LevelManager {
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
             case 5:
                 this._threshold = Constants_1.LEVEL_FIVE_THRESHOLD;
                 if (this._defeatedEnemies >= Constants_1.LEVEL_FIVE_THRESHOLD) {
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
             case 6:
                 this._threshold = Constants_1.LEVEL_SIX_THRESHOLD;
                 if (this._defeatedEnemies >= Constants_1.LEVEL_SIX_THRESHOLD) {
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
             case 7:
                 this._threshold = Constants_1.LEVEL_SEVEN_THRESHOLD;
                 if (this._defeatedEnemies >= Constants_1.LEVEL_SEVEN_THRESHOLD) {
                     this.stage.dispatchEvent(this.eventCompleteLevel);
                     this._activeLevel++;
                 }
+                break;
         }
     }
     resetForNextLevel() {
@@ -2936,11 +3222,9 @@ class LevelManager {
     }
     checkWaveStatus() {
         if (this._readyToSpawn == false) {
-            console.log("not ready to spawn");
             return;
         }
         else {
-            console.log("ready to spawn");
         }
         if (this._defeatedEnemies % this._activeLevel == 0 || this._enemiesSpawned == 0) {
             this.stage.dispatchEvent(this.eventSpawnWave);
@@ -6153,7 +6437,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("917a280f54524f1204fe")
+/******/ 		__webpack_require__.h = () => ("3c2a2569a45dc0e8115f")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
